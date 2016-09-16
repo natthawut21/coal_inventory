@@ -55,10 +55,15 @@ desired effect
  <body class="hold-transition skin-blue fixed sidebar-mini">
 <div class="wrapper">
 
-        <?php include "inc/nav_bar_inc.php";?>
+
+
+       <?php include "inc/nav_bar_inc.php";?>
 
 
         <?php include "inc/side_bar_inc.php"; ?>
+
+
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
