@@ -320,7 +320,7 @@ desired effect
                 </tfoot>-->
               </table>
 
-
+<!--
                 <div class="box">
             <div class="box-header">
               <h3 class="box-title">Responsive Hover Table</h3>
@@ -335,7 +335,7 @@ desired effect
                 </div>
               </div>
             </div>
-            <!-- /.box-header -->
+            
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
@@ -375,11 +375,12 @@ desired effect
                 </tr>
               </table>
             </div>
-            <!-- /.box-body -->
+           
           </div>
-
+-->
             </div>
-            <!-- /.box-body -->
+
+         
           </div>
 
          </div>

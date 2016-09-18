@@ -33,7 +33,7 @@
   <div class="login-box-body">
     <p class="login-box-msg">กรุณา   ล๊อกอิน ก่อนเข้าใช้</p>
 
-    <form action="index.html" method="post">
+    <form action="index.php" method="post">
       <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Username">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

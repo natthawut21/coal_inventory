@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ระบบบริหารคลังสินค้า | หน้าหลัก</title>
+  <title>รับวัตถุดิบเข้า | ระบบบริหารคลังสินค้า </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -31,6 +27,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+<style>
+ .datepicker{z-index:1151 !important;}
+</style>
+<script>
+    function jsSave_AddNew_Material()
+    {
+    //    alert("After Save");
+        console.log("After Save");
+        
+    }
+   
+</script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -70,150 +78,134 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Dashboard
-        <small>รายงานสรุป</small>
+          รับวัตถุดิบเข้า
+        <!-- <small>รายงานสรุป</small> -->
       </h1>
-      <ol class="breadcrumb">
+      <!--<ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
-      </ol>
+      </ol>-->
     </section>
 
     <!-- Main content -->
     <section class="content">
       <!-- Your Page Content Here -->
-
-
-        <!-- Small boxes (Stat box) -->
-      <div class="row">
-
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-gray-active">
-            <div class="inner">
-              <h3>1,500<sup style="font-size: 20px">Tons</sup></h3>
-
-              <p>ยอดรับวัตถุดิบ</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-ship"></i>
-
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <!--<div class="small-box bg-yellow">-->
-          <div class="small-box bg-gray-active">
-            <div class="inner">
-              <h3>1,500<sup style="font-size: 20px">Tons</sup></h3>
-
-              <p>ยอดเบิกวัตถุดิบ</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-industry"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-         <!-- <div class="small-box bg-red">-->
-            <div class="small-box bg-gray-active">
-            <div class="inner">
-              <h3>1,000<sup style="font-size: 20px">Tons</sup></h3>
-
-              <p>สินค้าแปรรูป</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-cube"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <!--<div class="small-box bg-aqua">-->
-          <div class="small-box bg-light-blue disabled">
-            <div class="inner">
-              <h3>550 <sup style="font-size: 20px">Tons</sup></h3>
-
-              <p>ยอดขายสินค้า</p>
-            </div>
-            <div class="icon">
-              <!--<i class="ion ion-bag"></i>-->
-              <i class="fa fa-truck"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+<div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
+        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการรับวัตถุดิบเข้าคลัง</h4>
       </div>
-      <!-- /.row -->
+    
+       <div class="modal-body">
+         <div class="row">
+             <div class="col-md-4"><label>วันที่รับวัตถุดิบ</label></div>
+          <div class="col-md-8 ">
+               <div class="form-group">
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="datepicker">
+                </div>
+              </div>
+           </div>
+        
+        </div>
         <div class="row">
-
-
-        <!-- ./col -->
-        <div class="col-lg-4 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-gray-active">
-            <div class="inner">
-              <h3>2,000<sup style="font-size: 20px">Tons</sup></h3>
-
-              <p>ยอดวัตถุดิบคงเหลือ</p>
+            <div class="col-md-4"><label>จำนวน</label></div>
+            <div class="col-md-7 "><div class="form-group">
+                  
+                  <input type="text" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
+               
+                </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-ship"></i>
-
+            <div class="col-md-1">
+                 <label>Tons</label>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+           </div>
+        <div class="row">
+            <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
+            <div class="col-md-8 ">
+             <!-- Select multiple-->
+                <div class="form-group">
+                  
+                  <!--<select multiple class="form-control">-->
+                  <select class="form-control">
+                    <option value="store_1">โกดัง 1</option>
+                    <option value="store_2">โกดัง 2</option>
+                    <option value="store_3">โกดัง 3</option>
+                    <option value="store_4">โกดัง 4</option>
+                    <option value="store_5">โกดัง 5</option>
+                  </select>
+                </div>
+            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><label>รายละเอียดเพิ่มเติม</label></div>
+            <div class="col-md-8 "> 
+                <div class="form-group">
+                  
+                  <textarea class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
+                </div></div>
+        </div>
+        
+      
+       <!--    
+         <div class="row">
+          <div class="col-md-4">.col-md-4</div>
+          <div class="col-md-4 col-md-offset-4">.col-md-4 .col-md-offset-4</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-md-offset-3">.col-md-3 .col-md-offset-3</div>
+          <div class="col-md-2 col-md-offset-4">.col-md-2 .col-md-offset-4</div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">.col-md-6 .col-md-offset-3</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-9">
+            Level 1: .col-sm-9
+            <div class="row">
+              <div class="col-xs-8 col-sm-6">
+                Level 2: .col-xs-8 .col-sm-6
+              </div>
+              <div class="col-xs-4 col-sm-6">
+                Level 2: .col-xs-4 .col-sm-6
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-lg-4 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-gray-active">
-            <div class="inner">
-              <h3>450<sup style="font-size: 20px">Tons</sup></h3>
-
-              <p>ยอดสินค้าคงเหลือ</p>
+           
+        -->   
+           
+           
+      </div>
+          
+    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_AddNew_Material();">บันทึก</button>
+      </div>
+    </div>
+  </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-cube"></i>
-
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-             <div class="col-lg-4 col-xs-12">
-          <!-- small box -->
-          <div class="small-box bg-yellow-active">
-            <div class="inner">
-              <h3>2,450<sup style="font-size: 20px">Tons</sup></h3>
-
-              <p>ยอดคงเหลือรวม</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-flag"></i>
-
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-       </div>
-
+         </div>
+        
        <div class="row">
 
         <!-- ./col -->
         <div class="col-lg-12 col-xs-12">
-      <div class="box">
+            
+        <div class="box">
             <div class="box-header">
-              <h3 class="box-title">ประวัติธุรกรรม</h3>
-
+              <div class="row">
+                <div class="col-lg-6 col-xs-6" >
+              <h3 class="box-title">รายการรับวัตถุดิบเข้า</h3>
+                   </div>
             <!--  <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
                   <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
@@ -223,38 +215,66 @@ desired effect
                   </div>
                 </div>
               </div>-->
+              <div class="col-lg-6 col-xs-6" align="right">
+                <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
+                <i class="fa fa-plus-circle"></i> เพิ่มรายการรับวัตถุดิบ
+              </a>
+                       
+                       
+                   </div>
+                   
+                </div>
+                
+                
+                
+                
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table id="example1" class="table table-bordered table-striped  table-hover">
-                <thead>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped table-hover">
+                
+               <thead>
                 <tr>
                   <th>วันที่</th>
                   <th>ประเภท</th>
                   <th>สถานที่จัดเก็บ</th>
                   <th>จำนวน</th>
-                  <th>ยอดรวม</th>
+                  <th>ยอดรวมวัตถุดิบ</th>
                   <th>ผู้ทำรายการ</th>
                 </tr>
                 </thead>
                 <tbody>
-                 <tr>
+                 <!--<tr>
                   <td>12/01/2016</td>
                   <td>ยอดรวมยกมา</td>
-                  <td>Location#1</td>
-                  <td align="right">1,500 Tons</td>
-                  <td align="right">1,500 Tons</td>
+                  <td>&nbsp;</td>
+                  <td align="right"><span class="badge bg-light-blue">1,500 Tons</span></td>
+                  <td align="right"><span class="badge bg-grey">1,500 Tons</span></td>
+                  <td align="center">Username1</td>
+                </tr>-->
+                <tr>
+                  <td>12/01/2016</td>
+                  <td>รับ วัตถุดิบ</td>
+                  <td>โกดัง # 1</td>
+                  <td align="right">
+                    <span class="badge bg-red">+1,000 Tons</span>
+                   </td>
+                  <td align="right">
+                    
+                    <span class="badge bg-grey">2,500 Tons</span>
+                    </td>
                   <td align="center">Username1</td>
                 </tr>
                 <tr>
                   <td>12/01/2016</td>
                   <td>รับ วัตถุดิบ</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 1,500 Tons</td>
-                  <td align="right">3,000 Tons</td>
+                  <td>โกดัง# 2</td>
+                  <td align="right"><span class="badge bg-red">+500 Tons</span></td>
+                  <td align="right"><span class="badge bg-grey">3,000 Tons</span></td>
                   <td align="center">Username1</td>
                 </tr>
-
+ <!--
+ <!--
                 <tr>
                   <td>13/01/2016</td>
                   <td>เบิก วัตถุดิบ</td>
@@ -264,7 +284,7 @@ desired effect
                   <td align="center">Username1</td>
                 </tr>
 
-                 <tr>
+                <tr>
                   <td>13/01/2016</td>
                   <td>ผลิต สินค้าแปรรูป กลุ่ม 1</td>
                   <td>Location#1</td>
@@ -307,7 +327,7 @@ desired effect
                   <td align="right">- 200 Tons</td>
                   <td align="right">2,800 Tons</td>
                   <td align="center">Username1</td>
-                </tr>
+                </tr>-->
                 </tbody>
                 <!--<tfoot>
                 <tr>
@@ -319,70 +339,16 @@ desired effect
                 </tr>
                 </tfoot>-->
               </table>
-
-
-                <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Responsive Hover Table</h3>
-
-              <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Reason</th>
-                </tr>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Alexander Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-              </table>
             </div>
             <!-- /.box-body -->
           </div>
-
-            </div>
-            <!-- /.box-body -->
-          </div>
-
-         </div>
+          <!-- /.box -->    
+            
+            
+            
+            
+      
+        </div>
         </div>
     </section>
     <!-- /.content -->
@@ -424,6 +390,7 @@ desired effect
 <!-- DataTables -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
 <script>
   $(function () {
     $("#example1").DataTable();
@@ -436,6 +403,11 @@ desired effect
       "info": true,
       "autoWidth": false
     });
+      //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    }); 
+      
   });
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

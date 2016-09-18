@@ -73,10 +73,10 @@ desired effect
        Dashboard
         <small>รายงานสรุป</small>
       </h1>
-      <ol class="breadcrumb">
+      <!--<ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
-      </ol>
+      </ol>-->
     </section>
 
     <!-- Main content -->
@@ -226,157 +226,10 @@ desired effect
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-              <table id="example1" class="table table-bordered table-striped  table-hover">
-                <thead>
-                <tr>
-                  <th>วันที่</th>
-                  <th>ประเภท</th>
-                  <th>สถานที่จัดเก็บ</th>
-                  <th>จำนวน</th>
-                  <th>ยอดรวม</th>
-                  <th>ผู้ทำรายการ</th>
-                </tr>
-                </thead>
-                <tbody>
-                 <tr>
-                  <td>12/01/2016</td>
-                  <td>ยอดรวมยกมา</td>
-                  <td>Location#1</td>
-                  <td align="right">1,500 Tons</td>
-                  <td align="right">1,500 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-                <tr>
-                  <td>12/01/2016</td>
-                  <td>รับ วัตถุดิบ</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 1,500 Tons</td>
-                  <td align="right">3,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>เบิก วัตถุดิบ</td>
-                  <td>Location#1</td>
-                  <td align="right">- 1,000 Tons</td>
-                  <td align="right">2,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 1</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 200 Tons</td>
-                  <td align="right">2,200 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 2</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,450 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,700 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 300 Tons</td>
-                  <td align="right">3,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>จำหน่าย สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">- 200 Tons</td>
-                  <td align="right">2,800 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-                </tbody>
-                <!--<tfoot>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </tfoot>-->
-              </table>
+              
 
 
-                <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Responsive Hover Table</h3>
-
-              <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Reason</th>
-                </tr>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Alexander Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
+                
 
             </div>
             <!-- /.box-body -->
