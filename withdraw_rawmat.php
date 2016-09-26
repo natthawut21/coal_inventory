@@ -1,8 +1,14 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv=Content-Type content="text/html; charset=tis-620">
+
   <title>เบิกจ่ายวัตถุดิบ | ระบบบริหารคลังสินค้า </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -20,7 +26,7 @@
         apply the skin class to the body tag so the changes take effect.
   -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-
+  <link rel="stylesheet" href="plugins/datepicker/css/bootstrap-datepicker3.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -60,7 +66,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
- <body class="hold-transition skin-blue fixed sidebar-mini">
+ <body class="hold-transition skin-blue fixed sidebar-mini"  onload="jsGetWithDrawTable();">
 <div class="wrapper">
 
 
@@ -70,7 +76,7 @@ desired effect
 
         <?php include "inc/side_bar_inc.php"; ?>
 
-
+  <?php include "inc/source/Basic_Info.php";?>
 
 
   <!-- Content Wrapper. Contains page content -->
@@ -108,7 +114,7 @@ desired effect
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker">
+                  <input type="text" class="form-control pull-right" id="txt_withdraw_date" name="txt_withdraw_date" >
                 </div>
               </div>
            </div>
@@ -118,7 +124,7 @@ desired effect
             <div class="col-md-4"><label>จำนวน</label></div>
             <div class="col-md-7 "><div class="form-group">
                   
-                  <input type="text" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
+                  <input id="txt_withdraw_qty" name="txt_withdraw_qty"  type="text" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
                
                 </div>
             </div>
@@ -132,13 +138,14 @@ desired effect
              <!-- Select multiple-->
                 <div class="form-group">
                   
-                  <!--<select multiple class="form-control">-->
-                  <select class="form-control">
-                    <option value="store_1">โกดัง 1</option>
-                    <option value="store_2">โกดัง 2</option>
-                    <option value="store_3">โกดัง 3</option>
-                    <option value="store_4">โกดัง 4</option>
-                    <option value="store_5">โกดัง 5</option>
+                 <!--<select multiple class="form-control">-->
+                    
+                  <?php
+                        $_basic_info = new Basic_Info();
+                        $_location_option = $_basic_info->getLocationList(-1);
+                    ?>
+                  <select class="form-control" id="opt_withdraw_location" name="opt_withdraw_location">
+                      <?php echo $_location_option; ?>
                   </select>
                 </div>
             
@@ -149,7 +156,7 @@ desired effect
             <div class="col-md-8 "> 
                 <div class="form-group">
                   
-                  <textarea class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
+                  <textarea  id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
                 </div></div>
         </div>
         
@@ -188,7 +195,7 @@ desired effect
     
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_AddNew_Material();">บันทึก</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_Withdraw_Material();">บันทึก</button>
       </div>
     </div>
   </div>
@@ -230,8 +237,9 @@ desired effect
                 
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped table-hover">
+            <div class="box-body table-responsive no-padding">
+              <div id="div_withdraw_table">
+              <table id="withdraw_table_1" class="table table-bordered table-striped table-hover">
                 
                <thead>
                 <tr>
@@ -244,103 +252,30 @@ desired effect
                 </tr>
                 </thead>
                 <tbody>
-                <!-- <tr>
-                  <td>12/01/2016</td>
-                  <td>ยอดรวมยกมา</td>
-                  <td>&nbsp;</td>
-                  <td align="right"><span class="badge bg-light-blue">3,000 Tons</span></td>
-                  <td align="right"><span class="badge bg-grey">3,000 Tons</span></td>
-                  <td align="center">Username1</td>
-                </tr>-->
+               
                 <tr>
-                  <td>12/01/2016</td>
-                  <td>เบิกจ่ายวัตถุดิบ</td>
-                  <td>โกดัง # 1</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
                   <td align="right">
-                    <span class="badge bg-yellow">-1,000 Tons</span>
+                    <span class="badge bg-yellow">-</span>
                    </td>
                   <td align="right">
                     
-                    <span class="badge bg-grey">2,000 Tons</span>
+                    <span class="badge bg-grey">-</span>
                     </td>
-                  <td align="center">Username1</td>
+                  <td align="center">-</td>
                 </tr>
-                <tr>
-                  <td>12/01/2016</td>
-                  <td>เบิกจ่ายวัตถุดิบ</td>
-                  <td>โกดัง# 2</td>
-                  <td align="right"><span class="badge bg-yellow">-500 Tons</span></td>
-                  <td align="right"><span class="badge bg-grey">1,500 Tons</span</td>
-                  <td align="center">Username1</td>
-                </tr>
- <!--
- <!--
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>เบิก วัตถุดิบ</td>
-                  <td>Location#1</td>
-                  <td align="right">- 1,000 Tons</td>
-                  <td align="right">2,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 1</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 200 Tons</td>
-                  <td align="right">2,200 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 2</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,450 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,700 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 300 Tons</td>
-                  <td align="right">3,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>จำหน่าย สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">- 200 Tons</td>
-                  <td align="right">2,800 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>-->
+                    
                 </tbody>
-                <!--<tfoot>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </tfoot>-->
+               
               </table>
             </div>
-            <!-- /.box-body -->
+              <div id="table_loading" class="overlay">
+                  <i class="fa fa-refresh fa-spin"></i>
+                </div>
+            </div>
+            
           </div>
           <!-- /.box -->    
             
@@ -390,25 +325,124 @@ desired effect
 <!-- DataTables -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+ 
+     
+<script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="plugins/datepicker/locales/bootstrap-datepicker.th.js"></script>
+<script src="inc/js/ajax_pop.js"></script>
+     
+     
+     
 <script>
   $(function () {
-    $("#example1").DataTable();
-
-    $('#example2').DataTable({
+   // $("#withdraw_table_1").DataTable();
+    /* $("#example_1").DataTable();
+    $('#example_2 ').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
       "ordering": true,
       "info": true,
       "autoWidth": false
-    });
+    });*/
+      
       //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
+    $('#txt_withdraw_date').datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        todayBtn: "linked",
+        language: "th",
+        todayHighlight: true
     }); 
       
   });
+ 
+  function jsSave_Withdraw_Material()
+  {
+    
+      
+       var obj_txt_withdraw_date = document.getElementById("txt_withdraw_date");
+        var obj_txt_withdraw_qty = document.getElementById("txt_withdraw_qty");
+        var obj_opt_withdraw_location = document.getElementById("opt_withdraw_location");
+        var obj_txt_remarks = document.getElementById("txt_remarks");
+        var val_withdraw_date ="";
+        var val_withdrawe_qty ="";
+        var val_store_location ="";
+        var val_withdraw_remarks ="";
+        if(obj_txt_withdraw_date != null)
+        {
+            val_withdraw_date =obj_txt_withdraw_date.value;
+            obj_txt_withdraw_date.value ="";
+        }
+        
+        if(obj_txt_withdraw_qty != null)
+        {
+            val_withdraw_qty =obj_txt_withdraw_qty.value;
+            obj_txt_withdraw_qty.value ="";
+        }
+        
+        if(obj_opt_withdraw_location != null)
+        {
+            val_store_location =obj_opt_withdraw_location.value;
+            obj_opt_withdraw_location.value ="";
+        }
+        
+        if(val_withdraw_remarks != null)
+        {
+            val_withdraw_remarks =obj_txt_remarks.value;
+            obj_txt_remarks.value ="";
+        }
+        var param_withdraw_rawmat ="withdraw_date="+val_withdraw_date+"&withdraw_qty="+val_withdraw_qty+"&store_location="+val_store_location+"&withdraw_remark="+val_withdraw_remarks;
+        
+        // console.log("inc/source/updateInventory.php?action=withdraw_rawmat&"+param_withdraw_rawmat);
+        getDataXML_Sync("inc/source/updateInventory.php?action=withdraw_rawmat&"+param_withdraw_rawmat,jsAfterSubmitWithdrawRawmat);
+        document.getElementById("table_loading").style.visibility = "hidden";
+  }
+  function jsAfterSubmitWithdrawRawmat(respText)
+  {
+         //console.log(respText);
+        if(respText==1)
+        {
+           
+            document.getElementById("table_loading").style.visibility = "visible";
+            //getData_Sync("./inc/source/getInventoryLog.php?prod_id=1&table_name=withdraw_table_1","div_withdraw_table");
+            getData_Sync("./inc/source/getInventoryLog.php?prod_id=1","div_withdraw_table");
+            document.getElementById("table_loading").style.visibility = "hidden";
+            
+            $(function () {
+                       //$("#withdraw_table_1").DataTable({
+                       $("#receive_table_1").DataTable({
+                      "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+                    
+                });
+            });
+        }
+  }
+  function jsGetWithDrawTable()
+  {
+        document.getElementById("table_loading").style.visibility = "visible";
+        //getData_Sync("./inc/source/getInventoryLog.php?prod_id=1&table_name=withdraw_table_1","div_withdraw_table");
+        getData_Sync("./inc/source/getInventoryLog.php?prod_id=1","div_withdraw_table");
+        document.getElementById("table_loading").style.visibility = "hidden";
+       $(function () {
+                     //$("#withdraw_table_1").DataTable({
+                     $("#receive_table_1").DataTable({
+                      "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+                    
+                });
+       });
+        
+    } 
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

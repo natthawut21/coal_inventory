@@ -29,7 +29,7 @@
               <!-- The user image in the navbar-->
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Username1</span>
+              <span class="hidden-xs">Guest</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -37,7 +37,7 @@
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Username1 - Stock Inv Admin.
+                  Guest - TEST_USER.
                   <small>Member since Nov. 2016</small>
                 </p>
               </li>

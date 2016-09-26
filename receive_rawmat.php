@@ -1,8 +1,13 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv=Content-Type content="text/html; charset=tis-620">
   <title>รับวัตถุดิบเข้า | ระบบบริหารคลังสินค้า </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -15,11 +20,16 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+      
+    
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="plugins/datepicker/css/bootstrap-datepicker3.css">
+    
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,12 +41,6 @@
  .datepicker{z-index:1151 !important;}
 </style>
 <script>
-    function jsSave_AddNew_Material()
-    {
-    //    alert("After Save");
-        console.log("After Save");
-        
-    }
    
 </script>
 </head>
@@ -60,17 +64,19 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
- <body class="hold-transition skin-blue fixed sidebar-mini">
+ <body class="hold-transition skin-blue fixed sidebar-mini" onload="jsGetReceiveTable();">
 <div class="wrapper">
 
 
 
-       <?php include "inc/nav_bar_inc.php";?>
+    <?php include "inc/nav_bar_inc.php";?>
 
 
-        <?php include "inc/side_bar_inc.php"; ?>
+    <?php include "inc/side_bar_inc.php"; ?>
 
-
+    <?php include "inc/source/Basic_Info.php";?>
+        
+      
 
 
   <!-- Content Wrapper. Contains page content -->
@@ -85,7 +91,7 @@ desired effect
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
       </ol>-->
-    </section>
+    </section> 
 
     <!-- Main content -->
     <section class="content">
@@ -108,7 +114,7 @@ desired effect
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker">
+                  <input type="text" id="txt_receive_date" name="txt_receive_date" class="form-control pull-right" >
                 </div>
               </div>
            </div>
@@ -117,8 +123,8 @@ desired effect
         <div class="row">
             <div class="col-md-4"><label>จำนวน</label></div>
             <div class="col-md-7 "><div class="form-group">
-                  
-                  <input type="text" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
+                 
+                  <input type="text" id="txt_receive_qty" name="txt_receive_qty" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
                
                 </div>
             </div>
@@ -133,12 +139,13 @@ desired effect
                 <div class="form-group">
                   
                   <!--<select multiple class="form-control">-->
-                  <select class="form-control">
-                    <option value="store_1">โกดัง 1</option>
-                    <option value="store_2">โกดัง 2</option>
-                    <option value="store_3">โกดัง 3</option>
-                    <option value="store_4">โกดัง 4</option>
-                    <option value="store_5">โกดัง 5</option>
+                    
+                  <?php
+                        $_basic_info = new Basic_Info();
+                        $_location_option = $_basic_info->getLocationList(-1);
+                    ?>
+                  <select class="form-control" id="opt_receive_location" name="opt_receive_location">
+                      <?php echo $_location_option; ?>
                   </select>
                 </div>
             
@@ -149,7 +156,7 @@ desired effect
             <div class="col-md-8 "> 
                 <div class="form-group">
                   
-                  <textarea class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
+                  <textarea id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
                 </div></div>
         </div>
         
@@ -230,9 +237,10 @@ desired effect
                 
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped table-hover">
-                
+            
+            <div class="box-body table-responsive no-padding">
+              <div id="div_receive_table">
+              <table id="receive_table_1" class="table table-bordered table-striped table-hover">
                <thead>
                 <tr>
                   <th>วันที่</th>
@@ -244,103 +252,34 @@ desired effect
                 </tr>
                 </thead>
                 <tbody>
-                 <!--<tr>
-                  <td>12/01/2016</td>
-                  <td>ยอดรวมยกมา</td>
-                  <td>&nbsp;</td>
-                  <td align="right"><span class="badge bg-light-blue">1,500 Tons</span></td>
-                  <td align="right"><span class="badge bg-grey">1,500 Tons</span></td>
-                  <td align="center">Username1</td>
-                </tr>-->
                 <tr>
-                  <td>12/01/2016</td>
-                  <td>รับ วัตถุดิบ</td>
-                  <td>โกดัง # 1</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
                   <td align="right">
-                    <span class="badge bg-red">+1,000 Tons</span>
+                    <span class="badge bg-red">+</span>
                    </td>
                   <td align="right">
                     
-                    <span class="badge bg-grey">2,500 Tons</span>
+                    <span class="badge bg-grey">+</span>
                     </td>
-                  <td align="center">Username1</td>
+                    <td>-</td>
                 </tr>
                 <tr>
-                  <td>12/01/2016</td>
-                  <td>รับ วัตถุดิบ</td>
-                  <td>โกดัง# 2</td>
-                  <td align="right"><span class="badge bg-red">+500 Tons</span></td>
-                  <td align="right"><span class="badge bg-grey">3,000 Tons</span></td>
-                  <td align="center">Username1</td>
-                </tr>
- <!--
- <!--
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>เบิก วัตถุดิบ</td>
-                  <td>Location#1</td>
-                  <td align="right">- 1,000 Tons</td>
-                  <td align="right">2,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 1</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 200 Tons</td>
-                  <td align="right">2,200 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 2</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,450 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,700 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 300 Tons</td>
-                  <td align="right">3,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>จำหน่าย สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">- 200 Tons</td>
-                  <td align="right">2,800 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>-->
+                
+ 
                 </tbody>
-                <!--<tfoot>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </tfoot>-->
+              
               </table>
+                  
+                  
+             </div>
+            <div id="table_loading" class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
             </div>
-            <!-- /.box-body -->
+                
+            </div>
+            
           </div>
           <!-- /.box -->    
             
@@ -359,10 +298,10 @@ desired effect
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Anything you want
+      ---
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2016 <a href="#">XXXXX</a>.</strong> All rights reserved.
   </footer>
 
 
@@ -390,11 +329,18 @@ desired effect
 <!-- DataTables -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+     
+     
+<script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="plugins/datepicker/locales/bootstrap-datepicker.th.js"></script>
+     
+ <script src="inc/js/ajax_pop.js"></script>
 <script>
   $(function () {
-    $("#example1").DataTable();
-
+    //$("#receive_table_1").DataTable();
+   
+      /*$("#example_1").DataTable();
+      
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -404,11 +350,110 @@ desired effect
       "autoWidth": false
     });
       //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
+    */
+      
+    $('#txt_receive_date').datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        todayBtn: "linked",
+        language: "th",
+        todayHighlight: true
     }); 
       
+      
   });
+    
+   function jsSave_AddNew_Material()
+    {
+    //    alert("After Save");
+       // console.log("After Save");
+         /*txt_receive_date
+           txt_receive_qty
+           opt_receive_location
+           txt_remarks
+        */
+        var obj_txt_receive_date = document.getElementById("txt_receive_date");
+        var obj_txt_receive_qty = document.getElementById("txt_receive_qty");
+        var obj_opt_receive_location = document.getElementById("opt_receive_location");
+        var obj_txt_remarks = document.getElementById("txt_remarks");
+        var val_receive_date ="";
+        var val_receive_qty ="";
+        var val_store_location ="";
+        var val_receive_remarks ="";
+        if(obj_txt_receive_date != null)
+        {
+            val_receive_date =obj_txt_receive_date.value;
+            obj_txt_receive_date.value ="";
+        }
+        
+        if(obj_txt_receive_qty != null)
+        {
+            val_receive_qty =obj_txt_receive_qty.value;
+            obj_txt_receive_qty.value ="";
+        }
+        
+        if(obj_opt_receive_location != null)
+        {
+            val_store_location =obj_opt_receive_location.value;
+            obj_opt_receive_location.value ="";
+        }
+        
+        if(val_receive_remarks != null)
+        {
+            val_receive_remarks =obj_txt_remarks.value;
+            obj_txt_remarks.value ="";
+        }
+        var param_receive_rawmat ="receive_date="+val_receive_date+"&receive_qty="+val_receive_qty+"&store_location="+val_store_location+"&receive_remark="+val_receive_remarks;
+        
+        //console.log(param_receive_rawmat);
+        document.getElementById("table_loading").style.visibility = "hidden";
+        getDataXML_Sync("inc/source/updateInventory.php?action=receive_rawmat&"+param_receive_rawmat,jsAfterSubmitReceiveRawmat);
+        
+    }
+   function jsGetReceiveTable()
+    {
+        document.getElementById("table_loading").style.visibility = "visible";
+        //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
+        getData_Sync("inc/source/getInventoryLog.php?prod_id=1","div_receive_table");
+        document.getElementById("table_loading").style.visibility = "hidden";
+        $(function () {
+             $("#receive_table_1").DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+            });
+            
+         });
+        
+    }  
+    function jsAfterSubmitReceiveRawmat(respText)
+    {
+        //console.log(respText);
+        if(respText==1)
+        {
+            
+            document.getElementById("table_loading").style.visibility = "visible";
+            //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
+            getData_Sync("inc/source/getInventoryLog.php?prod_id=1","div_receive_table");
+            document.getElementById("table_loading").style.visibility = "hidden";
+            
+            $(function () {
+                $("#receive_table_1").DataTable({
+                      "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+                    
+                });
+            });
+        }
+        
+    }
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

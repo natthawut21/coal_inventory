@@ -61,10 +61,13 @@ desired effect
 
 
         <?php include "inc/side_bar_inc.php"; ?>
-
-
-
-
+        <?php include "inc/source/Basic_Info.php";?>
+        
+        <?php
+            $_basic_info = new Basic_Info();
+            $_basic_info->getLocationList(-1);
+    
+        ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>ขายสินค้าแปรรูป | ระบบบริหารคลังสินค้า </title>
+<meta http-equiv=Content-Type content="text/html; charset=tis-620">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -20,6 +21,7 @@
         apply the skin class to the body tag so the changes take effect.
   -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="plugins/datepicker/css/bootstrap-datepicker3.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -245,7 +247,7 @@ desired effect
                 
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body table-responsive no-padding">
               <table id="example1" class="table table-bordered table-striped table-hover">
                 
                <thead>
@@ -429,7 +431,11 @@ desired effect
 <!-- DataTables -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+
+     
+<script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="plugins/datepicker/locales/bootstrap-datepicker.th.js"></script>
+     
 <script>
   $(function () {
     $("#example1").DataTable();
@@ -442,11 +448,15 @@ desired effect
       "info": true,
       "autoWidth": false
     });
-      //Date picker
+   
+   //Date picker
     $('#datepicker').datepicker({
-      autoclose: true
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        todayBtn: "linked",
+        language: "th",
+        todayHighlight: true
     }); 
-      
   });
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
