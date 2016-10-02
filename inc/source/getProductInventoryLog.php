@@ -43,7 +43,7 @@
                 ",DATE_FORMAT(tx.tx_create_time,\"%d/%m/%Y\") as tx_date_1,tt.tx_code_TH as tx_code,lo.location_name as location,tx.amount as receive_amount,tx.balance as balance ,unit.unit_code as unit,user.username ".
                 ",prd.prod_code_TH as prod_code_TH ,prd.prod_type_id as prod_type_id ".
                " FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user ".
-               " WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and prd.prod_type_id = 2 order by tx_log_time";
+               " WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and prd.prod_type_id = 2 order by tx_log_time desc";
        // echo "<BR> $_sql";
          $_table_row="";
         $result = $conn->query($_sql);
@@ -63,10 +63,22 @@
                     $_tx_sign =" - ";
                 }
                 
-                else if($row["prod_type_id"]==2)
+                else if($row["tx_type_id"]==4)
+                {  
+                    $_bagdge ="bg-red";
+                    $_tx_sign =" - ";
+                }
+                
+                
+                if($row["prod_type_id"]==2 && ($row["tx_type_id"]==3))
                 {  
                     $_bagdge ="bg-blue";
                     $_tx_sign =" + ";
+                }
+                else if($row["prod_type_id"]==2 && ($row["tx_type_id"]==4))
+                {  
+                    $_bagdge ="bg-red";
+                    $_tx_sign =" - ";
                 }
                 $_table_row.="\n <tr>
                   \n\t <td>".$row["tx_date_1"]."</td>

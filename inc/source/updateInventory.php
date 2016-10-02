@@ -48,6 +48,20 @@
              $_update_status = addNewProduct($_receive_date , $_prod_id, $_receive_qty , $_store_location ,$_receive_remark);
              echo $_update_status;
         }
+        else if($_action == "sell_product")    
+        {
+            // var param_receive_product ="sell_date="+val_sell_date+"&sell_qty="+val_sell_qty+"&prod_id="+val_sell_product+"&store_location="+val_sell_location+"&sell_remark="+val_sell_remarks;
+            $_sell_date = $_GET['sell_date'];
+            $_sell_qty = $_GET['sell_qty'];
+            $_prod_id = $_GET['prod_id'];
+            $_store_location = $_GET['store_location'];
+            $_sell_remark = $_GET['sell_remark'];
+             $_update_status = sellProduct($_sell_date , $_prod_id, $_sell_qty , $_store_location ,$_sell_remark);
+             echo $_update_status;
+            
+            
+        }
+    
     }
     function getRawMatBalance()
     {
@@ -207,6 +221,52 @@ function addNewProduct($_receive_date ,$_prod_id, $_receive_qty , $_store_locati
             // echo "<BR>  $last_id > update Product Balance ";
             
            $sql_2="update product_code set balance = balance+$_receive_qty,modify_date=now(),modify_by_uid=$_user_login_id  where prod_id =$_product_id";
+           //echo "<BR> $sql_2 ";
+          //  
+           if ($conn->query($sql_2) === TRUE)
+           {
+               $_update_status =1;
+           }
+                  
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+        $conn->close();
+        return  $_update_status;
+    }
+
+function sellProduct($_sell_date ,$_prod_id, $_sell_qty , $_store_location ,$_sell_remark )
+    {
+        include_once "db_connect_inc.php";
+        $_product_id =$_prod_id;
+        $_tx_type_id =4;
+        $_unit_id =1;
+        
+        if(isset($_SESSION['user_login_id']))
+        {
+            $_user_login_id = $_SESSION['user_login_id'];
+        }
+        else 
+        {
+             $_user_login_id=4;
+            
+        }
+        $_sell_date_array = explode("/",$_sell_date);
+        $insertdate =  $_sell_date_array[2]."/". $_sell_date_array[1]."/". $_sell_date_array[0];
+        $_prior_balance = getProductBalance($_prod_id);
+        $_new_balance =  $_prior_balance-$_sell_qty;
+        $sql_1 = "INSERT INTO tx_log (prod_id,tx_type_id,tx_create_time,amount,prior_balance,balance,location_id,remarks,unit_id,tx_log_time,uid)  ".
+                            " VALUES ( $_product_id, $_tx_type_id,'$insertdate', $_sell_qty, $_prior_balance,$_new_balance ,$_store_location,'$_sell_remark',$_unit_id,now(),$_user_login_id);";
+        // echo "<BR> $sql_1 ";
+        
+        
+        
+        $_update_status =0;
+        if ($conn->query($sql_1) === TRUE) {
+            $last_id = $conn->insert_id;
+            // echo "<BR>  $last_id > update Product Balance ";
+            
+           $sql_2="update product_code set balance = balance - $_sell_qty,modify_date=now(),modify_by_uid=$_user_login_id  where prod_id =$_prod_id";
            //echo "<BR> $sql_2 ";
           //  
            if ($conn->query($sql_2) === TRUE)

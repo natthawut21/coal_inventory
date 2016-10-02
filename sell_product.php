@@ -15,9 +15,9 @@ session_start();
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="plugins/ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
@@ -38,7 +38,7 @@ session_start();
  .datepicker{z-index:1151 !important;}
 </style>
 <script>
-    function jsSubmit_SaleProduct()
+    //function jsSubmit_SaleProduct()
     {
     //    alert("After Save");
        // console.log("After Save");
@@ -78,7 +78,7 @@ desired effect
         <?php include "inc/side_bar_inc.php"; ?>
 
 
-
+<?php include "inc/source/Basic_Info.php";?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -121,6 +121,9 @@ desired effect
            </div>
         
         </div>
+           
+          
+           
         <div class="row">
             <div class="col-md-4"><label>จำนวน</label></div>
             <div class="col-md-7 "><div class="form-group">
@@ -137,14 +140,14 @@ desired effect
             <div class="col-md-4"><label>กลุ่มสินค้า</label></div>
             <div class="col-md-8 ">
               <div class="form-group">
-                  
+                    <?php
+                        $_basic_info = new Basic_Info();
+                        $_product_option = $_basic_info->getProductList(-1);
+                    ?>
                   <select class="form-control" id="opt_sell_product" name="opt_sell_product">
-                    <option value="product_1">สินค้าประเภท 1</option>
-                    <option value="product_2">สินค้าประเภท 2</option>
-                    <option value="product_3">สินค้าประเภท 3</option>
-                    <option value="product_4">สินค้าประเภท 4</option>
-                    
+                      <?php echo $_product_option; ?>
                   </select>
+                  
                 </div>
             
             </div>
@@ -155,16 +158,19 @@ desired effect
                 <div class="form-group">
                   
                   <!--<select multiple class="form-control">-->
+                     <?php
+                        $_basic_info = new Basic_Info();
+                        $_location_option = $_basic_info->getLocationList(-1);
+                    ?>
                   <select class="form-control" id="opt_sell_location" name="opt_sell_location">
-                    <option value="store_1">โกดัง 1</option>
-                    <option value="store_2">โกดัง 2</option>
-                    <option value="store_3">โกดัง 3</option>
-                    <option value="store_4">โกดัง 4</option>
-                    <option value="store_5">โกดัง 5</option>
+                      <?php echo $_location_option; ?>
                   </select>
+                    
+                    
                 </div>
             
             </div>
+           
         </div>
         <div class="row">
             <div class="col-md-4"><label>รายละเอียดเพิ่มเติม</label></div>
@@ -396,6 +402,77 @@ desired effect
          });
 
     }
+    
+    function jsSubmit_SaleProduct()
+    {
+    //    alert("After Save");
+       // console.log("After Save");
+         /* txt_sell_date
+           txt_sell_qty
+           opt_sell_product
+           opt_sell_location
+           txt_remarks
+        */
+        var obj_txt_sell_date = document.getElementById("txt_sell_date");
+        var obj_txt_sell_qty = document.getElementById("txt_sell_qty");
+        var obj_opt_sell_location = document.getElementById("opt_sell_location");
+        var obj_opt_sell_product = document.getElementById("opt_sell_product");
+        var obj_txt_remarks = document.getElementById("txt_remarks");
+        var val_sell_date ="";
+        var val_sell_qty ="";
+        var val_sell_product ="";
+        var val_sell_location ="";
+        var val_sell_remarks ="";
+        
+        if(obj_txt_sell_date != null)
+        {
+            val_sell_date =obj_txt_sell_date.value;
+            obj_txt_sell_date.value ="";
+        }
+        
+        if(obj_txt_sell_qty != null)
+        {
+            val_sell_qty =obj_txt_sell_qty.value;
+            obj_txt_sell_qty.value ="";
+        }
+        
+        if(obj_opt_sell_location != null)
+        {
+            val_sell_location =obj_opt_sell_location.value;
+            obj_opt_sell_location.value ="";
+        }
+        
+        if(obj_opt_sell_product != null)
+        {
+            val_sell_product =obj_opt_sell_product.value;
+            obj_opt_sell_product.value ="";
+        }
+        
+        if(val_sell_remarks != null)
+        {
+            val_sell_remarks =obj_txt_remarks.value;
+            obj_txt_remarks.value ="";
+        }
+        var param_sell_product ="sell_date="+val_sell_date+"&sell_qty="+val_sell_qty+"&prod_id="+val_sell_product+"&store_location="+val_sell_location+"&sell_remark="+val_sell_remarks;
+        
+      
+        document.getElementById("table_loading").style.visibility = "hidden";
+       //  console.log("inc/source/updateInventory.php?action=sell_product&"+param_sell_product);
+        getDataXML_Sync("inc/source/updateInventory.php?action=sell_product&"+param_sell_product,jsAfterSubmitSellProduct);
+        
+    }
+     function jsAfterSubmitSellProduct(respText)
+    {
+        //console.log(respText);
+        if(respText==1)
+        {
+            jsGetSellProductTable();
+        }
+      
+        
+    }
+    
+    
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

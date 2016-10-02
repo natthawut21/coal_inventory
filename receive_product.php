@@ -433,8 +433,9 @@ function jsSave_AddNew_Material()
         //console.log(respText);
         if(respText==1)
         {
+            jsGetReceiveProductTable();
             
-         document.getElementById("table_loading").style.visibility = "visible";
+       /*  document.getElementById("table_loading").style.visibility = "visible";
         //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
         getData_Sync("inc/source/getProductInventoryLog.php?prod_id=1&param_table=product_table","div_receive_table");
         document.getElementById("table_loading").style.visibility = "hidden";
@@ -448,7 +449,7 @@ function jsSave_AddNew_Material()
                 "autoWidth": false
             });
             
-         });
+         });*/
         }
         
     }
