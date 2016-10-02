@@ -38,12 +38,12 @@ session_start();
  .datepicker{z-index:1151 !important;}
 </style>
 <script>
-    function jsSave_AddNew_Material()
+ /*   function jsSave_AddNew_Material()
     {
     //    alert("After Save");
        // console.log("After Save");
         
-    }
+    }*/
    
 </script>
 </head>

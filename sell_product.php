@@ -1,3 +1,8 @@
+<?php
+// Start the session
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,10 +38,10 @@
  .datepicker{z-index:1151 !important;}
 </style>
 <script>
-    function jsSave_AddNew_Material()
+    function jsSubmit_SaleProduct()
     {
     //    alert("After Save");
-        console.log("After Save");
+       // console.log("After Save");
         
     }
    
@@ -62,7 +67,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
- <body class="hold-transition skin-blue fixed sidebar-mini">
+ <body class="hold-transition skin-blue fixed sidebar-mini"  onload="jsGetSellProductTable();">
 <div class="wrapper">
 
 
@@ -110,7 +115,7 @@ desired effect
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker">
+                  <input id="txt_sell_date" name ="txt_sell_date" type="text" class="form-control pull-right" id="datepicker">
                 </div>
               </div>
            </div>
@@ -120,7 +125,7 @@ desired effect
             <div class="col-md-4"><label>จำนวน</label></div>
             <div class="col-md-7 "><div class="form-group">
                   
-                  <input type="text" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
+                  <input type="text" id="txt_sell_qty" name="txt_sell_qty" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
                
                 </div>
             </div>
@@ -133,7 +138,7 @@ desired effect
             <div class="col-md-8 ">
               <div class="form-group">
                   
-                  <select class="form-control">
+                  <select class="form-control" id="opt_sell_product" name="opt_sell_product">
                     <option value="product_1">สินค้าประเภท 1</option>
                     <option value="product_2">สินค้าประเภท 2</option>
                     <option value="product_3">สินค้าประเภท 3</option>
@@ -150,7 +155,7 @@ desired effect
                 <div class="form-group">
                   
                   <!--<select multiple class="form-control">-->
-                  <select class="form-control">
+                  <select class="form-control" id="opt_sell_location" name="opt_sell_location">
                     <option value="store_1">โกดัง 1</option>
                     <option value="store_2">โกดัง 2</option>
                     <option value="store_3">โกดัง 3</option>
@@ -166,38 +171,11 @@ desired effect
             <div class="col-md-8 "> 
                 <div class="form-group">
                   
-                  <textarea class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
+                  <textarea id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
                 </div></div>
         </div>
         
-      
-       <!--    
-         <div class="row">
-          <div class="col-md-4">.col-md-4</div>
-          <div class="col-md-4 col-md-offset-4">.col-md-4 .col-md-offset-4</div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 col-md-offset-3">.col-md-3 .col-md-offset-3</div>
-          <div class="col-md-2 col-md-offset-4">.col-md-2 .col-md-offset-4</div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3">.col-md-6 .col-md-offset-3</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-9">
-            Level 1: .col-sm-9
-            <div class="row">
-              <div class="col-xs-8 col-sm-6">
-                Level 2: .col-xs-8 .col-sm-6
-              </div>
-              <div class="col-xs-4 col-sm-6">
-                Level 2: .col-xs-4 .col-sm-6
-              </div>
-            </div>
-          </div>
-        </div>
-           
-        -->   
+
            
            
       </div>
@@ -205,7 +183,7 @@ desired effect
     
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_AddNew_Material();">บันทึก</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSubmit_SaleProduct();">บันทึก</button>
       </div>
     </div>
   </div>
@@ -223,15 +201,7 @@ desired effect
                 <div class="col-lg-6 col-xs-6" >
               <h3 class="box-title">รายการขายสินค้าเปรรูป</h3>
                    </div>
-            <!--  <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>-->
               <div class="col-lg-6 col-xs-6" align="right">
                 <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
                 <i class="fa fa-plus-circle"></i> เพิ่มรายการขายสินค้าแปรรูป
@@ -248,7 +218,8 @@ desired effect
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-              <table id="example1" class="table table-bordered table-striped table-hover">
+              <div id="div_sell_table">
+              <table id="product_table" class="table table-bordered table-striped table-hover">
                 
                <thead>
                 <tr>
@@ -300,75 +271,7 @@ desired effect
                     </td>
                   <td align="center">Username1</td>
                 </tr>
-              <!--   <tr>
-                  <td>12/01/2016</td>
-                  <td>รับ สินค้าแปรรูป</td>
-                  <td>โกดัง # 5</td>
-                  <td>สินค้าประเภท 3</td>
-                  <td align="right">
-                    <span class="badge bg-green">+500 Tons</span>
-                   </td>
-                  <td align="right">
-                    
-                    <span class="badge bg-grey">1,500 Tons</span>
-                    </td>
-                  <td align="center">Username1</td>
-                </tr>-->
- <!--
- <!--
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>เบิก วัตถุดิบ</td>
-                  <td>Location#1</td>
-                  <td align="right">- 1,000 Tons</td>
-                  <td align="right">2,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
 
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 1</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 200 Tons</td>
-                  <td align="right">2,200 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 2</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,450 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,700 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 300 Tons</td>
-                  <td align="right">3,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>จำหน่าย สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">- 200 Tons</td>
-                  <td align="right">2,800 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>-->
                 </tbody>
                 <!--<tfoot>
                 <tr>
@@ -381,6 +284,13 @@ desired effect
                 </tfoot>-->
               </table>
             </div>
+
+
+             <div id="table_loading" class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+            </div>
+
+
             <!-- /.box-body -->
           </div>
           <!-- /.box -->    
@@ -435,7 +345,9 @@ desired effect
      
 <script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
 <script src="plugins/datepicker/locales/bootstrap-datepicker.th.js"></script>
-     
+<script src="plugins/datepicker/locales/bootstrap-datepicker.th.js"></script>
+<script src="inc/js/ajax_pop.js"></script>
+
 <script>
   $(function () {
     $("#example1").DataTable();
@@ -450,14 +362,40 @@ desired effect
     });
    
    //Date picker
-    $('#datepicker').datepicker({
+    $('#txt_sell_date').datepicker({
         autoclose: true,
         format: "dd/mm/yyyy",
         todayBtn: "linked",
         language: "th",
         todayHighlight: true
     }); 
+       //Date picker
+
   });
+
+   function jsGetSellProductTable()
+    {
+        document.getElementById("table_loading").style.visibility = "visible";
+
+
+       getData_Sync("inc/source/getProductInventoryLog.php?prod_id=1&param_table=product_table","div_sell_table");
+
+
+
+        document.getElementById("table_loading").style.visibility = "hidden";
+        $(function () {
+             $("#product_table").DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+            });
+
+         });
+
+    }
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
