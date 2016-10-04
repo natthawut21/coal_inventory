@@ -67,13 +67,8 @@ desired effect
  <body class="hold-transition skin-blue fixed sidebar-mini" onload="jsGetReceiveTable();">
 <div class="wrapper">
 
-
-
     <?php include "inc/nav_bar_inc.php";?>
-
-
     <?php include "inc/side_bar_inc.php"; ?>
-
     <?php include "inc/source/Basic_Info.php";?>
         
       
@@ -434,8 +429,8 @@ desired effect
         //console.log(respText);
         if(respText==1)
         {
-            
-            document.getElementById("table_loading").style.visibility = "visible";
+            jsGetReceiveTable();
+           /* document.getElementById("table_loading").style.visibility = "visible";
             //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
             getData_Sync("inc/source/getInventoryLog.php?prod_id=1","div_receive_table");
             document.getElementById("table_loading").style.visibility = "hidden";
@@ -451,6 +446,7 @@ desired effect
                     
                 });
             });
+            */
         }
         
     }

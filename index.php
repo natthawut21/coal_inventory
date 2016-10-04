@@ -1,3 +1,8 @@
+<?php
+// Start the session
+session_start();
+?>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -52,7 +57,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
- <body class="hold-transition skin-blue fixed sidebar-mini">
+ <body class="hold-transition skin-blue fixed sidebar-mini" onload="jsGetInventoryTable();">
 <div class="wrapper">
 
 
@@ -83,7 +88,7 @@ desired effect
     <section class="content">
       <!-- Your Page Content Here -->
 
-
+<?php// echo number_format(getReceiveRawMat(30),0);?> 
         <!-- Small boxes (Stat box) -->
       <div class="row">
 
@@ -93,7 +98,7 @@ desired effect
           <!-- small box -->
           <div class="small-box bg-gray-active">
             <div class="inner">
-              <h3>1,500<sup style="font-size: 20px">Tons</sup></h3>
+              <h3><?php echo number_format(getReceiveRawMat(30),0);?>  <sup style="font-size: 20px">Tons</sup></h3>
 
               <p>ยอดรับวัตถุดิบ</p>
             </div>
@@ -110,7 +115,7 @@ desired effect
           <!--<div class="small-box bg-yellow">-->
           <div class="small-box bg-gray-active">
             <div class="inner">
-              <h3>1,500<sup style="font-size: 20px">Tons</sup></h3>
+              <h3><?php echo number_format(getWithdrawRawMat(30),0);?><sup style="font-size: 20px">Tons</sup></h3>
 
               <p>ยอดเบิกวัตถุดิบ</p>
             </div>
@@ -126,9 +131,9 @@ desired effect
          <!-- <div class="small-box bg-red">-->
             <div class="small-box bg-gray-active">
             <div class="inner">
-              <h3>1,000<sup style="font-size: 20px">Tons</sup></h3>
+              <h3><?php echo number_format(getReceiveFinishGoods(30));?><sup style="font-size: 20px">Tons</sup></h3>
 
-              <p>สินค้าแปรรูป</p>
+              <p>ยอดผลิตสินค้าแปรรูป</p>
             </div>
             <div class="icon">
               <i class="fa fa-cube"></i>
@@ -142,7 +147,7 @@ desired effect
           <!--<div class="small-box bg-aqua">-->
           <div class="small-box bg-light-blue disabled">
             <div class="inner">
-              <h3>550 <sup style="font-size: 20px">Tons</sup></h3>
+              <h3><?php echo number_format(getSellFinishGoods(30));?> <sup style="font-size: 20px">Tons</sup></h3>
 
               <p>ยอดขายสินค้า</p>
             </div>
@@ -163,7 +168,7 @@ desired effect
           <!-- small box -->
           <div class="small-box bg-gray-active">
             <div class="inner">
-              <h3>2,000<sup style="font-size: 20px">Tons</sup></h3>
+              <h3><?php echo number_format(getBalance(1),0);?><sup style="font-size: 20px">Tons</sup></h3>
 
               <p>ยอดวัตถุดิบคงเหลือ</p>
             </div>
@@ -178,7 +183,7 @@ desired effect
           <!-- small box -->
           <div class="small-box bg-gray-active">
             <div class="inner">
-              <h3>450<sup style="font-size: 20px">Tons</sup></h3>
+              <h3><?php echo number_format(getBalance(2),0);?><sup style="font-size: 20px">Tons</sup></h3>
 
               <p>ยอดสินค้าคงเหลือ</p>
             </div>
@@ -193,7 +198,7 @@ desired effect
           <!-- small box -->
           <div class="small-box bg-yellow-active">
             <div class="inner">
-              <h3>2,450<sup style="font-size: 20px">Tons</sup></h3>
+              <h3><?php echo number_format(getBalance(3),0);?><sup style="font-size: 20px">Tons</sup></h3>
 
               <p>ยอดคงเหลือรวม</p>
             </div>
@@ -226,7 +231,9 @@ desired effect
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-              <table id="example1" class="table table-bordered table-striped  table-hover">
+                <div id="div_inventory_table">
+                    
+              <table id="inventory_table_1"  class="table table-bordered table-striped  table-hover">
                 <thead>
                 <tr>
                   <th>วันที่</th>
@@ -239,75 +246,14 @@ desired effect
                 </thead>
                 <tbody>
                  <tr>
-                  <td>12/01/2016</td>
-                  <td>ยอดรวมยกมา</td>
-                  <td>Location#1</td>
-                  <td align="right">1,500 Tons</td>
-                  <td align="right">1,500 Tons</td>
-                  <td align="center">Username1</td>
+                  <td>--</td>
+                  <td>--</td>
+                  <td>--</td>
+                  <td align="right">--</td>
+                  <td align="right">--</td>
+                  <td align="center">--</td>
                 </tr>
-                <tr>
-                  <td>12/01/2016</td>
-                  <td>รับ วัตถุดิบ</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 1,500 Tons</td>
-                  <td align="right">3,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>เบิก วัตถุดิบ</td>
-                  <td>Location#1</td>
-                  <td align="right">- 1,000 Tons</td>
-                  <td align="right">2,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 1</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 200 Tons</td>
-                  <td align="right">2,200 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 2</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,450 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 250 Tons</td>
-                  <td align="right">2,700 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>ผลิต สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">+ 300 Tons</td>
-                  <td align="right">3,000 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
-
-                 <tr>
-                  <td>13/01/2016</td>
-                  <td>จำหน่าย สินค้าแปรรูป กลุ่ม 3</td>
-                  <td>Location#1</td>
-                  <td align="right">- 200 Tons</td>
-                  <td align="right">2,800 Tons</td>
-                  <td align="center">Username1</td>
-                </tr>
+              
                 </tbody>
                 <!--<tfoot>
                 <tr>
@@ -319,6 +265,10 @@ desired effect
                 </tr>
                 </tfoot>-->
               </table>
+                </div>
+                  <div id="table_loading" class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+            </div>
 
 <!--
                 <div class="box">
@@ -425,9 +375,11 @@ desired effect
 <!-- DataTables -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+     
+ <script src="inc/js/ajax_pop.js"></script>
 <script>
   $(function () {
-    $("#example1").DataTable();
+    $("#inventory_table_1").DataTable();
 
     $('#example2').DataTable({
       "paging": true,
@@ -438,6 +390,27 @@ desired effect
       "autoWidth": false
     });
   });
+    
+    
+ function jsGetInventoryTable()
+    {
+        document.getElementById("table_loading").style.visibility = "visible";
+        //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
+        getData_Sync("inc/source/getInventoryLog.php?prod_id=-1&param_table=inventory_table_1","div_inventory_table");
+        document.getElementById("table_loading").style.visibility = "hidden";
+        $(function () {
+             $("#inventory_table_1").DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+            });
+            
+         });
+        
+    }  
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
@@ -447,3 +420,136 @@ desired effect
 
 
 </html>
+<?php
+function getBalance($_option_id)
+{
+     include "inc/source/db_connect_inc.php";
+    if($_option_id==1)
+        $_sql ="select balance from product_code prd,product_type prd_t where prd.prod_type_id = prd_t.prod_type_id and prd.prod_id =1 ";
+    else if($_option_id==2)
+        $_sql ="select sum(balance) as balance from product_code prd,product_type prd_t where prd.prod_type_id = prd_t.prod_type_id and prd_t.prod_type_id =2 ";
+     else if($_option_id==3)
+        $_sql ="select sum(balance) as balance from product_code prd,product_type prd_t where prd.prod_type_id = prd_t.prod_type_id and (prd_t.prod_type_id =2  or prd.prod_id =1) ";
+     $_sum_raw_mat=0;
+     $result = $conn->query($_sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $_sum_raw_mat= $row['balance'];
+                
+            }
+        }
+    return $_sum_raw_mat;
+}
+function getReceiveRawMat($_day_prev)
+{
+    
+     include "inc/source/db_connect_inc.php";
+     $_prod_id=1;
+     $_sql =" SELECT sum(tx.amount) as sum_raw_mat  ".
+               " FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user ".
+               " WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id = $_prod_id and tx.tx_type_id  =1 ".
+            "and  tx.tx_create_time >= (CURDATE() - INTERVAL $_day_prev DAY)  ";
+    
+    /*
+    SELECT tx.prod_id,tx.tx_type_id as tx_type_id,tx.tx_create_time,tx.amount,tx.prior_balance,tx.balance,tx.location_id,tx.remarks,tx.unit_id,tx.tx_log_time,tx.uid ,DATE_FORMAT(tx.tx_create_time,"%d/%m/%Y") as tx_date_1,tt.tx_code_TH as tx_code,lo.location_name as location,tx.amount as receive_amount,tx.balance as balance ,unit.unit_code as unit,user.username FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id =1 and tx.tx_type_id =1 order by tx.tx_log_time desc
+    */
+    /*
+    SELECT tx.* 
+FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user 
+WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id
+and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id = 1 and tx.tx_type_id =1
+and tx.tx_create_time >= (CURDATE() - INTERVAL -30 DAY)
+    */
+    //echo $_sql ;
+    $_sum_raw_mat=0;
+     $result = $conn->query($_sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $_sum_raw_mat= $row['sum_raw_mat'];
+                
+            }
+        }
+    return $_sum_raw_mat;
+}
+
+function getReceiveFinishGoods($_day_prev)
+{
+    
+     include "inc/source/db_connect_inc.php";
+     $_prod_id=1;
+     $_sql =" SELECT sum(tx.amount) as sum_raw_mat  ".
+               " FROM tx_log tx ,product_code prd,product_type prd_t , location lo,tx_type tt,unit ,mgnt_user user ".
+               " WHERE tx.prod_id = prd.prod_id and prd.prod_type_id= prd_t.prod_type_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and prd_t.prod_type_id=2 and tx.tx_type_id  =3 ".
+            "and  tx.tx_create_time >= (CURDATE() - INTERVAL $_day_prev DAY) " ;
+    
+    /*
+    SELECT tx.prod_id,tx.tx_type_id as tx_type_id,tx.tx_create_time,tx.amount,tx.prior_balance,tx.balance,tx.location_id,tx.remarks,tx.unit_id,tx.tx_log_time,tx.uid ,DATE_FORMAT(tx.tx_create_time,"%d/%m/%Y") as tx_date_1,tt.tx_code_TH as tx_code,lo.location_name as location,tx.amount as receive_amount,tx.balance as balance ,unit.unit_code as unit,user.username FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id =1 and tx.tx_type_id =1 order by tx.tx_log_time desc
+    */
+    
+    //echo $_sql ;
+    $_sum_raw_mat=0;
+     $result = $conn->query($_sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $_sum_raw_mat= $row['sum_raw_mat'];
+                
+            }
+        }
+    return $_sum_raw_mat;
+}
+function getWithdrawRawMat($_day_prev)
+{
+    
+     include "inc/source/db_connect_inc.php";
+     $_prod_id=1;
+     $_sql =" SELECT sum(tx.amount) as sum_raw_mat  ".
+               " FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user ".
+               " WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id = $_prod_id and tx.tx_type_id  =2 ".
+            "and  tx.tx_create_time >= (CURDATE() - INTERVAL $_day_prev DAY)  ";
+    
+    /*
+    SELECT tx.prod_id,tx.tx_type_id as tx_type_id,tx.tx_create_time,tx.amount,tx.prior_balance,tx.balance,tx.location_id,tx.remarks,tx.unit_id,tx.tx_log_time,tx.uid ,DATE_FORMAT(tx.tx_create_time,"%d/%m/%Y") as tx_date_1,tt.tx_code_TH as tx_code,lo.location_name as location,tx.amount as receive_amount,tx.balance as balance ,unit.unit_code as unit,user.username FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id =1 and tx.tx_type_id =1 order by tx.tx_log_time desc
+    */
+    
+    //echo $_sql ;
+    $_sum_raw_mat=0;
+     $result = $conn->query($_sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $_sum_raw_mat= $row['sum_raw_mat'];
+                
+            }
+        }
+    return $_sum_raw_mat;
+}
+function getSellFinishGoods($_day_prev)
+{
+    
+     include "inc/source/db_connect_inc.php";
+     $_prod_id=1;
+     $_sql =" SELECT sum(tx.amount) as sum_raw_mat  ".
+               " FROM tx_log tx ,product_code prd,product_type prd_t , location lo,tx_type tt,unit ,mgnt_user user ".
+               " WHERE tx.prod_id = prd.prod_id and prd.prod_type_id= prd_t.prod_type_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and prd_t.prod_type_id=2 and tx.tx_type_id  =4 and  tx.tx_create_time >= (CURDATE() - INTERVAL $_day_prev DAY) ";
+    
+    /*
+    SELECT tx.prod_id,tx.tx_type_id as tx_type_id,tx.tx_create_time,tx.amount,tx.prior_balance,tx.balance,tx.location_id,tx.remarks,tx.unit_id,tx.tx_log_time,tx.uid ,DATE_FORMAT(tx.tx_create_time,"%d/%m/%Y") as tx_date_1,tt.tx_code_TH as tx_code,lo.location_name as location,tx.amount as receive_amount,tx.balance as balance ,unit.unit_code as unit,user.username FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id =1 and tx.tx_type_id =1 order by tx.tx_log_time desc
+    */
+    
+    //echo $_sql ;
+    $_sum_raw_mat=0;
+     $result = $conn->query($_sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $_sum_raw_mat= $row['sum_raw_mat'];
+                
+            }
+        }
+    return $_sum_raw_mat;
+}
+
+?>
