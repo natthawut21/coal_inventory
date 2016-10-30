@@ -115,6 +115,35 @@ desired effect
            </div>
         
         </div>
+       <div class="row">
+            <div class="col-md-4"><label>ชนิดถ่านหิน</label></div>
+            <div class="col-md-8 ">
+                <div class="form-group">
+                 
+                  <?php
+                        $_basic_info = new Basic_Info();
+                        $_rawmat_option = $_basic_info->getRawMatList(-1);
+                    ?>
+                  <select class="form-control" id="opt_rawmat_type" name="opt_rawmat_type">
+                      <?php echo $_rawmat_option; ?>
+                  </select>
+                </div>
+            </div>
+       </div>
+           
+        <div class="row">
+            <div class="col-md-4"><label>ค่า T.M. </label></div>
+            <div class="col-md-7 "><div class="form-group">
+                 
+                
+                 <input type="text" id="txt_TM_value" name="txt_TM_value" class="form-control" placeholder="ระบุจำนวนตัวเลข %...">
+                </div>
+               
+            </div>
+             <div class="col-md-1">
+                 <label> % </label>
+            </div>
+       </div>
         <div class="row">
             <div class="col-md-4"><label>จำนวน</label></div>
             <div class="col-md-7 "><div class="form-group">
@@ -126,7 +155,7 @@ desired effect
             <div class="col-md-1">
                  <label>Tons</label>
             </div>
-           </div>
+       </div>
         <div class="row">
             <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
             <div class="col-md-8 ">
@@ -136,7 +165,7 @@ desired effect
                   <!--<select multiple class="form-control">-->
                     
                   <?php
-                        $_basic_info = new Basic_Info();
+                       // $_basic_info = new Basic_Info();
                         $_location_option = $_basic_info->getLocationList(-1);
                     ?>
                   <select class="form-control" id="opt_receive_location" name="opt_receive_location">
@@ -239,10 +268,14 @@ desired effect
                <thead>
                 <tr>
                   <th>วันที่</th>
-                  <th>ประเภท</th>
-                  <th>สถานที่จัดเก็บ</th>
+                  <th>ธุรกรรม</th>
+                  <th>ประเภทวัตถุดิบ</th>
+                  <th>ค่า T.M.</th>
                   <th>จำนวน</th>
+                  <th>รายละเอียด </th>
+                 
                   <th>ยอดรวมวัตถุดิบ</th>
+                  <th>สถานที่จัดเก็บ</th>
                   <th>ผู้ทำรายการ</th>
                 </tr>
                 </thead>
@@ -370,11 +403,15 @@ desired effect
         var obj_txt_receive_date = document.getElementById("txt_receive_date");
         var obj_txt_receive_qty = document.getElementById("txt_receive_qty");
         var obj_opt_receive_location = document.getElementById("opt_receive_location");
+        var obj_opt_rawmat_type = document.getElementById("opt_rawmat_type");
+        var obj_txt_TM_value = document.getElementById("txt_TM_value");
         var obj_txt_remarks = document.getElementById("txt_remarks");
         var val_receive_date ="";
         var val_receive_qty ="";
         var val_store_location ="";
         var val_receive_remarks ="";
+        var val_product_id ="";
+        var val_TM_value ="";
         if(obj_txt_receive_date != null)
         {
             val_receive_date =obj_txt_receive_date.value;
@@ -398,9 +435,20 @@ desired effect
             val_receive_remarks =obj_txt_remarks.value;
             obj_txt_remarks.value ="";
         }
-        var param_receive_rawmat ="receive_date="+val_receive_date+"&receive_qty="+val_receive_qty+"&store_location="+val_store_location+"&receive_remark="+val_receive_remarks;
+        if(obj_opt_rawmat_type != null)
+        {
+            val_product_id =obj_opt_rawmat_type.value;
+            obj_opt_rawmat_type.value ="";
+        } 
+         if(obj_txt_TM_value != null)
+        {
+            val_TM_value =obj_txt_TM_value.value;
+            obj_txt_TM_value.value ="";
+        } 
         
-        //console.log(param_receive_rawmat);
+        var param_receive_rawmat ="product_id="+val_product_id+"&TM_value="+val_TM_value+"&receive_date="+val_receive_date+"&receive_qty="+val_receive_qty+"&store_location="+val_store_location+"&receive_remark="+val_receive_remarks;
+        
+       // console.log("inc/source/updateInventory.php?action=receive_rawmat&"+param_receive_rawmat);
         document.getElementById("table_loading").style.visibility = "hidden";
         getDataXML_Sync("inc/source/updateInventory.php?action=receive_rawmat&"+param_receive_rawmat,jsAfterSubmitReceiveRawmat);
         
@@ -409,7 +457,7 @@ desired effect
     {
         document.getElementById("table_loading").style.visibility = "visible";
         //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
-        getData_Sync("inc/source/getInventoryLog.php?prod_id=1","div_receive_table");
+        getData_Sync("inc/source/getInventoryLog.php?prod_type_id=1","div_receive_table");
         document.getElementById("table_loading").style.visibility = "hidden";
         $(function () {
              $("#receive_table_1").DataTable({
@@ -430,23 +478,7 @@ desired effect
         if(respText==1)
         {
             jsGetReceiveTable();
-           /* document.getElementById("table_loading").style.visibility = "visible";
-            //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
-            getData_Sync("inc/source/getInventoryLog.php?prod_id=1","div_receive_table");
-            document.getElementById("table_loading").style.visibility = "hidden";
-            
-            $(function () {
-                $("#receive_table_1").DataTable({
-                      "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": false,
-                "info": true,
-                "autoWidth": false
-                    
-                });
-            });
-            */
+          
         }
         
     }

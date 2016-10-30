@@ -49,8 +49,8 @@
         <li <?php if($_menu_id==2) echo "class=\"active\"";?>><a href="receive_rawmat.php?menu_id=2"><i class="fa fa-ship fa-lg"></i> <span>รับวัตถุดิบ เข้าคลัง</span></a></li>
         <li <?php if($_menu_id==3) echo "class=\"active\"";?>><a href="withdraw_rawmat.php?menu_id=3"><i class="fa fa-industry fa-lg"></i> <span>เบิกวัถุดิบ สำหรับแปรรูป</span></a></li>
 
-        <li <?php if($_menu_id==4) echo "class=\"active\"";?>><a href="receive_product.php?menu_id=4"><i class="fa fa-cube fa-lg"></i> <span>รับสินค้าแปรรูป</span></a></li>
-        <li <?php if($_menu_id==5) echo "class=\"active\"";?>><a href="sell_product.php?menu_id=5"><i class="fa fa-truck fa-lg"></i> <span>ขายสินค้าแปรรูป</span></a></li>
+        <li <?php if($_menu_id==4) echo "class=\"active\"";?>><a href="receive_product.php?menu_id=4"><i class="fa fa-cube fa-lg"></i> <span>ผลิตสินค้า</span></a></li>
+        <li <?php if($_menu_id==5) echo "class=\"active\"";?>><a href="sell_product.php?menu_id=5"><i class="fa fa-truck fa-lg"></i> <span>ขายสินค้า</span></a></li>
         <li class="treeview <?php if($_menu_id==6) echo "active";?>">
           <a href="#"><i class="fa fa-sticky-note"></i> <span>รายงาน</span>
             <span class="pull-right-container">

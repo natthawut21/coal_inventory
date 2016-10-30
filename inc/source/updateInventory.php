@@ -17,8 +17,12 @@
             $_store_location = $_GET['store_location'];
             $_receive_remark = $_GET['receive_remark'];
             
+            $_product_id = $_GET['product_id'];
+            $_TM_value = $_GET['TM_value'];
+            
+            
             //echo "receive raw mat: $_receive_date , $_receive_qty , $_store_location ,$_receive_remark ";
-             $_update_status = addNewRawMat($_receive_date , $_receive_qty , $_store_location ,$_receive_remark);
+             $_update_status = addNewRawMat($_receive_date , $_product_id,$_receive_qty,$_TM_value , $_store_location ,$_receive_remark);
              echo $_update_status;
         }
         else if( $_action == "withdraw_rawmat")
@@ -30,8 +34,10 @@
             $_store_location = $_GET['store_location'];
             $_withdraw_remark = $_GET['withdraw_remark'];
             
+             $_product_id = $_GET['product_id'];
+            $_TM_value = $_GET['TM_value'];
             //echo "receive raw mat: $_receive_date , $_receive_qty , $_store_location ,$_receive_remark ";
-             $_update_status = withdrawRawMat($_withdraw_date , $_withdraw_qty , $_store_location ,$_withdraw_remark);
+             $_update_status = withdrawRawMat($_withdraw_date, $_product_id, $_withdraw_qty ,$_TM_value , $_store_location ,$_withdraw_remark);
              echo $_update_status;
         }
         else if( $_action == "receive_product")
@@ -63,11 +69,11 @@
         }
     
     }
-    function getRawMatBalance()
+    function getRawMatBalance($_product_id)
     {
         $_balance=0;
         include "db_connect_inc.php";
-        $sql="Select Balance from product_code Where prod_id = 1";
+        $sql="Select Balance from product_code Where prod_id = $_product_id";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             // output data of each row
@@ -99,10 +105,10 @@
         $conn->close();
         return $_balance;
     }
-    function addNewRawMat($_receive_date , $_receive_qty , $_store_location ,$_receive_remark )
+    function addNewRawMat($_receive_date , $_product_id,$_receive_qty,$_TM_value, $_store_location ,$_receive_remark )
     {
         include "db_connect_inc.php";
-        $_product_id =1;
+       // $_product_id =1;
         $_tx_type_id =1;
         $_unit_id =1;
         
@@ -117,11 +123,12 @@
         }
         $_receive_date_array = explode("/",$_receive_date);
         $insertdate =  $_receive_date_array[2]."/". $_receive_date_array[1]."/". $_receive_date_array[0];
-        $_prior_balnace = getRawMatBalance();
+        //$_prior_balnace = getRawMatBalance($_product_id);
+        $_prior_balnace = getProductBalance($_product_id);
         $_new_balance =  $_receive_qty+$_prior_balnace;
-        $sql_1 = "INSERT INTO tx_log (prod_id,tx_type_id,tx_create_time,amount,prior_balance,balance,location_id,remarks,unit_id,tx_log_time,uid)  ".
-                            " VALUES ( $_product_id, $_tx_type_id,'$insertdate', $_receive_qty, $_prior_balnace,$_new_balance ,$_store_location,'$_receive_remark',$_unit_id,now(),$_user_login_id);";
-        // echo "<BR> $sql_1 ";
+        $sql_1 = "INSERT INTO tx_log (prod_id,tx_type_id,tx_create_time,amount,prior_balance,balance,location_id,remarks,unit_id,tx_log_time,uid,TM_PCT)  ".
+                            " VALUES ( $_product_id, $_tx_type_id,'$insertdate', $_receive_qty, $_prior_balnace,$_new_balance ,$_store_location,'$_receive_remark',$_unit_id,now(),$_user_login_id,$_TM_value);";
+       //  echo "<BR> $sql_1 ";
         
         
         
@@ -143,10 +150,10 @@
         $conn->close();
         return  $_update_status;
     }
-     function withdrawRawMat($_withdraw_date , $_withdraw_qty , $_store_location ,$_withdraw_remark )
+     function withdrawRawMat($_withdraw_date , $_product_id,  $_withdraw_qty ,$_TM_value , $_store_location ,$_withdraw_remark )
     {
         include "db_connect_inc.php";
-        $_product_id =1;
+        //$_product_id =1;
         $_tx_type_id =2;
         $_unit_id =1;
         
@@ -161,11 +168,12 @@
         }
         $_temp_date_array = explode("/",$_withdraw_date);
         $insertdate =  $_temp_date_array[2]."/". $_temp_date_array[1]."/". $_temp_date_array[0];
-        $_prior_balnace = getRawMatBalance();
+        //$_prior_balnace = getRawMatBalance($_product_id);
+        $_prior_balnace = getProductBalance($_product_id);
         $_new_balance =  $_prior_balnace-$_withdraw_qty;
          
-        $sql_1 = "INSERT INTO tx_log (prod_id,tx_type_id,tx_create_time,amount,prior_balance,balance,location_id,remarks,unit_id,tx_log_time,uid)  ".
-                            " VALUES ( $_product_id, $_tx_type_id,'$insertdate', $_withdraw_qty, $_prior_balnace,$_new_balance ,$_store_location,'$_withdraw_remark',$_unit_id,now(),$_user_login_id);";
+        $sql_1 = "INSERT INTO tx_log (prod_id,tx_type_id,tx_create_time,amount,prior_balance,balance,location_id,remarks,unit_id,tx_log_time,uid,TM_PCT)  ".
+                            " VALUES ( $_product_id, $_tx_type_id,'$insertdate', $_withdraw_qty, $_prior_balnace,$_new_balance ,$_store_location,'$_withdraw_remark',$_unit_id,now(),$_user_login_id,$_TM_value );";
          //echo "<BR> $sql_1 ";
         
         

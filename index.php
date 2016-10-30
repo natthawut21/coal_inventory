@@ -425,11 +425,11 @@ function getBalance($_option_id)
 {
      include "inc/source/db_connect_inc.php";
     if($_option_id==1)
-        $_sql ="select balance from product_code prd,product_type prd_t where prd.prod_type_id = prd_t.prod_type_id and prd.prod_id =1 ";
+        $_sql ="select sum(balance) as balance from product_code prd,product_type prd_t where prd.prod_type_id = prd_t.prod_type_id and prd.prod_type_id =1 ";
     else if($_option_id==2)
         $_sql ="select sum(balance) as balance from product_code prd,product_type prd_t where prd.prod_type_id = prd_t.prod_type_id and prd_t.prod_type_id =2 ";
      else if($_option_id==3)
-        $_sql ="select sum(balance) as balance from product_code prd,product_type prd_t where prd.prod_type_id = prd_t.prod_type_id and (prd_t.prod_type_id =2  or prd.prod_id =1) ";
+        $_sql ="select sum(balance) as balance from product_code prd,product_type prd_t where prd.prod_type_id = prd_t.prod_type_id and (prd_t.prod_type_id =2  or prd.prod_type_id =1) ";
      $_sum_raw_mat=0;
      $result = $conn->query($_sql);
         if ($result->num_rows > 0) {
@@ -445,10 +445,10 @@ function getReceiveRawMat($_day_prev)
 {
     
      include "inc/source/db_connect_inc.php";
-     $_prod_id=1;
+     $_prod_type_id=1;
      $_sql =" SELECT sum(tx.amount) as sum_raw_mat  ".
                " FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user ".
-               " WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id = $_prod_id and tx.tx_type_id  =1 ".
+               " WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and prd.prod_type_id = $_prod_type_id and tx.tx_type_id  =1 ".
             "and  tx.tx_create_time >= (CURDATE() - INTERVAL $_day_prev DAY)  ";
     
     /*

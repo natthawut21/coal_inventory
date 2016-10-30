@@ -9,7 +9,7 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv=Content-Type content="text/html; charset=tis-620">
 
-  <title>เบิกจ่ายวัตถุดิบ | ระบบบริหารคลังสินค้า </title>
+  <title>เบิกวัตถุดิบ | ระบบบริหารคลังสินค้า </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -84,7 +84,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-          เบิกจ่ายวัตถุดิบ
+          เบิกวัตถุดิบ
         <!-- <small>รายงานสรุป</small> -->
       </h1>
       <!--<ol class="breadcrumb">
@@ -102,12 +102,12 @@ desired effect
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
-        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการเบิกจ่ายวัตถุดิบ</h4>
+        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการเบิกวัตถุดิบ</h4>
       </div>
     
        <div class="modal-body">
          <div class="row">
-             <div class="col-md-4"><label>วันที่รับเบิกจ่ายวัตุถุดิบ</label></div>
+             <div class="col-md-4"><label>วันที่เบิกวัตุถุดิบ</label></div>
           <div class="col-md-8 ">
                <div class="form-group">
                 <div class="input-group date">
@@ -120,6 +120,38 @@ desired effect
            </div>
         
         </div>
+           
+         <div class="row">
+            <div class="col-md-4"><label>ชนิดถ่านหิน</label></div>
+            <div class="col-md-8 ">
+                <div class="form-group">
+                 
+                  <?php
+                        $_basic_info = new Basic_Info();
+                        $_rawmat_option = $_basic_info->getRawMatList(-1);
+                    ?>
+                  <select class="form-control" id="opt_rawmat_type" name="opt_rawmat_type">
+                      <?php echo $_rawmat_option; ?>
+                  </select>
+                </div>
+            </div>
+       </div>
+           
+          
+        <div class="row">
+            <div class="col-md-4"><label>ค่า T.M. </label></div>
+            <div class="col-md-7 "><div class="form-group">
+                 
+                
+                 <input type="text" id="txt_TM_value" name="txt_TM_value" class="form-control" placeholder="ระบุจำนวนตัวเลข %...">
+                </div>
+               
+            </div>
+             <div class="col-md-1">
+                 <label> % </label>
+            </div>
+       </div>
+           
         <div class="row">
             <div class="col-md-4"><label>จำนวน</label></div>
             <div class="col-md-7 "><div class="form-group">
@@ -131,7 +163,7 @@ desired effect
             <div class="col-md-1">
                  <label>Tons</label>
             </div>
-           </div>
+         </div>
         <div class="row">
             <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
             <div class="col-md-8 ">
@@ -141,7 +173,7 @@ desired effect
                  <!--<select multiple class="form-control">-->
                     
                   <?php
-                        $_basic_info = new Basic_Info();
+                      //  $_basic_info = new Basic_Info();
                         $_location_option = $_basic_info->getLocationList(-1);
                     ?>
                   <select class="form-control" id="opt_withdraw_location" name="opt_withdraw_location">
@@ -211,7 +243,7 @@ desired effect
             <div class="box-header">
               <div class="row">
                 <div class="col-lg-6 col-xs-6" >
-              <h3 class="box-title">รายการเบิกจ่ายวัตถุดิบ</h3>
+              <h3 class="box-title">รายการเบิกวัตถุดิบ</h3>
                    </div>
             <!--  <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -224,7 +256,7 @@ desired effect
               </div>-->
               <div class="col-lg-6 col-xs-6" align="right">
                 <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
-                <i class="fa fa-plus-circle"></i> เพิ่มรายการเบิกจ่าย
+                <i class="fa fa-plus-circle"></i> เพิ่มรายการเบิก
               </a>
                        
                        
@@ -365,10 +397,20 @@ desired effect
         var obj_txt_withdraw_qty = document.getElementById("txt_withdraw_qty");
         var obj_opt_withdraw_location = document.getElementById("opt_withdraw_location");
         var obj_txt_remarks = document.getElementById("txt_remarks");
+      
+      
+      var obj_opt_rawmat_type = document.getElementById("opt_rawmat_type");
+      var obj_txt_TM_value = document.getElementById("txt_TM_value");
+       
+           
         var val_withdraw_date ="";
         var val_withdrawe_qty ="";
+        
         var val_store_location ="";
         var val_withdraw_remarks ="";
+      
+      var val_rawmat_type_id ="";
+        var val_TM_value ="0";
         if(obj_txt_withdraw_date != null)
         {
             val_withdraw_date =obj_txt_withdraw_date.value;
@@ -387,21 +429,35 @@ desired effect
             obj_opt_withdraw_location.value ="";
         }
         
+      
+       if(obj_opt_rawmat_type != null)
+        {
+            val_rawmat_type_id =obj_opt_rawmat_type.value;
+            obj_opt_rawmat_type.value ="";
+        }
+       if(obj_txt_TM_value != null)
+        {
+            val_TM_value =obj_txt_TM_value.value;
+            obj_txt_TM_value.value ="";
+        }
+      
+      
+      
         if(val_withdraw_remarks != null)
         {
             val_withdraw_remarks =obj_txt_remarks.value;
             obj_txt_remarks.value ="";
         }
-        var param_withdraw_rawmat ="withdraw_date="+val_withdraw_date+"&withdraw_qty="+val_withdraw_qty+"&store_location="+val_store_location+"&withdraw_remark="+val_withdraw_remarks;
+        var param_withdraw_rawmat="product_id="+val_rawmat_type_id+"&TM_value="+val_TM_value+"&withdraw_date="+val_withdraw_date+"&withdraw_qty="+val_withdraw_qty+"&store_location="+val_store_location+"&withdraw_remark="+val_withdraw_remarks;
         
-        // console.log("inc/source/updateInventory.php?action=withdraw_rawmat&"+param_withdraw_rawmat);
+       // console.log("inc/source/updateInventory.php?action=withdraw_rawmat&"+param_withdraw_rawmat);
         getDataXML_Sync("inc/source/updateInventory.php?action=withdraw_rawmat&"+param_withdraw_rawmat,jsAfterSubmitWithdrawRawmat);
         document.getElementById("table_loading").style.visibility = "hidden";
   }
   function jsAfterSubmitWithdrawRawmat(respText)
   {
          //console.log(respText);
-        if(respText==1)
+      /*  if(respText==1)
         {
            
             document.getElementById("table_loading").style.visibility = "visible";
@@ -421,13 +477,16 @@ desired effect
                     
                 });
             });
-        }
+        }*/
+      jsGetWithDrawTable();
+      
   }
   function jsGetWithDrawTable()
   {
         document.getElementById("table_loading").style.visibility = "visible";
         //getData_Sync("./inc/source/getInventoryLog.php?prod_id=1&table_name=withdraw_table_1","div_withdraw_table");
-        getData_Sync("./inc/source/getInventoryLog.php?prod_id=1","div_withdraw_table");
+       // getData_Sync("./inc/source/getInventoryLog.php?prod_id=1","div_withdraw_table");
+        getData_Sync("./inc/source/getInventoryLog.php?prod_type_id=1","div_withdraw_table");
         document.getElementById("table_loading").style.visibility = "hidden";
        $(function () {
                      //$("#withdraw_table_1").DataTable({

@@ -9,7 +9,7 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv=Content-Type content="text/html; charset=tis-620">
 
-  <title>รับสินค้าแปรรูป | ระบบบริหารคลังสินค้า </title>
+  <title>ผลิตสินค้า | ระบบบริหารคลังสินค้า </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -85,7 +85,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-          รับสินค้าแปรรูป
+         ผลิตสินค้า
         <!-- <small>รายงานสรุป</small> -->
       </h1>
       <!--<ol class="breadcrumb">
@@ -103,12 +103,12 @@ desired effect
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
-        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการรับสินค้าแปรรูป</h4>
+        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการผลิตสินค้า</h4>
       </div>
     
        <div class="modal-body">
          <div class="row">
-             <div class="col-md-4"><label>วันที่รับสินค้าแปรรูป</label></div>
+             <div class="col-md-4"><label>วันที่ ผลิตสินค้า</label></div>
           <div class="col-md-8 ">
                <div class="form-group">
                 <div class="input-group date">
@@ -204,7 +204,7 @@ desired effect
             <div class="box-header">
               <div class="row">
                 <div class="col-lg-6 col-xs-6" >
-              <h3 class="box-title">รายการรับสินค้าเปรรูป</h3>
+              <h3 class="box-title">รายการผลิตสินค้า</h3>
                    </div>
             <!--  <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -217,7 +217,7 @@ desired effect
               </div>-->
               <div class="col-lg-6 col-xs-6" align="right">
                 <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
-                <i class="fa fa-plus-circle"></i> เพิ่มรายการรับสินค้าแปรรูป
+                <i class="fa fa-plus-circle"></i> เพิ่มรายการผลิตสินค้า
               </a>
                        
                        
