@@ -67,6 +67,37 @@
             
             
         }
+        
+        else if($_action=="add_receive_rawmat_header")
+        {
+            $_receive_date = $_GET['receive_date'];
+            $_receive_doc_no = $_GET['document_no'];
+            $_receive_remark = $_GET['receive_remark'];
+            $_header_update_status = updateRecRawMat_Header("addnew",$_receive_date , $_receive_doc_no,$_receive_remark);
+            
+            if($_header_update_status>-1)
+            {
+                $_product_array = $_GET['product_id'];
+                $_TM_value_array = $_GET['TM_value'];
+                $_receive_qty_array = $_GET['receive_qty'];
+                $_store_location_array = $_GET['store_location'];
+                for($p=0;$p<count($_product_array);$p++)
+                {
+                    if($_product_array[$p]!=-1 && $_receive_qty_array[$p]>0)
+                    {
+                        
+                      $_update_header_detail_status = updateHeader_Detail( $_header_update_status,$_product_array[$p],$_TM_value_array[$p],$_receive_qty_array[$p],"");
+                      $_update_status = addNewRawMat($_receive_date ,$_product_array[$p], $_receive_qty_array[$p],$_TM_value_array[$p] , $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");  
+                        
+                        
+                    }
+                    
+                }
+             echo $_update_status;   
+            }
+           
+            
+        }
     
     }
     function getRawMatBalance($_product_id)
@@ -105,6 +136,91 @@
         $conn->close();
         return $_balance;
     }
+
+ function getMaxReceiveRawMatHeader()
+    {
+        $max_rh_id=0;
+        include "db_connect_inc.php";
+        $sql="Select max(rh_id) as max_rh_id from receive_rawmat_document_header ";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                //echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+                $max_rh_id=$row["max_rh_id"];
+            }
+         } else {
+            //echo "0 results";
+        }
+        $conn->close();
+        return $max_rh_id;
+    }
+  function updateRecRawMat_Header($_action_type,$_receive_date , $_receive_doc_no,$_receive_remark )
+    {
+        include "db_connect_inc.php";
+       // $_product_id =1;
+        $_tx_type_id =1;
+        $_unit_id =1;
+        
+        if(isset($_SESSION['user_login_id']))
+        {
+            $_user_login_id = $_SESSION['user_login_id'];
+        }
+        else 
+        {
+             $_user_login_id=4;
+            
+        }
+        $_receive_date_array = explode("/",$_receive_date);
+        $insertdate =  $_receive_date_array[2]."/". $_receive_date_array[1]."/". $_receive_date_array[0];
+        
+        if($_action_type=="addnew")
+        {
+           $_rh_id = getMaxReceiveRawMatHeader();
+            
+            $_query = "Insert into receive_rawmat_document_header(document_date,document_no,remarks,create_date,create_by_uid,modify_date,modify_by_uid,document_status,status_code)".
+            " VALUES('$insertdate','$_receive_doc_no','$_receive_remark',now(),$_user_login_id,now(),$_user_login_id ,1,'RM-ADD')";
+            
+            //echo "$_query ";
+
+
+            if ($conn->query($_query) === TRUE) {
+                $last_id = $conn->insert_id;
+                
+            
+        }
+      
+        }
+        
+        
+        
+   
+      $conn->close();
+        return  $last_id;
+    }
+  function  updateHeader_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_status)
+  {
+       include "db_connect_inc.php";
+       $_tx_type_id =1;
+       $_unit_id =1;
+      $last_id=-1;
+       if(isset($_SESSION['user_login_id']))
+        {
+            $_user_login_id = $_SESSION['user_login_id'];
+        }
+        else 
+        {
+             $_user_login_id=4;
+            
+        }
+        $_sql ="INSERT INTO receive_rawmat_document_detail(rh_id,prod_id,TM_PCT,amount,unit_id,status_code) VALUES ($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_unit_id,'$_status')";
+     //echo "<BR>$_sql";
+        if ($conn->query($_sql) === TRUE) {
+            $last_id = $conn->insert_id;
+        }
+      return $last_id;
+      
+  }
     function addNewRawMat($_receive_date , $_product_id,$_receive_qty,$_TM_value, $_store_location ,$_receive_remark )
     {
         include "db_connect_inc.php";

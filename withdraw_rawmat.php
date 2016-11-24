@@ -34,7 +34,19 @@ session_start();
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 <style>
+ 
+  @media (min-width: 992px)
+.modal-lg
+{
+    width: 120px;
+    height: 1000px; /* control height here */
+}
+    
+    
  .datepicker{z-index:1151 !important;}
+    
+
+   
 </style>
 <script>
     function jsSave_AddNew_Material()
@@ -96,7 +108,14 @@ desired effect
     <!-- Main content -->
     <section class="content">
       <!-- Your Page Content Here -->
-<div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+
+        
+        
+         <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                
+                      
+<!-- <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">-->
+    
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -105,10 +124,13 @@ desired effect
         <h4 class="modal-title" id="myModalLabel">เพิ่มรายการเบิกวัตถุดิบ</h4>
       </div>
     
+        
+        
+        
        <div class="modal-body">
          <div class="row">
-             <div class="col-md-4"><label>วันที่เบิกวัตุถุดิบ</label></div>
-          <div class="col-md-8 ">
+             <div class="col-md-2"><label>วันที่เบิกวัตุถุดิบ</label></div>
+          <div class="col-md-3 ">
                <div class="form-group">
                 <div class="input-group date">
                   <div class="input-group-addon">
@@ -118,9 +140,55 @@ desired effect
                 </div>
               </div>
            </div>
+               <div class="col-md-2 col-md-offset-2 "><label>หมายเลขเอกสาร</label></div>
+             <div class="col-md-3 ">
+                 <input type="text" id="txt_document_no" name="txt_document_no" class="form-control pull-right" >
+                  </div>
+                
         
         </div>
-           
+         <div class="row">
+          <table class="table table-bordered table-striped">
+              <tr>
+                  <th style="width: 10px">#</th>
+                  <th style="width: 80px">ชนิดถ่านหิน</th>
+                  <th style="width: 20px">% TM</th>
+                  <th style="width: 40px">จำนวน (Tons)</th>
+                  <th style="width: 60px">ที่จัดเก็บ</th>
+              </tr>
+              <?php
+              
+               $_basic_info = new Basic_Info(); 
+              
+              $row_data=5;
+                for($i=0;$i<5;$i++)
+                {
+                     $_rawmat_option = $_basic_info->getRawMatList_v1(-1);
+              ?>
+              <tr>
+                   <td><?php echo $i+1; ?></td>
+                  <td>
+                   <select class="form-control" id="opt_rawmat_type_a[]" name="opt_rawmat_type_a[]">
+                           <?php echo $_rawmat_option; ?>
+                  </select>
+                  </td>
+                  <td> <input type="text" id="txt_TM_value_a[]" name="txt_TM_value_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข %..."></td>
+                  <td> <input type="text" id="txt_receive_qty_a[]" name="txt_receive_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
+                  <td>
+                   <?php
+                       // $_basic_info = new Basic_Info();
+                        $_location_option = $_basic_info->getLocationList(-1);
+                    ?>
+                  <select class="form-control" id="opt_receive_location_a[]" name="opt_receive_location_a[]">
+                      <?php echo $_location_option; ?>
+                  </select>
+                  </td>
+                  
+              </tr>
+              <?php } ?>
+          </table>
+      </div>
+       <!--    
          <div class="row">
             <div class="col-md-4"><label>ชนิดถ่านหิน</label></div>
             <div class="col-md-8 ">
@@ -167,10 +235,10 @@ desired effect
         <div class="row">
             <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
             <div class="col-md-8 ">
-             <!-- Select multiple-->
+           
                 <div class="form-group">
                   
-                 <!--<select multiple class="form-control">-->
+                 
                     
                   <?php
                       //  $_basic_info = new Basic_Info();
@@ -182,10 +250,10 @@ desired effect
                 </div>
             
             </div>
-        </div>
+        </div>-->
         <div class="row">
-            <div class="col-md-4"><label>รายละเอียดเพิ่มเติม</label></div>
-            <div class="col-md-8 "> 
+            <div class="col-md-3"><label>รายละเอียด</label></div>
+            <div class="col-md-9 "> 
                 <div class="form-group">
                   
                   <textarea  id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
@@ -255,7 +323,8 @@ desired effect
                 </div>
               </div>-->
               <div class="col-lg-6 col-xs-6" align="right">
-                <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
+                <!-- <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">-->
+                <a class="btn btn-app btn-primary" data-toggle="modal" onclick="openDialog()">
                 <i class="fa fa-plus-circle"></i> เพิ่มรายการเบิก
               </a>
                        
@@ -276,10 +345,8 @@ desired effect
                <thead>
                 <tr>
                   <th>วันที่</th>
-                  <th>ประเภท</th>
-                  <th>สถานที่จัดเก็บ</th>
-                  <th>จำนวน</th>
-                  <th>ยอดคงเหลือวัตถุดิบ</th>
+                  <th>หมายเลขเอกสาร</th>
+                  <th>จำนวนรับทั้งหมด</th>
                   <th>ผู้ทำรายการ</th>
                 </tr>
                 </thead>
@@ -289,13 +356,13 @@ desired effect
                   <td>-</td>
                   <td>-</td>
                   <td>-</td>
-                  <td align="right">
+                 <!--<td align="right">
                     <span class="badge bg-yellow">-</span>
                    </td>
                   <td align="right">
                     
                     <span class="badge bg-grey">-</span>
-                    </td>
+                    </td>-->
                   <td align="center">-</td>
                 </tr>
                     
@@ -388,7 +455,16 @@ desired effect
     }); 
       
   });
- 
+  function openDialog()
+    {
+        
+        $('#rawmatModal').attr('class', 'modal fade bs-example-modal-lg')
+            .attr('aria-labelledby','myLargeModalLabel');
+		$('.modal-dialog').attr('class','modal-dialog modal-lg');
+        $('#rawmatModal').modal('show');
+        
+    }
+    
   function jsSave_Withdraw_Material()
   {
     

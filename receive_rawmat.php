@@ -39,6 +39,10 @@ session_start();
   <![endif]-->
 <style>
  .datepicker{z-index:1151 !important;}
+/*Bootstrap 3*/
+.modal.large {
+     width: 80%;
+}
 </style>
 <script>
    
@@ -91,8 +95,38 @@ desired effect
     <!-- Main content -->
     <section class="content">
       <!-- Your Page Content Here -->
-<div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
+<!--<div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document">-->
+
+        
+        
+<div class="modal fade bs-example-modal-lg" id="rawmatModal_1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+     <div class="modal-dialog  modal-large">
+                      
+                      
+     <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
+        <h4 class="modal-title" id="myModalLabel">รายการรับวัตถุดิบเข้าคลัง</h4>
+      </div>
+    
+       <div class="modal-body">
+           <div id="div_receive_data"> - </div>
+        </div> 
+           <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">ปิด </button>
+           </div>
+      </div>
+     </div>
+    </div>
+</div>
+                
+                
+ <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog  modal-large">
+                      
+                      
               <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -101,9 +135,12 @@ desired effect
       </div>
     
        <div class="modal-body">
+           
+           
+        <form id=form01>
          <div class="row">
-             <div class="col-md-4"><label>วันที่รับวัตถุดิบ</label></div>
-          <div class="col-md-8 ">
+             <div class="col-md-2"><label>วันที่รับวัตถุดิบ</label></div>
+            <div class="col-md-3">
                <div class="form-group">
                 <div class="input-group date">
                   <div class="input-group-addon">
@@ -113,113 +150,74 @@ desired effect
                 </div>
               </div>
            </div>
+             
+             
+             <div class="col-md-2 col-md-offset-2 "><label>หมายเลขเอกสาร</label></div>
+             <div class="col-md-3 ">
+                 <input type="text" id="txt_document_no" name="txt_document_no" class="form-control pull-right" >
+                  </div>
         
         </div>
-       <div class="row">
-            <div class="col-md-4"><label>ชนิดถ่านหิน</label></div>
-            <div class="col-md-8 ">
-                <div class="form-group">
-                 
-                  <?php
-                        $_basic_info = new Basic_Info();
-                        $_rawmat_option = $_basic_info->getRawMatList(-1);
-                    ?>
-                  <select class="form-control" id="opt_rawmat_type" name="opt_rawmat_type">
-                      <?php echo $_rawmat_option; ?>
-                  </select>
-                </div>
-            </div>
-       </div>
            
-        <div class="row">
-            <div class="col-md-4"><label>ค่า T.M. </label></div>
-            <div class="col-md-7 "><div class="form-group">
-                 
-                
-                 <input type="text" id="txt_TM_value" name="txt_TM_value" class="form-control" placeholder="ระบุจำนวนตัวเลข %...">
-                </div>
-               
-            </div>
-             <div class="col-md-1">
-                 <label> % </label>
-            </div>
-       </div>
-        <div class="row">
-            <div class="col-md-4"><label>จำนวน</label></div>
-            <div class="col-md-7 "><div class="form-group">
-                 
-                  <input type="text" id="txt_receive_qty" name="txt_receive_qty" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
-               
-                </div>
-            </div>
-            <div class="col-md-1">
-                 <label>Tons</label>
-            </div>
-       </div>
-        <div class="row">
-            <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
-            <div class="col-md-8 ">
-             <!-- Select multiple-->
-                <div class="form-group">
-                  
-                  <!--<select multiple class="form-control">-->
-                    
-                  <?php
+      <div class="row">
+          <table class="table table-bordered table-striped">
+              <tr>
+                  <th style="width: 10px">#</th>
+                  <th style="width: 80px">ชนิดถ่านหิน</th>
+                  <th style="width: 20px">% TM</th>
+                  <th style="width: 40px">จำนวน (Tons)</th>
+                  <th style="width: 60px">ที่จัดเก็บ</th>
+              </tr>
+              <?php
+              
+               $_basic_info = new Basic_Info(); 
+              
+              $row_data=5;
+                for($i=0;$i<5;$i++)
+                {
+                     $_rawmat_option = $_basic_info->getRawMatList_v1(-1);
+              ?>
+              <tr>
+                   <td><?php echo $i+1; ?></td>
+                  <td>
+                   <select class="form-control" id="opt_rawmat_type_a[]" name="opt_rawmat_type_a[]">
+                           <?php echo $_rawmat_option; ?>
+                  </select>
+                  </td>
+                  <td> <input type="text" id="txt_TM_value_a[]" name="txt_TM_value_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข %..."></td>
+                  <td> <input type="text" id="txt_receive_qty_a[]" name="txt_receive_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
+                  <td>
+                   <?php
                        // $_basic_info = new Basic_Info();
                         $_location_option = $_basic_info->getLocationList(-1);
                     ?>
-                  <select class="form-control" id="opt_receive_location" name="opt_receive_location">
+                  <select class="form-control" id="opt_receive_location_a[]" name="opt_receive_location_a[]">
                       <?php echo $_location_option; ?>
                   </select>
-                </div>
-            
-            </div>
-        </div>
+                  </td>
+                  
+              </tr>
+              <?php } ?>
+             
+              
+          </table>
+      </div>
+     
         <div class="row">
-            <div class="col-md-4"><label>รายละเอียดเพิ่มเติม</label></div>
-            <div class="col-md-8 "> 
+            <div class="col-md-2"><label>รายละเอียด</label></div>
+            <div class="col-md-10 "> 
                 <div class="form-group">
                   
                   <textarea id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
                 </div></div>
         </div>
-        
-      
-       <!--    
-         <div class="row">
-          <div class="col-md-4">.col-md-4</div>
-          <div class="col-md-4 col-md-offset-4">.col-md-4 .col-md-offset-4</div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 col-md-offset-3">.col-md-3 .col-md-offset-3</div>
-          <div class="col-md-2 col-md-offset-4">.col-md-2 .col-md-offset-4</div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3">.col-md-6 .col-md-offset-3</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-9">
-            Level 1: .col-sm-9
-            <div class="row">
-              <div class="col-xs-8 col-sm-6">
-                Level 2: .col-xs-8 .col-sm-6
-              </div>
-              <div class="col-xs-4 col-sm-6">
-                Level 2: .col-xs-4 .col-sm-6
-              </div>
-            </div>
-          </div>
-        </div>
-           
-        -->   
-           
-           
+         </form>   
       </div>
           
     
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_AddNew_Material();">บันทึก</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_AddNew_Material_v2();">บันทึก</button>
       </div>
     </div>
   </div>
@@ -247,7 +245,8 @@ desired effect
                 </div>
               </div>-->
               <div class="col-lg-6 col-xs-6" align="right">
-                <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
+                <!--<a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">-->
+                <a class="btn btn-app btn-primary" data-toggle="modal" onclick="openDialog()">
                 <i class="fa fa-plus-circle"></i> เพิ่มรายการรับวัตถุดิบ
               </a>
                        
@@ -391,15 +390,90 @@ desired effect
       
   });
     
-   function jsSave_AddNew_Material()
+    
+    function openDialog()
     {
-    //    alert("After Save");
-       // console.log("After Save");
-         /*txt_receive_date
-           txt_receive_qty
-           opt_receive_location
-           txt_remarks
+        
+        $('#rawmatModal').attr('class', 'modal fade bs-example-modal-lg')
+            .attr('aria-labelledby','myLargeModalLabel');
+		$('.modal-dialog').attr('class','modal-dialog modal-lg');
+        $('#rawmatModal').modal('show');
+        
+    }
+    
+    function jsSave_AddNew_Material_v2()
+    {
+ 
+        document.getElementById("table_loading").style.visibility = "visible";
+        
+        var obj_txt_receive_date = document.getElementById("txt_receive_date");
+        var obj_txt_document_no = document.getElementById("txt_document_no");
+        var obj_txt_remarks = document.getElementById("txt_remarks");
+        
+       var val_receive_date ="";
+       var val_document_no ="";
+        var val_receive_remarks ="";
+        if(obj_txt_receive_date != null)
+        {
+            val_receive_date =obj_txt_receive_date.value;
+            obj_txt_receive_date.value ="";
+        }
+        
+        if(obj_txt_document_no != null)
+        {
+            val_document_no =obj_txt_document_no.value;
+            obj_txt_document_no.value ="";
+        }
+        if(val_receive_remarks != null)
+        {
+            val_receive_remarks =obj_txt_remarks.value;
+            obj_txt_remarks.value ="";
+        }
+       /* var param_receive_rawmat ="product_id="+val_product_id+"&TM_value="+val_TM_value+"&receive_date="+val_receive_date+"&receive_qty="+val_receive_qty+"&store_location="+val_store_location+"&receive_remark="+val_receive_remarks;
         */
+        
+        var param_receive_rawmat_header ="&receive_date="+val_receive_date+"&document_no="+val_document_no+"&receive_remark="+val_receive_remarks;
+        
+        
+       // console.log("inc/source/updateInventory.php?action=receive_rawmat&"+param_receive_rawmat);
+      
+       var obj_txt_receive_qty = document.getElementById("opt_rawmat_type_a");
+        var obj_opt_receive_location = document.getElementById("opt_receive_location");
+        
+        
+        
+
+        var obj_opt_rawmat_type = document.forms.form01.elements["opt_rawmat_type_a[]"];
+        var obj_txt_TM_value = document.forms.form01.elements["txt_TM_value_a[]"];
+        var obj_txt_receive_qty = document.forms.form01.elements["txt_receive_qty_a[]"];
+        var obj_opt_receive_location = document.forms.form01.elements["opt_receive_location_a[]"];
+
+        var param_product="";
+        for (var i = 0, len = obj_opt_rawmat_type.length; i < len; i++) {
+            if(obj_opt_rawmat_type[i].value!=-1)
+            {
+                
+                param_product=param_product+"&product_id[]="+obj_opt_rawmat_type[i].value+"&TM_value[]="+obj_txt_TM_value[i].value+"&receive_qty[]="+obj_txt_receive_qty[i].value+"&store_location[]="+obj_opt_receive_location[i].value;
+                obj_opt_rawmat_type[i].value="";
+                obj_txt_TM_value[i].value="";
+                obj_txt_receive_qty[i].value="";
+                obj_opt_receive_location[i].value="-1";
+                
+            }
+          
+            
+        }
+        var update_ajax_url ="inc/source/updateInventory.php?action=add_receive_rawmat_header&"+param_receive_rawmat_header+param_product;
+        
+        console.log(update_ajax_url);
+        getDataXML_Sync(update_ajax_url,jsAfterSubmitReceiveRawmat_v2);
+        
+        document.getElementById("table_loading").style.visibility = "hidden";
+        
+    }
+   function jsSave_AddNew_Material_NotUse()
+    {
+ 
         var obj_txt_receive_date = document.getElementById("txt_receive_date");
         var obj_txt_receive_qty = document.getElementById("txt_receive_qty");
         var obj_opt_receive_location = document.getElementById("opt_receive_location");
@@ -457,7 +531,7 @@ desired effect
     {
         document.getElementById("table_loading").style.visibility = "visible";
         //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
-        getData_Sync("inc/source/getInventoryLog.php?prod_type_id=1","div_receive_table");
+        getData_Sync("inc/source/getInventoryLog_v2.php?prod_type_id=1&tran_type=receive_rawmat&param_table=receive_table_1","div_receive_table");
         document.getElementById("table_loading").style.visibility = "hidden";
         $(function () {
              $("#receive_table_1").DataTable({
@@ -472,6 +546,20 @@ desired effect
          });
         
     }  
+    function jsAfterSubmitReceiveRawmat_v2(respText)
+    {
+        
+        document.getElementById("table_loading").style.visibility = "hidden";
+        
+        
+        console.log("response text = "+respText);
+        if(respText==1)
+        {
+            jsGetReceiveTable();
+          
+        }
+        
+    }
     function jsAfterSubmitReceiveRawmat(respText)
     {
         //console.log(respText);
@@ -481,6 +569,33 @@ desired effect
           
         }
         
+    }
+    function jsOpenReceiveRawmat(rh_id)
+    {
+        
+        //jsGetTransaction("receive_rawmat",rh_id);
+        console.log(rh_id);
+        var url_1 ="inc/source/getTranscation_data.php?type=receive_rawmat&rh_id="+rh_id;
+         getDataXML_Sync(url_1,jsShowReceiveDialog);
+        
+        
+        
+       /* $('#rawmatModal_1').attr('class', 'modal fade bs-example-modal-lg')
+            .attr('aria-labelledby','myLargeModalLabel');
+		$('.modal-dialog').attr('class','modal-dialog modal-lg');
+        $('#rawmatModal_1').modal('show');*/
+        
+    }
+    function jsShowReceiveDialog(respText)
+    {
+        
+        if(respText!="")
+        {
+            document.getElementById("div_receive_data").innerHTML =respText;
+            $('#rawmatModal_1').attr('class', 'modal fade bs-example-modal-lg').attr('aria-labelledby','myLargeModalLabel');
+            $('.modal-dialog').attr('class','modal-dialog modal-lg');
+            $('#rawmatModal_1').modal('show');
+        }
     }
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

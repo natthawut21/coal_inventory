@@ -97,8 +97,17 @@ desired effect
     <!-- Main content -->
     <section class="content">
       <!-- Your Page Content Here -->
-<div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        
+        
+        
+<!--<div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg" role="document">
+    -->            
+                
+                
+      <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                
               <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -107,9 +116,11 @@ desired effect
       </div>
     
        <div class="modal-body">
+           
+           
          <div class="row">
-             <div class="col-md-4"><label>วันที่ ผลิตสินค้า</label></div>
-          <div class="col-md-8 ">
+             <div class="col-md-2"><label>วันที่ ผลิตสินค้า</label></div>
+          <div class="col-md-3 ">
                <div class="form-group">
                 <div class="input-group date">
                   <div class="input-group-addon">
@@ -119,8 +130,59 @@ desired effect
                 </div>
               </div>
            </div>
+            <div class="col-md-2 col-md-offset-2 "><label>หมายเลขเอกสาร</label></div>
+             <div class="col-md-3 ">
+                 <input type="text" id="txt_document_no" name="txt_document_no" class="form-control pull-right" >
+                  </div>
         
         </div>
+        <div class="row">
+            <!-- <div class="col-md-3"><label>อ้างอิง รายการเบิกวัตถุดิบ</label></div>
+             <div class="col-md-3 ">
+                  <select class="form-control" id="opt_refer_withdraw_product" name="opt_refer_withdraw_product" onchange="">
+                      <option value="-1">  </option>
+                      <option value="1"> XXXXX </option>
+                  </select>
+            </div>-->
+            <div class="col-md-12">
+             <div class="box box-warning box-solid">
+            <div class="box-header with-border">
+                
+                <div class="row">
+                  <div class="col-md-4">
+                      <h3 class="box-title">
+                        <label>ระบุรายการเบิกวัตถุดิบ</label>
+                    </h3>
+                 </div>
+                 <div class="col-md-6">
+                    <select class="form-control" id="opt_refer_withdraw_product" name="opt_refer_withdraw_product" onchange="">
+                        <option value="-1">  </option>
+                        <option value="1"> XXXXX </option>
+                    </select>
+                </div>
+                </div>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                  <div class="col-md-4">
+               
+                </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+          </div>
+            
+            
+        </div>
+            
         <div class="row">
             <div class="col-md-4"><label>จำนวน</label></div>
             <div class="col-md-7 "><div class="form-group">
@@ -216,7 +278,8 @@ desired effect
                 </div>
               </div>-->
               <div class="col-lg-6 col-xs-6" align="right">
-                <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
+                <!--<a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">-->
+                <a class="btn btn-app btn-primary" data-toggle="modal" onclick="openDialog()" >
                 <i class="fa fa-plus-circle"></i> เพิ่มรายการผลิตสินค้า
               </a>
                        
@@ -353,6 +416,16 @@ desired effect
     }); 
       
   });
+    
+  function openDialog()
+    {
+        
+        $('#rawmatModal').attr('class', 'modal fade bs-example-modal-lg')
+            .attr('aria-labelledby','myLargeModalLabel');
+		$('.modal-dialog').attr('class','modal-dialog modal-lg');
+        $('#rawmatModal').modal('show');
+        
+    }
     
  function jsGetReceiveProductTable()
     {
