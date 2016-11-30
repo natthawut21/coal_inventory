@@ -86,8 +86,39 @@
                     if($_product_array[$p]!=-1 && $_receive_qty_array[$p]>0)
                     {
                         
-                      $_update_header_detail_status = updateHeader_Detail( $_header_update_status,$_product_array[$p],$_TM_value_array[$p],$_receive_qty_array[$p],"");
+                      $_update_header_detail_status = updateHeader_Detail( $_header_update_status,$_product_array[$p],$_TM_value_array[$p],$_receive_qty_array[$p],$_store_location_array[$p],"");
                       $_update_status = addNewRawMat($_receive_date ,$_product_array[$p], $_receive_qty_array[$p],$_TM_value_array[$p] , $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");  
+                        
+                        
+                    }
+                    
+                }
+             echo $_update_status;   
+            }
+           
+            
+        }
+         else if($_action=="add_withdraw_rawmat_header")
+        {
+            $_withdraw_date = $_GET['withdraw_date'];
+            $_withdraw_doc_no = $_GET['document_no'];
+            $_withdraw_remark = $_GET['receive_remark'];
+            $_header_update_status = updateWithdrawRawMat_Header("addnew",$_withdraw_date , $_withdraw_doc_no,$_withdraw_remark);
+            
+            if($_header_update_status>-1)
+            {
+                $_product_array = $_GET['product_id'];
+                $_TM_value_array = $_GET['TM_value'];
+                $_receive_qty_array = $_GET['receive_qty'];
+                $_store_location_array = $_GET['store_location'];
+                for($p=0;$p<count($_product_array);$p++)
+                {
+                    if($_product_array[$p]!=-1 && $_receive_qty_array[$p]>0)
+                    {
+                        
+                      $_update_status = updateWithdraw_Detail( $_header_update_status,$_product_array[$p],$_TM_value_array[$p],$_receive_qty_array[$p],$_store_location_array[$p],"");
+//                      $_update_status = addNewRawMat($_withdraw_date ,$_product_array[$p], $_receive_qty_array[$p],$_TM_value_array[$p] , $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");  
+                    //  $_update_status = withdrawRawMat($_withdraw_date, $_product_array[$p], $_receive_qty_array[$p],$_TM_value_array[$p],  $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");
                         
                         
                     }
@@ -155,6 +186,52 @@
         $conn->close();
         return $max_rh_id;
     }
+
+  function updateWithdrawRawMat_Header($_action_type,$_withdraw_date , $_receive_doc_no,$_receive_remark )
+  {
+      include "db_connect_inc.php";
+       // $_product_id =1;
+        $_tx_type_id =1;
+        $_unit_id =1;
+        
+        if(isset($_SESSION['user_login_id']))
+        {
+            $_user_login_id = $_SESSION['user_login_id'];
+        }
+        else 
+        {
+             $_user_login_id=4;
+            
+        }
+        $_withdraw_date_array = explode("/",$_withdraw_date);
+        $insertdate =  $_withdraw_date_array[2]."/". $_withdraw_date_array[1]."/". $_withdraw_date_array[0];
+        
+        if($_action_type=="addnew")
+        {
+           $_rh_id = getMaxReceiveRawMatHeader();
+            
+            $_query = "Insert into withdraw_document_header(document_date,document_no,remarks,create_date,create_by_uid,modify_date,modify_by_uid,document_status)".
+            " VALUES('$insertdate','$_receive_doc_no','$_receive_remark',now(),$_user_login_id,now(),$_user_login_id ,1)";
+            
+            echo "$_query ";
+
+
+            if ($conn->query($_query) === TRUE) {
+                $last_id = $conn->insert_id;
+                
+            
+        }
+      
+        }
+        
+        
+        
+   
+      $conn->close();
+        return  $last_id; 
+      
+  }
+    
   function updateRecRawMat_Header($_action_type,$_receive_date , $_receive_doc_no,$_receive_remark )
     {
         include "db_connect_inc.php";
@@ -181,7 +258,7 @@
             $_query = "Insert into receive_rawmat_document_header(document_date,document_no,remarks,create_date,create_by_uid,modify_date,modify_by_uid,document_status,status_code)".
             " VALUES('$insertdate','$_receive_doc_no','$_receive_remark',now(),$_user_login_id,now(),$_user_login_id ,1,'RM-ADD')";
             
-            //echo "$_query ";
+           echo "$_query ";
 
 
             if ($conn->query($_query) === TRUE) {
@@ -198,7 +275,8 @@
       $conn->close();
         return  $last_id;
     }
-  function  updateHeader_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_status)
+
+function  updateWithdraw_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_status)
   {
        include "db_connect_inc.php";
        $_tx_type_id =1;
@@ -213,7 +291,32 @@
              $_user_login_id=4;
             
         }
-        $_sql ="INSERT INTO receive_rawmat_document_detail(rh_id,prod_id,TM_PCT,amount,unit_id,status_code) VALUES ($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_unit_id,'$_status')";
+        $_sql ="INSERT INTO withdraw_document_detail(wh_id,prod_id,TM_PCT,amount,location_id,unit_id,status_code) VALUES ($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_unit_id,'$_status')";
+     echo "<BR>$_sql";
+        if ($conn->query($_sql) === TRUE) {
+            $last_id = $conn->insert_id;
+        }
+      return $last_id;
+      
+  }
+
+
+  function  updateHeader_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_status)
+  {
+       include "db_connect_inc.php";
+       $_tx_type_id =1;
+       $_unit_id =1;
+      $last_id=-1;
+       if(isset($_SESSION['user_login_id']))
+        {
+            $_user_login_id = $_SESSION['user_login_id'];
+        }
+        else 
+        {
+             $_user_login_id=4;
+            
+        }
+        $_sql ="INSERT INTO receive_rawmat_document_detail(rh_id,prod_id,TM_PCT,amount,location_id,unit_id,status_code) VALUES ($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_unit_id,'$_status')";
      //echo "<BR>$_sql";
         if ($conn->query($_sql) === TRUE) {
             $last_id = $conn->insert_id;

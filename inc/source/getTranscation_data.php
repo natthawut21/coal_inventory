@@ -5,7 +5,9 @@
 
     if($_GET['type']=="receive_rawmat")
     {
-        getReceiveRawmat_Heder($_GET['rh_id'],$_receive_date,$_document_no,$_remarks,$_username);
+        $_receive_data = getReceiveRawmat_Heder($_GET['rh_id'],$_receive_date,$_document_no,$_remarks,$_username);
+        
+        
 ?>
 
         <div class="row">
@@ -16,7 +18,7 @@
              <div class="col-md-2"> &nbsp;</div>
              
              
-             <div class="col-md-2"><h4><span class="label label-default" align="center"><B>วันที่รับวัตถุดิบ</B></span></h4></div>
+             <div class="col-md-2"><h4><span class="label label-default" align="center"><B>หมายเลขเอกสาร</B></span></h4></div>
              <div class="col-md-3">
                  <h4><span class="label label-info" align="center"><B><?php echo $_document_no;?></B></span></h4>
              </div>
@@ -26,11 +28,12 @@
           <table class="table table-bordered table-striped">
               <tr>
                   <th style="width: 10px">#</th>
-                  <th style="width: 80px">ชนิดถ่านหิน</th>
-                  <th style="width: 20px">% TM</th>
-                  <th style="width: 40px">จำนวน (Tons)</th>
-                  <th style="width: 60px">ที่จัดเก็บ</th>
+                  <th style="width: 80px" align="center">ชนิดถ่านหิน</th>
+                  <th style="width: 20px" align="center">% TM</th>
+                  <th style="width: 40px" align="center">จำนวน (Tons)</th>
+                  <th style="width: 60px" align="center">ที่จัดเก็บ</th>
               </tr>
+              <?php echo $_receive_data;?>
          </table>
            </div>
            
@@ -96,8 +99,30 @@ function getReceiveRawmat_Heder($rh_id,&$_receive_date,&$_document_no,&$_remarks
             }*/
             
         }
-                
         
+        $_receive_detail_table ="";
+        $_sql_get_receive_detail="SELECT prd.prod_code_TH as prod_code,rd.amount as amount,loc.location_name as location ,rd.TM_PCT as TM".
+                                 " FROM receive_rawmat_document_detail rd,product_code prd ,location loc ".
+                                 " Where rd.prod_id = prd.prod_id and loc.location_id = rd.location_id and rd.rh_id = $rh_id order by rd.r_id";
+                
+       // echo "<BR>$_sql_get_receive_detail";
+        $result_detail = $conn->query($_sql_get_receive_detail);
+        if ($result_detail->num_rows > 0) {
+            $_i=0;
+            
+            while($row = $result_detail->fetch_assoc()){
+                $_i++;
+                $_receive_detail_table .= "\n <tr>".
+                                        "\n\t <td align=\"right\">$_i</td>".
+                                        "\n\t <td align=\"left\">".$row["prod_code"]."</td>".
+                                        "\n\t <td align=\"center\">".$row["TM"]."</td>".
+                                        "\n\t <td align=\"right\">".number_format($row["amount"])."</td>".
+                                        "\n\t <td align=\"center\">".$row["location"]."</td>".
+                                        "\n </tr>";
+            }
+        }
+        
+       return $_receive_detail_table;         
     }
      $conn->close();
     //return  $_table_row;

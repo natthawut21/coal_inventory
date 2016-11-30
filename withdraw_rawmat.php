@@ -128,6 +128,7 @@ desired effect
         
         
        <div class="modal-body">
+          <form id=form01>
          <div class="row">
              <div class="col-md-2"><label>วันที่เบิกวัตุถุดิบ</label></div>
           <div class="col-md-3 ">
@@ -145,7 +146,8 @@ desired effect
                  <input type="text" id="txt_document_no" name="txt_document_no" class="form-control pull-right" >
                   </div>
                 
-        
+             
+             
         </div>
          <div class="row">
           <table class="table table-bordered table-striped">
@@ -188,69 +190,7 @@ desired effect
               <?php } ?>
           </table>
       </div>
-       <!--    
-         <div class="row">
-            <div class="col-md-4"><label>ชนิดถ่านหิน</label></div>
-            <div class="col-md-8 ">
-                <div class="form-group">
-                 
-                  <?php
-                        $_basic_info = new Basic_Info();
-                        $_rawmat_option = $_basic_info->getRawMatList(-1);
-                    ?>
-                  <select class="form-control" id="opt_rawmat_type" name="opt_rawmat_type">
-                      <?php echo $_rawmat_option; ?>
-                  </select>
-                </div>
-            </div>
-       </div>
-           
-          
-        <div class="row">
-            <div class="col-md-4"><label>ค่า T.M. </label></div>
-            <div class="col-md-7 "><div class="form-group">
-                 
-                
-                 <input type="text" id="txt_TM_value" name="txt_TM_value" class="form-control" placeholder="ระบุจำนวนตัวเลข %...">
-                </div>
-               
-            </div>
-             <div class="col-md-1">
-                 <label> % </label>
-            </div>
-       </div>
-           
-        <div class="row">
-            <div class="col-md-4"><label>จำนวน</label></div>
-            <div class="col-md-7 "><div class="form-group">
-                  
-                  <input id="txt_withdraw_qty" name="txt_withdraw_qty"  type="text" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
-               
-                </div>
-            </div>
-            <div class="col-md-1">
-                 <label>Tons</label>
-            </div>
-         </div>
-        <div class="row">
-            <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
-            <div class="col-md-8 ">
-           
-                <div class="form-group">
-                  
-                 
-                    
-                  <?php
-                      //  $_basic_info = new Basic_Info();
-                        $_location_option = $_basic_info->getLocationList(-1);
-                    ?>
-                  <select class="form-control" id="opt_withdraw_location" name="opt_withdraw_location">
-                      <?php echo $_location_option; ?>
-                  </select>
-                </div>
-            
-            </div>
-        </div>-->
+     
         <div class="row">
             <div class="col-md-3"><label>รายละเอียด</label></div>
             <div class="col-md-9 "> 
@@ -259,43 +199,11 @@ desired effect
                   <textarea  id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
                 </div></div>
         </div>
-        
-      
-       <!--    
-         <div class="row">
-          <div class="col-md-4">.col-md-4</div>
-          <div class="col-md-4 col-md-offset-4">.col-md-4 .col-md-offset-4</div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 col-md-offset-3">.col-md-3 .col-md-offset-3</div>
-          <div class="col-md-2 col-md-offset-4">.col-md-2 .col-md-offset-4</div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3">.col-md-6 .col-md-offset-3</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-9">
-            Level 1: .col-sm-9
-            <div class="row">
-              <div class="col-xs-8 col-sm-6">
-                Level 2: .col-xs-8 .col-sm-6
-              </div>
-              <div class="col-xs-4 col-sm-6">
-                Level 2: .col-xs-4 .col-sm-6
-              </div>
-            </div>
-          </div>
-        </div>
-           
-        -->   
-           
-           
+           </form>
       </div>
-          
-    
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_Withdraw_Material();">บันทึก</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_Withdraw_Material_v2();">บันทึก</button>
       </div>
     </div>
   </div>
@@ -480,7 +388,7 @@ desired effect
        
            
         var val_withdraw_date ="";
-        var val_withdrawe_qty ="";
+        var val_withdraw_qty ="";
         
         var val_store_location ="";
         var val_withdraw_remarks ="";
@@ -526,47 +434,118 @@ desired effect
         }
         var param_withdraw_rawmat="product_id="+val_rawmat_type_id+"&TM_value="+val_TM_value+"&withdraw_date="+val_withdraw_date+"&withdraw_qty="+val_withdraw_qty+"&store_location="+val_store_location+"&withdraw_remark="+val_withdraw_remarks;
         
-       // console.log("inc/source/updateInventory.php?action=withdraw_rawmat&"+param_withdraw_rawmat);
+       
         getDataXML_Sync("inc/source/updateInventory.php?action=withdraw_rawmat&"+param_withdraw_rawmat,jsAfterSubmitWithdrawRawmat);
         document.getElementById("table_loading").style.visibility = "hidden";
   }
+    
+function jsSave_Withdraw_Material_v2()
+    {
+        
+                
+        
+
+ 
+        document.getElementById("table_loading").style.visibility = "visible";
+        
+        var obj_txt_withdraw_date = document.getElementById("txt_withdraw_date");
+        var obj_txt_document_no = document.getElementById("txt_document_no");
+        var obj_txt_remarks = document.getElementById("txt_remarks");
+        
+       var val_receive_date ="";
+       var val_document_no ="";
+        var val_receive_remarks ="";
+        if(obj_txt_withdraw_date != null)
+        {
+            val_receive_date =obj_txt_withdraw_date.value;
+            obj_txt_withdraw_date.value ="";
+        }
+        
+        if(obj_txt_document_no != null)
+        {
+            val_document_no =obj_txt_document_no.value;
+            obj_txt_document_no.value ="";
+        }
+        if(val_receive_remarks != null)
+        {
+            val_receive_remarks =obj_txt_remarks.value;
+            obj_txt_remarks.value ="";
+        }
+       /* var param_receive_rawmat ="product_id="+val_product_id+"&TM_value="+val_TM_value+"&receive_date="+val_receive_date+"&receive_qty="+val_receive_qty+"&store_location="+val_store_location+"&receive_remark="+val_receive_remarks;
+        */
+        
+        var param_receive_rawmat_header ="&withdraw_date="+val_receive_date+"&document_no="+val_document_no+"&receive_remark="+val_receive_remarks;
+        
+        
+       // console.log("inc/source/updateInventory.php?action=receive_rawmat&"+param_receive_rawmat);
+      
+       var obj_txt_receive_qty = document.getElementById("opt_rawmat_type_a");
+        var obj_opt_receive_location = document.getElementById("opt_receive_location");
+        
+        
+        
+
+        var obj_opt_rawmat_type = document.forms.form01.elements["opt_rawmat_type_a[]"];
+        var obj_txt_TM_value = document.forms.form01.elements["txt_TM_value_a[]"];
+        var obj_txt_receive_qty = document.forms.form01.elements["txt_receive_qty_a[]"];
+        var obj_opt_receive_location = document.forms.form01.elements["opt_receive_location_a[]"];
+
+        var param_product="";
+        for (var i = 0, len = obj_opt_rawmat_type.length; i < len; i++) {
+            if(obj_opt_rawmat_type[i].value!=-1)
+            {
+                
+                param_product=param_product+"&product_id[]="+obj_opt_rawmat_type[i].value+"&TM_value[]="+obj_txt_TM_value[i].value+"&receive_qty[]="+obj_txt_receive_qty[i].value+"&store_location[]="+obj_opt_receive_location[i].value;
+                obj_opt_rawmat_type[i].value="";
+                obj_txt_TM_value[i].value="";
+                obj_txt_receive_qty[i].value="";
+                obj_opt_receive_location[i].value="-1";
+                
+            }
+          
+            
+        }
+        var update_ajax_url ="inc/source/updateInventory.php?action=add_withdraw_rawmat_header"+param_receive_rawmat_header+param_product;
+        
+        console.log(update_ajax_url);
+        getDataXML_Sync(update_ajax_url,jsAfterSubmitWithdrawRawmat_v2);
+        
+        document.getElementById("table_loading").style.visibility = "hidden";
+        
+    }
+    function jsAfterSubmitWithdrawRawmat_v2(respText)
+  {
+       
+      
+       document.getElementById("table_loading").style.visibility = "hidden";
+        
+        
+        //console.log("response text = "+respText);
+        if(respText==1)
+        {
+            jsGetWithDrawTable();
+          
+        }
+      
+      
+  }
+    
   function jsAfterSubmitWithdrawRawmat(respText)
   {
-         //console.log(respText);
-      /*  if(respText==1)
-        {
-           
-            document.getElementById("table_loading").style.visibility = "visible";
-            //getData_Sync("./inc/source/getInventoryLog.php?prod_id=1&table_name=withdraw_table_1","div_withdraw_table");
-            getData_Sync("./inc/source/getInventoryLog.php?prod_id=1","div_withdraw_table");
-            document.getElementById("table_loading").style.visibility = "hidden";
-            
-            $(function () {
-                       //$("#withdraw_table_1").DataTable({
-                       $("#receive_table_1").DataTable({
-                      "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": false,
-                "info": true,
-                "autoWidth": false
-                    
-                });
-            });
-        }*/
+       
       jsGetWithDrawTable();
       
   }
   function jsGetWithDrawTable()
   {
         document.getElementById("table_loading").style.visibility = "visible";
-        //getData_Sync("./inc/source/getInventoryLog.php?prod_id=1&table_name=withdraw_table_1","div_withdraw_table");
-       // getData_Sync("./inc/source/getInventoryLog.php?prod_id=1","div_withdraw_table");
-        getData_Sync("./inc/source/getInventoryLog.php?prod_type_id=1","div_withdraw_table");
+        
+        //getData_Sync("./inc/source/getInventoryLog.php?prod_type_id=1","div_withdraw_table");
+      getData_Sync("inc/source/getInventoryLog_v2.php?prod_type_id=1&tran_type=withdraw_rawmat&param_table=withdraw_table_1","div_withdraw_table");
         document.getElementById("table_loading").style.visibility = "hidden";
        $(function () {
                      //$("#withdraw_table_1").DataTable({
-                     $("#receive_table_1").DataTable({
+                     $("#withdraw_table_1").DataTable({
                       "paging": true,
                 "lengthChange": true,
                 "searching": true,

@@ -552,7 +552,7 @@ desired effect
         document.getElementById("table_loading").style.visibility = "hidden";
         
         
-        console.log("response text = "+respText);
+        //console.log("response text = "+respText);
         if(respText==1)
         {
             jsGetReceiveTable();
