@@ -258,7 +258,7 @@
             $_query = "Insert into receive_rawmat_document_header(document_date,document_no,remarks,create_date,create_by_uid,modify_date,modify_by_uid,document_status,status_code)".
             " VALUES('$insertdate','$_receive_doc_no','$_receive_remark',now(),$_user_login_id,now(),$_user_login_id ,1,'RM-ADD')";
             
-           echo "$_query ";
+         // echo "<BR>$_query ";
 
 
             if ($conn->query($_query) === TRUE) {
@@ -292,7 +292,7 @@ function  updateWithdraw_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_q
             
         }
         $_sql ="INSERT INTO withdraw_document_detail(wh_id,prod_id,TM_PCT,amount,location_id,unit_id,status_code) VALUES ($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_unit_id,'$_status')";
-     echo "<BR>$_sql";
+     //echo "<BR>$_sql";
         if ($conn->query($_sql) === TRUE) {
             $last_id = $conn->insert_id;
         }
