@@ -235,18 +235,9 @@ desired effect
                 <div class="col-lg-6 col-xs-6" >
               <h3 class="box-title">รายการรับวัตถุดิบเข้า</h3>
                    </div>
-            <!--  <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>-->
+          
               <div class="col-lg-6 col-xs-6" align="right">
-                <!--<a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">-->
-                <a class="btn btn-app btn-primary" data-toggle="modal" onclick="openDialog()">
+                    <a class="btn btn-app btn-primary" data-toggle="modal" onclick="openDialog()">
                 <i class="fa fa-plus-circle"></i> เพิ่มรายการรับวัตถุดิบ
               </a>
                        
@@ -566,25 +557,13 @@ desired effect
         if(respText==1)
         {
             jsGetReceiveTable();
-          
         }
-        
     }
     function jsOpenReceiveRawmat(rh_id)
     {
-        
-        //jsGetTransaction("receive_rawmat",rh_id);
-        console.log(rh_id);
+       // console.log(rh_id);
         var url_1 ="inc/source/getTranscation_data.php?type=receive_rawmat&rh_id="+rh_id;
          getDataXML_Sync(url_1,jsShowReceiveDialog);
-        
-        
-        
-       /* $('#rawmatModal_1').attr('class', 'modal fade bs-example-modal-lg')
-            .attr('aria-labelledby','myLargeModalLabel');
-		$('.modal-dialog').attr('class','modal-dialog modal-lg');
-        $('#rawmatModal_1').modal('show');*/
-        
     }
     function jsShowReceiveDialog(respText)
     {

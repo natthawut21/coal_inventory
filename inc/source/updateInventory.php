@@ -212,9 +212,6 @@
             
             $_query = "Insert into withdraw_document_header(document_date,document_no,remarks,create_date,create_by_uid,modify_date,modify_by_uid,document_status)".
             " VALUES('$insertdate','$_receive_doc_no','$_receive_remark',now(),$_user_login_id,now(),$_user_login_id ,1)";
-            
-            echo "$_query ";
-
 
             if ($conn->query($_query) === TRUE) {
                 $last_id = $conn->insert_id;

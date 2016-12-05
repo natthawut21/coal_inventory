@@ -108,7 +108,30 @@ desired effect
     <!-- Main content -->
     <section class="content">
       <!-- Your Page Content Here -->
-
+      
+        
+<div class="modal fade bs-example-modal-lg" id="rawmatModal_1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+     <div class="modal-dialog  modal-large">
+                      
+                      
+     <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
+        <h4 class="modal-title" id="myModalLabel">รายการเบิกวัตถุดิบ</h4>
+      </div>
+    
+       <div class="modal-body">
+           <div id="div_withdraw_data"> - </div>
+        </div> 
+           <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">ปิด </button>
+           </div>
+      </div>
+     </div>
+    </div>
+</div>
+        
         
         
          <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -466,7 +489,7 @@ function jsSave_Withdraw_Material_v2()
             val_document_no =obj_txt_document_no.value;
             obj_txt_document_no.value ="";
         }
-        if(val_receive_remarks != null)
+        if(obj_txt_remarks != null)
         {
             val_receive_remarks =obj_txt_remarks.value;
             obj_txt_remarks.value ="";
@@ -521,7 +544,7 @@ function jsSave_Withdraw_Material_v2()
         
         
         //console.log("response text = "+respText);
-        if(respText==1)
+        if(respText!="")
         {
             jsGetWithDrawTable();
           
@@ -557,6 +580,25 @@ function jsSave_Withdraw_Material_v2()
        });
         
     } 
+    
+    
+     function jsOpenWithdrawRawmat(wh_id)
+    {
+       // console.log(rh_id);
+        var url_1 ="inc/source/getTranscation_data.php?type=withdraw_rawmat&wh_id="+wh_id;
+         getDataXML_Sync(url_1,jsShowWithdrawDialog);
+    }
+    function jsShowWithdrawDialog(respText)
+    {
+        
+        if(respText!="")
+        {
+            document.getElementById("div_withdraw_data").innerHTML =respText;
+            $('#rawmatModal_1').attr('class', 'modal fade bs-example-modal-lg').attr('aria-labelledby','myLargeModalLabel');
+            $('.modal-dialog').attr('class','modal-dialog modal-lg');
+            $('#rawmatModal_1').modal('show');
+        }
+    }
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
