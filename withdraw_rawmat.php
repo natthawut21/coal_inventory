@@ -198,13 +198,13 @@ desired effect
                   </select>
                   </td>
                   <td> <input type="text" id="txt_TM_value_a[]" name="txt_TM_value_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข %..."></td>
-                  <td> <input type="text" id="txt_receive_qty_a[]" name="txt_receive_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
+                  <td> <input type="text" id="txt_withdraw_qty_a[]" name="txt_withdraw_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
                   <td>
                    <?php
                        // $_basic_info = new Basic_Info();
                         $_location_option = $_basic_info->getLocationList(-1);
                     ?>
-                  <select class="form-control" id="opt_receive_location_a[]" name="opt_receive_location_a[]">
+                  <select class="form-control" id="opt_withdraw_location_a[]" name="opt_withdraw_location_a[]">
                       <?php echo $_location_option; ?>
                   </select>
                   </td>
@@ -494,41 +494,32 @@ function jsSave_Withdraw_Material_v2()
             val_receive_remarks =obj_txt_remarks.value;
             obj_txt_remarks.value ="";
         }
-       /* var param_receive_rawmat ="product_id="+val_product_id+"&TM_value="+val_TM_value+"&receive_date="+val_receive_date+"&receive_qty="+val_receive_qty+"&store_location="+val_store_location+"&receive_remark="+val_receive_remarks;
-        */
-        
-        var param_receive_rawmat_header ="&withdraw_date="+val_receive_date+"&document_no="+val_document_no+"&receive_remark="+val_receive_remarks;
-        
-        
-       // console.log("inc/source/updateInventory.php?action=receive_rawmat&"+param_receive_rawmat);
       
-       var obj_txt_receive_qty = document.getElementById("opt_rawmat_type_a");
-        var obj_opt_receive_location = document.getElementById("opt_receive_location");
         
-        
+        var param_withdraw_rawmat_header ="&withdraw_date="+val_receive_date+"&document_no="+val_document_no+"&receive_remark="+val_receive_remarks;
         
 
         var obj_opt_rawmat_type = document.forms.form01.elements["opt_rawmat_type_a[]"];
         var obj_txt_TM_value = document.forms.form01.elements["txt_TM_value_a[]"];
-        var obj_txt_receive_qty = document.forms.form01.elements["txt_receive_qty_a[]"];
-        var obj_opt_receive_location = document.forms.form01.elements["opt_receive_location_a[]"];
+        var obj_txt_withdraw_qty = document.forms.form01.elements["txt_withdraw_qty_a[]"];
+        var obj_opt_withdraw_location = document.forms.form01.elements["opt_withdraw_location_a[]"];
 
         var param_product="";
         for (var i = 0, len = obj_opt_rawmat_type.length; i < len; i++) {
             if(obj_opt_rawmat_type[i].value!=-1)
             {
                 
-                param_product=param_product+"&product_id[]="+obj_opt_rawmat_type[i].value+"&TM_value[]="+obj_txt_TM_value[i].value+"&receive_qty[]="+obj_txt_receive_qty[i].value+"&store_location[]="+obj_opt_receive_location[i].value;
+                param_product=param_product+"&product_id[]="+obj_opt_rawmat_type[i].value+"&TM_value[]="+obj_txt_TM_value[i].value+"&withdraw_qty[]="+obj_txt_withdraw_qty[i].value+"&store_location[]="+obj_opt_withdraw_location[i].value;
                 obj_opt_rawmat_type[i].value="";
                 obj_txt_TM_value[i].value="";
-                obj_txt_receive_qty[i].value="";
-                obj_opt_receive_location[i].value="-1";
+                obj_txt_withdraw_qty[i].value="";
+                obj_opt_withdraw_location[i].value="-1";
                 
             }
           
             
         }
-        var update_ajax_url ="inc/source/updateInventory.php?action=add_withdraw_rawmat_header"+param_receive_rawmat_header+param_product;
+        var update_ajax_url ="inc/source/updateInventory.php?action=add_withdraw_rawmat_header"+param_withdraw_rawmat_header+param_product;
         
         console.log(update_ajax_url);
         getDataXML_Sync(update_ajax_url,jsAfterSubmitWithdrawRawmat_v2);

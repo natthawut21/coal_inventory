@@ -109,16 +109,15 @@
             {
                 $_product_array = $_GET['product_id'];
                 $_TM_value_array = $_GET['TM_value'];
-                $_receive_qty_array = $_GET['receive_qty'];
-                $_store_location_array = $_GET['store_location'];
+                $_withdraw_qty_array = $_GET['withdraw_qty'];
+                $_withdraw_location_array = $_GET['store_location'];
                 for($p=0;$p<count($_product_array);$p++)
                 {
-                    if($_product_array[$p]!=-1 && $_receive_qty_array[$p]>0)
+                    if($_product_array[$p]!=-1 && $_withdraw_qty_array[$p]>0)
                     {
                         
-                      $_update_status = updateWithdraw_Detail( $_header_update_status,$_product_array[$p],$_TM_value_array[$p],$_receive_qty_array[$p],$_store_location_array[$p],"");
-//                      $_update_status = addNewRawMat($_withdraw_date ,$_product_array[$p], $_receive_qty_array[$p],$_TM_value_array[$p] , $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");  
-                    //  $_update_status = withdrawRawMat($_withdraw_date, $_product_array[$p], $_receive_qty_array[$p],$_TM_value_array[$p],  $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");
+                      $_update_status = updateWithdraw_Detail( $_header_update_status,$_product_array[$p],$_TM_value_array[$p],$_withdraw_qty_array[$p],$_withdraw_location_array[$p],"");
+                      $_update_status = withdrawRawMat($_withdraw_date, $_product_array[$p], $_withdraw_qty_array[$p],$_TM_value_array[$p],  $_withdraw_location_array[$p] ,"HEADER_ID=$_header_update_status");
                         
                         
                     }

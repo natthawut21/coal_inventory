@@ -505,14 +505,19 @@ function getWithdrawRawMat($_day_prev)
     
      include "inc/source/db_connect_inc.php";
      $_prod_id=1;
-     $_sql =" SELECT sum(tx.amount) as sum_raw_mat  ".
+   /*  $_sql =" SELECT sum(tx.amount) as sum_raw_mat  ".
                " FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user ".
                " WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id = $_prod_id and tx.tx_type_id  =2 ".
             "and  tx.tx_create_time >= (CURDATE() - INTERVAL $_day_prev DAY)  ";
-    
+    */
     /*
     SELECT tx.prod_id,tx.tx_type_id as tx_type_id,tx.tx_create_time,tx.amount,tx.prior_balance,tx.balance,tx.location_id,tx.remarks,tx.unit_id,tx.tx_log_time,tx.uid ,DATE_FORMAT(tx.tx_create_time,"%d/%m/%Y") as tx_date_1,tt.tx_code_TH as tx_code,lo.location_name as location,tx.amount as receive_amount,tx.balance as balance ,unit.unit_code as unit,user.username FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and tx.prod_id =1 and tx.tx_type_id =1 order by tx.tx_log_time desc
     */
+    
+      $_sql =" SELECT sum(tx.amount) as sum_raw_mat  ".
+               " FROM tx_log tx ,product_code prd,location lo,tx_type tt,unit ,mgnt_user user ".
+               " WHERE tx.prod_id = prd.prod_id and tx.location_id = lo.location_id and tx.tx_type_id = tt.tx_type_id and tx.unit_id=unit.unit_id and tx.uid = user.uid and prd.prod_type_id = $_prod_id and tx.tx_type_id  =2 ".
+            "and  tx.tx_create_time >= (CURDATE() - INTERVAL $_day_prev DAY)  ";
     
     //echo $_sql ;
     $_sum_raw_mat=0;
