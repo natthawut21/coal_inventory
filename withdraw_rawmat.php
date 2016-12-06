@@ -173,6 +173,7 @@ desired effect
              
         </div>
          <div class="row">
+          <div class="col-md-12"> 
           <table class="table table-bordered table-striped">
               <tr>
                   <th style="width: 10px">#</th>
@@ -212,6 +213,7 @@ desired effect
               </tr>
               <?php } ?>
           </table>
+            </div>
       </div>
      
         <div class="row">
@@ -287,13 +289,7 @@ desired effect
                   <td>-</td>
                   <td>-</td>
                   <td>-</td>
-                 <!--<td align="right">
-                    <span class="badge bg-yellow">-</span>
-                   </td>
-                  <td align="right">
-                    
-                    <span class="badge bg-grey">-</span>
-                    </td>-->
+                
                   <td align="center">-</td>
                 </tr>
                     

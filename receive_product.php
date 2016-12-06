@@ -9,7 +9,7 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv=Content-Type content="text/html; charset=tis-620">
 
-  <title>ผลิตสินค้า | ระบบบริหารคลังสินค้า </title>
+  <title>แปรรูปวัตถุดิบ | ระบบบริหารคลังสินค้า </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -85,7 +85,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         ผลิตสินค้า
+        แปรรูปวัตถุดิบ
         <!-- <small>รายงานสรุป</small> -->
       </h1>
       <!--<ol class="breadcrumb">
@@ -112,14 +112,14 @@ desired effect
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
-        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการผลิตสินค้า</h4>
+        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการ แปรรูปวัตถุดิบ</h4>
       </div>
     
        <div class="modal-body">
            
            
          <div class="row">
-             <div class="col-md-2"><label>วันที่ ผลิตสินค้า</label></div>
+             <div class="col-md-2"><label>วันที่ แปรรูปวัตถุดิบ</label></div>
           <div class="col-md-3 ">
                <div class="form-group">
                 <div class="input-group date">
@@ -155,7 +155,7 @@ desired effect
                     </h3>
                  </div>
                  <div class="col-md-6">
-                    <select class="form-control" id="opt_refer_withdraw_product" name="opt_refer_withdraw_product" onchange="">
+                    <select class="form-control" id="opt_refer_withdraw_rawmat" name="opt_refer_withdraw_rawmat" onchange="">
                         <option value="-1">  </option>
                         <option value="1"> XXXXX </option>
                     </select>
@@ -182,56 +182,56 @@ desired effect
             
             
         </div>
+        <div class="row">
+             <div class="col-md-12">
             
-        <div class="row">
-            <div class="col-md-4"><label>จำนวน</label></div>
-            <div class="col-md-7 "><div class="form-group">
-                  
-                  <input type="text" id="txt_receive_qty" name="txt_receive_qty" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
-               
-                </div>
-            </div>
-            <div class="col-md-1">
-                 <label>Tons</label>
-            </div>
-           </div>
-        <div class="row">
-            <div class="col-md-4"><label>กลุ่มสินค้า</label></div>
-            <div class="col-md-8 ">
-              <div class="form-group">
-                  
-                  
-                  <?php
-                        $_basic_info = new Basic_Info();
-                        $_product_option = $_basic_info->getProductList(-1);
-                    ?>
-                  <select class="form-control" id="opt_receive_product" name="opt_receive_product">
-                      <?php echo $_product_option; ?>
+             <table class="table table-bordered table-striped">
+              <tr>
+                  <th style="width: 10px">#</th>
+                  <th style="width: 80px">ชนิดถ่านหิน</th>
+                  <th style="width: 20px">% TM</th>
+                  <th style="width: 40px">จำนวน (Tons)</th>
+                  <th style="width: 60px">ที่จัดเก็บ</th>
+              </tr>
+              <?php
+              
+               $_basic_info = new Basic_Info(); 
+              
+              $row_data=5;
+                for($i=0;$i<5;$i++)
+                {
+                     $_rawmat_option = $_basic_info->getRawMatList_v1(-1);
+              ?>
+              <tr>
+                   <td><?php echo $i+1; ?></td>
+                  <td>
+                   <select class="form-control" id="opt_rawmat_type_a[]" name="opt_rawmat_type_a[]">
+                           <?php echo $_rawmat_option; ?>
                   </select>
-                  
-                </div>
-            
-            </div>
-        </div> <div class="row">
-            <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
-            <div class="col-md-8 ">
-             <!-- Select multiple-->
-                <div class="form-group">
-                  
-                     <!--<select multiple class="form-control">-->
-                  <?php
-                        $_basic_info = new Basic_Info();
+                  </td>
+                  <td> <input type="text" id="txt_TM_value_a[]" name="txt_TM_value_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข %..."></td>
+                  <td> <input type="text" id="txt_withdraw_qty_a[]" name="txt_withdraw_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
+                  <td>
+                   <?php
+                       // $_basic_info = new Basic_Info();
                         $_location_option = $_basic_info->getLocationList(-1);
                     ?>
-                  <select class="form-control" id="opt_receive_location" name="opt_receive_location">
+                  <select class="form-control" id="opt_withdraw_location_a[]" name="opt_withdraw_location_a[]">
                       <?php echo $_location_option; ?>
                   </select>
+                  </td>
                   
-                    
-                </div>
+              </tr>
+              <?php } ?>
+          </table>
+                 
+                 
+            
             
             </div>
-        </div>
+           </div>
+       
+       
         <div class="row">
             <div class="col-md-4"><label>รายละเอียดเพิ่มเติม</label></div>
             <div class="col-md-8 "> 
@@ -266,7 +266,7 @@ desired effect
             <div class="box-header">
               <div class="row">
                 <div class="col-lg-6 col-xs-6" >
-              <h3 class="box-title">รายการผลิตสินค้า</h3>
+              <h3 class="box-title">.</h3>
                    </div>
             <!--  <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -280,8 +280,7 @@ desired effect
               <div class="col-lg-6 col-xs-6" align="right">
                 <!--<a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">-->
                 <a class="btn btn-app btn-primary" data-toggle="modal" onclick="openDialog()" >
-                <i class="fa fa-plus-circle"></i> เพิ่มรายการผลิตสินค้า
-              </a>
+                <i class="fa fa-plus-circle"></i> เพิ่มรายการ แปรรูปวัตถุดิบ   </a>
                        
                        
                    </div>
