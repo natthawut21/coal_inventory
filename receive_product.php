@@ -293,7 +293,7 @@ desired effect
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-                <div id="div_receive_table">
+             <div id="div_receive_table">
               <table id="product_table" class="table table-bordered table-striped table-hover">
                 
                <thead>
@@ -428,8 +428,8 @@ desired effect
     
  function jsGetReceiveProductTable()
     {
-        document.getElementById("table_loading").style.visibility = "visible";
-        //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
+       /* document.getElementById("table_loading").style.visibility = "visible";
+        
         getData_Sync("inc/source/getProductInventoryLog.php?prod_id=1&param_table=product_table","div_receive_table");
         document.getElementById("table_loading").style.visibility = "hidden";
         $(function () {
@@ -442,7 +442,26 @@ desired effect
                 "autoWidth": false
             });
             
-         });
+         });*/
+        
+        document.getElementById("table_loading").style.visibility = "visible";
+        
+        //getData_Sync("./inc/source/getInventoryLog.php?prod_type_id=1","div_withdraw_table");
+      getData_Sync("inc/source/getInventoryLog_v2.php?prod_type_id=1&tran_type=withdraw_rawmat&param_table=withdraw_table_1","div_withdraw_table");
+        document.getElementById("table_loading").style.visibility = "hidden";
+       $(function () {
+                     //$("#withdraw_table_1").DataTable({
+                     $("#withdraw_table_1").DataTable({
+                      "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+                    
+                });
+       });
+        
         
     }     
 function jsSave_AddNew_Material()
