@@ -116,34 +116,8 @@ desired effect
       </div>
     
        <div class="modal-body">
+           <div class="row">
            
-           
-         <div class="row">
-             <div class="col-md-2"><label>วันที่ แปรรูปวัตถุดิบ</label></div>
-          <div class="col-md-3 ">
-               <div class="form-group">
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" id="txt_receive_date" name="txt_receive_date" class="form-control pull-right" >
-                </div>
-              </div>
-           </div>
-            <div class="col-md-2 col-md-offset-2 "><label>หมายเลขเอกสาร</label></div>
-             <div class="col-md-3 ">
-                 <input type="text" id="txt_document_no" name="txt_document_no" class="form-control pull-right" >
-                  </div>
-        
-        </div>
-        <div class="row">
-            <!-- <div class="col-md-3"><label>อ้างอิง รายการเบิกวัตถุดิบ</label></div>
-             <div class="col-md-3 ">
-                  <select class="form-control" id="opt_refer_withdraw_product" name="opt_refer_withdraw_product" onchange="">
-                      <option value="-1">  </option>
-                      <option value="1"> XXXXX </option>
-                  </select>
-            </div>-->
             <div class="col-md-12">
              <div class="box box-warning box-solid">
             <div class="box-header with-border">
@@ -182,6 +156,27 @@ desired effect
             
             
         </div>
+		
+           
+         <div class="row">
+             <div class="col-md-2"><label>วันที่ แปรรูปวัตถุดิบ</label></div>
+          <div class="col-md-3 ">
+               <div class="form-group">
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" id="txt_receive_date" name="txt_receive_date" class="form-control pull-right" >
+                </div>
+              </div>
+           </div>
+            <div class="col-md-2 col-md-offset-2 "><label>หมายเลขเอกสาร</label></div>
+             <div class="col-md-3 ">
+                 <input type="text" id="txt_document_no" name="txt_document_no" class="form-control pull-right" >
+                  </div>
+        
+        </div>
+       
         <div class="row">
              <div class="col-md-12">
             
