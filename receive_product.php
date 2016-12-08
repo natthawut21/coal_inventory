@@ -195,7 +195,7 @@ desired effect
               $row_data=5;
                 for($i=0;$i<5;$i++)
                 {
-                     $_rawmat_option = $_basic_info->getRawMatList_v1(-1);
+                     $_rawmat_option = $_basic_info->getProductList_v1(-1);
               ?>
               <tr>
                    <td><?php echo $i+1; ?></td>
