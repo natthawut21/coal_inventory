@@ -2,8 +2,9 @@
         $_server_name="localhost";
 
 
-        $_username="coal_inv_user";
-        $_password="popeye";
+        $_username="coal_inv_user";        $_password="popeye";
+        //$_username="test_user_01";        $_password="passw0rd";
+        //$_username="root";        $_password="password";
         $_dbname="coal_inventory";
 
       /*    Inkberry Server*/
@@ -29,11 +30,11 @@
 $conn = new mysqli($_server_name, $_username, $_password, $_dbname);
 // Check connection
 if ($conn->connect_error) {
-   // die("Connection failed: " . $conn->connect_error);
+    //die("Connection failed: " . $conn->connect_error);
 } 
 else 
 { 
-//    echo "Connect Mysqli OO";
+   // echo "Connect Mysqli OO";
 }
 
 if (!$conn->set_charset("utf8")) {

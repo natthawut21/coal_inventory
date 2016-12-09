@@ -129,9 +129,14 @@ desired effect
                     </h3>
                  </div>
                  <div class="col-md-6">
-                    <select class="form-control" id="opt_refer_withdraw_rawmat" name="opt_refer_withdraw_rawmat" onchange="">
+                    <select class="form-control" id="opt_refer_withdraw_rawmat" name="opt_refer_withdraw_rawmat" onchange="jsGetWithdrawData(this.value);">
                         <option value="-1">  </option>
-                        <option value="1"> XXXXX </option>
+						<?php
+								$_basic_info = new Basic_Info(); 
+								$_withdrawheader_list = $_basic_info->getWithdrawRawmatOption();
+								echo $_withdrawheader_list;
+							
+							?>
                     </select>
                 </div>
                 </div>
@@ -143,11 +148,12 @@ desired effect
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <div class="row">
-                  <div class="col-md-4">
-               
-                </div>
-                </div>
+				<div id="div_withdraw_data"> - </div>
+				<!--<div class="row">
+                  <div class="col-md-12">
+						<div id="div_withdraw_data"> - </div>
+				  </div>
+                </div>-->
             </div>
             <!-- /.box-body -->
           </div>
@@ -192,8 +198,8 @@ desired effect
               
                $_basic_info = new Basic_Info(); 
               
-              $row_data=5;
-                for($i=0;$i<5;$i++)
+              $row_data=10;
+                for($i=0;$i<$row_data;$i++)
                 {
                      $_rawmat_option = $_basic_info->getProductList_v1(-1);
               ?>
@@ -420,29 +426,32 @@ desired effect
         $('#rawmatModal').modal('show');
         
     }
-    
+ function jsGetWithdrawData(wh_id)
+ {
+	    var url_1 ="inc/source/getTranscation_data.php?type=withdraw_rawmat&wh_id="+wh_id;
+		
+		console.log(url_1);
+        getDataXML_Sync(url_1,jsShowWithdrawDialog);
+		
+	 
+ }
+  function jsShowWithdrawDialog(respText)
+    {
+        document.getElementById("div_withdraw_data").innerHTML ="-";
+        if(respText!="")
+        {
+			//console.log(respText);
+            document.getElementById("div_withdraw_data").innerHTML =respText;
+        }
+    }
  function jsGetReceiveProductTable()
     {
-       /* document.getElementById("table_loading").style.visibility = "visible";
-        
-        getData_Sync("inc/source/getProductInventoryLog.php?prod_id=1&param_table=product_table","div_receive_table");
-        document.getElementById("table_loading").style.visibility = "hidden";
-        $(function () {
-             $("#product_table").DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": false,
-                "info": true,
-                "autoWidth": false
-            });
-            
-         });*/
-        
+      
+       
         document.getElementById("table_loading").style.visibility = "visible";
         
-        //getData_Sync("./inc/source/getInventoryLog.php?prod_type_id=1","div_withdraw_table");
-      getData_Sync("inc/source/getInventoryLog_v2.php?prod_type_id=1&tran_type=withdraw_rawmat&param_table=withdraw_table_1","div_withdraw_table");
+     
+      //getData_Sync("inc/source/getInventoryLog_v2.php?prod_type_id=1&tran_type=withdraw_rawmat&param_table=withdraw_table_1","div_withdraw_table");
         document.getElementById("table_loading").style.visibility = "hidden";
        $(function () {
                      //$("#withdraw_table_1").DataTable({
@@ -457,7 +466,7 @@ desired effect
                 });
        });
         
-        
+       
     }     
 function jsSave_AddNew_Material()
     {

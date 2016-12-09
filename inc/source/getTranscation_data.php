@@ -25,7 +25,8 @@
         
         </div>
 
-            <div class="row">
+        <div class="row">
+		 <div class="col-md-12">
           <table class="table table-bordered table-striped">
               <tr>
                   <th style="width: 10px">#</th>
@@ -37,9 +38,9 @@
               <?php echo $_receive_data;?>
          </table>
            </div>
-           
+         </div> 
            <div class="row">
-            <div class="col-md-2"><label>รายละเอียด</label></div>
+            <div class="col-md-2"><h4><span class="label label-default" align="center"><B>ลายละเอียด:</B></span></h4></div>
             <div class="col-md-10 "> 
                 <div class="form-group">
                   
@@ -50,12 +51,10 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2"><label>ผู้ทำรายการ</label></div>
+                <div class="col-md-2"><h4><span class="label label-default" align="center"><B>ผู้ทำรายการ:</B></span></h4></div>
                 <div class="col-md-10 "><h4><div class="label label-info" align="center"><b> <?php echo $_username;?></b></div></h4></div>
            </div>
-           
-           
-        </div>   
+		   
 
 <?php }  
  if($_GET['type']=="withdraw_rawmat")
@@ -77,7 +76,10 @@
         
         </div>
 
-            <div class="row">
+         <div class="row">
+		 
+		  <div class="col-md-12">
+		  
           <table class="table table-bordered table-striped">
               <tr>
                   <th style="width: 10px">#</th>
@@ -89,25 +91,31 @@
               <?php echo $_withdraw_data; ?>
          </table>
            </div>
-           
+          </div>
            <div class="row">
-            <div class="col-md-2"><label>รายละเอียด</label></div>
-            <div class="col-md-10 "> 
-                <div class="form-group">
+            <div class="col-md-2"><h4><span class="label label-default" align="center"><B>ลายละเอียด:</B></span></h4></div>
+            <div class="col-md-10 ">
+				<h4><span class="label label-info" align="center">
+				<?php echo "$_remarks";?>		
+				</span>
+				</h4>
+				<BR>
+                <!--<div class="form-group">
                   
                   <textarea id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."><?php echo "$_remarks";?></textarea>
                     
                    
-                </div></div>
+                </div>-->
+				</div>
             </div>
 
             <div class="row">
-                <div class="col-md-2"><label>ผู้ทำรายการ</label></div>
+                <div class="col-md-2"><h4><span class="label label-default" align="center"><B>ผู้ทำรายการ:</B></span></h4></div>
                 <div class="col-md-10 "><h4><div class="label label-info" align="center"><b> <?php echo $_username;?></b></div></h4></div>
            </div>
+             
            
-           
-        </div>   
+        
 
 
 <?php
