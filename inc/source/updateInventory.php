@@ -128,6 +128,38 @@
            
             
         }
+        
+          else if($_action=="add_receive_prodcut_header")
+        {
+            $_receive_date = $_GET['receive_date'];
+            $_receive_doc_no = $_GET['document_no'];
+            $_receive_remark = $_GET['receive_remark'];
+            $_header_update_status = updateRecProduct_Header("addnew",$_receive_date , $_receive_doc_no,$_receive_remark);
+            
+            if($_header_update_status>-1)
+            {
+                $_product_array = $_GET['product_id'];
+                $_TM_value_array = $_GET['TM_value'];
+                $_receive_qty_array = $_GET['receive_qty'];
+                $_store_location_array = $_GET['store_location'];
+                for($p=0;$p<count($_product_array);$p++)
+                {
+                    if($_product_array[$p]!=-1 && $_receive_qty_array[$p]>0)
+                    {
+                        
+                      $_update_header_detail_status = updateProductHeader_Detail( $_header_update_status,$_product_array[$p],$_TM_value_array[$p],$_receive_qty_array[$p],$_store_location_array[$p],"");
+                    // $_update_status = addNewRawMat($_receive_date ,$_product_array[$p], $_receive_qty_array[$p],$_TM_value_array[$p] , $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");  
+                      $_update_status = addNewProduct($_receive_date ,$_product_array[$p], $_receive_qty_array[$p] ,$_TM_value_array[$p] , $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");
+                        
+                        
+                    }
+                    
+                }
+             echo $_update_status;   
+            }
+           
+            
+        }
     
     }
     function getRawMatBalance($_product_id)
@@ -272,6 +304,50 @@
         return  $last_id;
     }
 
+
+function updateRecProduct_Header($_action_type,$_receive_date , $_receive_doc_no,$_receive_remark )
+    {
+        include "db_connect_inc.php";
+       // $_product_id =1;
+        $_tx_type_id =1;
+        $_unit_id =1;
+        
+        if(isset($_SESSION['user_login_id']))
+        {
+            $_user_login_id = $_SESSION['user_login_id'];
+        }
+        else 
+        {
+             $_user_login_id=4;
+            
+        }
+        $_receive_date_array = explode("/",$_receive_date);
+        $insertdate =  $_receive_date_array[2]."/". $_receive_date_array[1]."/". $_receive_date_array[0];
+        
+        if($_action_type=="addnew")
+        {
+           $_rh_id = getMaxReceiveRawMatHeader();
+            
+            $_query = "Insert into production_document_header(document_date,document_no,remarks,create_date,create_by_uid,modify_date,modify_by_uid,document_status,status_code)".
+            " VALUES('$insertdate','$_receive_doc_no','$_receive_remark',now(),$_user_login_id,now(),$_user_login_id ,1,'PRD-ADD')";
+            
+         echo "<BR>$_query ";
+
+
+            if ($conn->query($_query) === TRUE) {
+                $last_id = $conn->insert_id;
+                
+            
+        }
+      
+        }
+        
+        
+        
+   
+      $conn->close();
+        return  $last_id;
+    }
 function  updateWithdraw_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_status)
   {
        include "db_connect_inc.php";
@@ -313,6 +389,30 @@ function  updateWithdraw_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_q
             
         }
         $_sql ="INSERT INTO receive_rawmat_document_detail(rh_id,prod_id,TM_PCT,amount,location_id,unit_id,status_code) VALUES ($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_unit_id,'$_status')";
+     //echo "<BR>$_sql";
+        if ($conn->query($_sql) === TRUE) {
+            $last_id = $conn->insert_id;
+        }
+      return $last_id;
+      
+  }
+
+function  updateProductHeader_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_status)
+  {
+       include "db_connect_inc.php";
+       $_tx_type_id =1;
+       $_unit_id =1;
+      $last_id=-1;
+       if(isset($_SESSION['user_login_id']))
+        {
+            $_user_login_id = $_SESSION['user_login_id'];
+        }
+        else 
+        {
+             $_user_login_id=4;
+            
+        }
+        $_sql ="INSERT INTO production_document_detail(ph_id,prod_id,TM_PCT,amount,location_id,unit_id,status_code) VALUES ($_hdeader_id,$_product_id,$_TM_value,$_receive_qty,$_location_id,$_unit_id,'$_status')";
      //echo "<BR>$_sql";
         if ($conn->query($_sql) === TRUE) {
             $last_id = $conn->insert_id;
@@ -412,7 +512,7 @@ function  updateWithdraw_Detail($_hdeader_id,$_product_id,$_TM_value,$_receive_q
         return  $_update_status;
     }
 
-function addNewProduct($_receive_date ,$_prod_id, $_receive_qty , $_store_location ,$_receive_remark )
+function addNewProduct($_receive_date ,$_prod_id, $_receive_qty , $_TM_value,$_store_location ,$_receive_remark )
     {
         include "db_connect_inc.php";
         $_product_id =$_prod_id;
@@ -432,8 +532,8 @@ function addNewProduct($_receive_date ,$_prod_id, $_receive_qty , $_store_locati
         $insertdate =  $_receive_date_array[2]."/". $_receive_date_array[1]."/". $_receive_date_array[0];
         $_prior_balance = getProductBalance($_product_id);
         $_new_balance =  $_receive_qty+$_prior_balance;
-        $sql_1 = "INSERT INTO tx_log (prod_id,tx_type_id,tx_create_time,amount,prior_balance,balance,location_id,remarks,unit_id,tx_log_time,uid)  ".
-                            " VALUES ( $_product_id, $_tx_type_id,'$insertdate', $_receive_qty, $_prior_balance,$_new_balance ,$_store_location,'$_receive_remark',$_unit_id,now(),$_user_login_id);";
+        $sql_1 = "INSERT INTO tx_log (prod_id,tx_type_id,tx_create_time,amount,prior_balance,balance,location_id,remarks,unit_id,tx_log_time,uid,TM_PCT)  ".
+                            " VALUES ( $_product_id, $_tx_type_id,'$insertdate', $_receive_qty, $_prior_balance,$_new_balance ,$_store_location,'$_receive_remark',$_unit_id,now(),$_user_login_id,$_TM_value);";
         // echo "<BR> $sql_1 ";
         
         

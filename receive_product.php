@@ -198,7 +198,7 @@ desired effect
               
                $_basic_info = new Basic_Info(); 
               
-              $row_data=10;
+              $row_data=5;
                 for($i=0;$i<$row_data;$i++)
                 {
                      $_rawmat_option = $_basic_info->getProductList_v1(-1);
@@ -206,18 +206,18 @@ desired effect
               <tr>
                    <td><?php echo $i+1; ?></td>
                   <td>
-                   <select class="form-control" id="opt_rawmat_type_a[]" name="opt_rawmat_type_a[]">
+                   <select class="form-control" id="opt_product_id_a[]" name="opt_product_id_a[]">
                            <?php echo $_rawmat_option; ?>
                   </select>
                   </td>
                   <td> <input type="text" id="txt_TM_value_a[]" name="txt_TM_value_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข %..."></td>
-                  <td> <input type="text" id="txt_withdraw_qty_a[]" name="txt_withdraw_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
+                  <td> <input type="text" id="txt_receive_qty_a[]" name="txt_receive_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
                   <td>
                    <?php
                        // $_basic_info = new Basic_Info();
                         $_location_option = $_basic_info->getLocationList(-1);
                     ?>
-                  <select class="form-control" id="opt_withdraw_location_a[]" name="opt_withdraw_location_a[]">
+                  <select class="form-control" id="opt_receive_location_a[]" name="opt_receive_location_a[]">
                       <?php echo $_location_option; ?>
                   </select>
                   </td>
@@ -470,13 +470,7 @@ desired effect
     }     
 function jsSave_AddNew_Material()
     {
-    //    alert("After Save");
-       // console.log("After Save");
-         /*txt_receive_date
-           txt_receive_qty
-           opt_receive_location
-           txt_remarks
-        */
+   /*
         var obj_txt_receive_date = document.getElementById("txt_receive_date");
         var obj_txt_receive_qty = document.getElementById("txt_receive_qty");
         var obj_opt_receive_location = document.getElementById("opt_receive_location");
@@ -520,7 +514,70 @@ function jsSave_AddNew_Material()
         
        // console.log(param_receive_product);
         document.getElementById("table_loading").style.visibility = "hidden";
-        getDataXML_Sync("inc/source/updateInventory.php?action=receive_product&"+param_receive_product,jsAfterSubmitReceiveProduct);
+        getDataXML_Sync("inc/source/updateInventory.php?action=receive_product&"+param_receive_product,jsAfterSubmitReceiveProduct);*/
+        
+        
+         document.getElementById("table_loading").style.visibility = "visible";
+        
+        var obj_txt_receive_date = document.getElementById("txt_receive_date");
+        var obj_txt_document_no = document.getElementById("txt_document_no");
+        var obj_txt_remarks = document.getElementById("txt_remarks");
+        
+       var val_receive_date ="";
+       var val_document_no ="";
+        var val_receive_remarks ="";
+        if(obj_txt_receive_date != null)
+        {
+            val_receive_date =obj_txt_receive_date.value;
+            obj_txt_receive_date.value ="";
+        }
+        
+        if(obj_txt_document_no != null)
+        {
+            val_document_no =obj_txt_document_no.value;
+            obj_txt_document_no.value ="";
+        }
+        if(val_receive_remarks != null)
+        {
+            val_receive_remarks =obj_txt_remarks.value;
+            obj_txt_remarks.value ="";
+        }
+     
+        
+        var param_receive_rawmat_header ="&receive_date="+val_receive_date+"&document_no="+val_document_no+"&receive_remark="+val_receive_remarks;
+        
+        
+     
+        
+        
+
+        var obj_opt_product_id = document.forms.form01.elements["opt_product_id_a[]"];
+        var obj_txt_TM_value = document.forms.form01.elements["txt_TM_value_a[]"];
+        var obj_txt_receive_qty = document.forms.form01.elements["txt_receive_qty_a[]"];
+        var obj_opt_receive_location = document.forms.form01.elements["opt_receive_location_a[]"];
+
+        var param_product="";
+        for (var i = 0, len = obj_opt_product_id.length; i < len; i++) {
+            if(obj_opt_product_id[i].value!=-1)
+            {
+                
+                param_product=param_product+"&product_id[]="+obj_opt_product_id[i].value+"&TM_value[]="+obj_txt_TM_value[i].value+"&receive_qty[]="+obj_txt_receive_qty[i].value+"&store_location[]="+obj_opt_receive_location[i].value;
+                obj_opt_product_id[i].value="";
+                obj_txt_TM_value[i].value="";
+                obj_txt_receive_qty[i].value="";
+                obj_opt_receive_location[i].value="-1";
+                
+            }
+          
+            
+        }
+        var update_ajax_url ="inc/source/updateInventory.php?action=add_receive_product_header&"+param_receive_rawmat_header+param_product;
+        
+        console.log(update_ajax_url);
+        getDataXML_Sync(update_ajax_url,jsAfterSubmitReceiveProduct);
+        
+        document.getElementById("table_loading").style.visibility = "hidden";
+        
         
     }
     function jsAfterSubmitReceiveProduct(respText)
@@ -530,29 +587,12 @@ function jsSave_AddNew_Material()
         {
             jsGetReceiveProductTable();
             
-       /*  document.getElementById("table_loading").style.visibility = "visible";
-        //getData_Sync("inc/source/getInventoryLog.php?prod_id=1&table_name=receive_table_1","div_receive_table");
-        getData_Sync("inc/source/getProductInventoryLog.php?prod_id=1&param_table=product_table","div_receive_table");
-        document.getElementById("table_loading").style.visibility = "hidden";
-        $(function () {
-             $("#product_table").DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": false,
-                "info": true,
-                "autoWidth": false
-            });
-            
-         });*/
+      
         }
         
     }
 </script>
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+ 
 </body>
 
 
