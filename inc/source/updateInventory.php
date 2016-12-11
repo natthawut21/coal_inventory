@@ -8,6 +8,7 @@
     if(isset($_GET['action']))
     {   
         $_action =$_GET['action'];
+       
         if( $_action == "receive_rawmat")
         {
             
@@ -67,7 +68,7 @@
             
             
         }
-        
+                           
         else if($_action=="add_receive_rawmat_header")
         {
             $_receive_date = $_GET['receive_date'];
@@ -128,12 +129,14 @@
            
             
         }
-        
-          else if($_action=="add_receive_prodcut_header")
+              
+          else if($_action=="add_receive_product_header")
         {
             $_receive_date = $_GET['receive_date'];
             $_receive_doc_no = $_GET['document_no'];
             $_receive_remark = $_GET['receive_remark'];
+              
+            
             $_header_update_status = updateRecProduct_Header("addnew",$_receive_date , $_receive_doc_no,$_receive_remark);
             
             if($_header_update_status>-1)
@@ -331,7 +334,7 @@ function updateRecProduct_Header($_action_type,$_receive_date , $_receive_doc_no
             $_query = "Insert into production_document_header(document_date,document_no,remarks,create_date,create_by_uid,modify_date,modify_by_uid,document_status,status_code)".
             " VALUES('$insertdate','$_receive_doc_no','$_receive_remark',now(),$_user_login_id,now(),$_user_login_id ,1,'PRD-ADD')";
             
-         echo "<BR>$_query ";
+         //echo "<BR>$_query ";
 
 
             if ($conn->query($_query) === TRUE) {

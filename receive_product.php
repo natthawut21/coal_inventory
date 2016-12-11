@@ -100,9 +100,30 @@ desired effect
         
         
         
-<!--<div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-    -->            
+        
+        
+<div class="modal fade bs-example-modal-lg" id="productModal_1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+     <div class="modal-dialog  modal-large">
+                      
+                      
+     <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
+        <h4 class="modal-title" id="myModalLabel">รายการผลิตสินค้าแปรรูป</h4>
+      </div>
+    
+       <div class="modal-body">
+           <div id="div_receive_data"> - </div>
+        </div> 
+           <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">ปิด </button>
+           </div>
+      </div>
+     </div>
+    </div>
+</div>
+        
                 
                 
       <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -116,6 +137,8 @@ desired effect
       </div>
     
        <div class="modal-body">
+          <form id=form01>
+           
            <div class="row">
            
             <div class="col-md-12">
@@ -245,7 +268,7 @@ desired effect
       
         
            
-           
+           </form>    
       </div>
           
     
@@ -295,44 +318,45 @@ desired effect
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
              <div id="div_receive_table">
-              <table id="product_table" class="table table-bordered table-striped table-hover">
-                
+              <table id="receive_table_1" class="table table-bordered table-striped table-hover">
                <thead>
                 <tr>
                   <th>วันที่</th>
-                  <th>ประเภทธุรกรรม</th>
-                    
-                 <th>สถานที่จัดเก็บ</th>
-                  <th>ประเภทสินค้าแปรรูป</th>
-                  
+                  <th>ธุรกรรม</th>
+                  <th>ประเภทวัตถุดิบ</th>
+                  <th>ค่า T.M.</th>
                   <th>จำนวน</th>
-                  <th>ยอดรวมสินค้าแปรรูป</th>
+                  <th>รายละเอียด </th>
+                 
+                  <th>ยอดรวมวัตถุดิบ</th>
+                  <th>สถานที่จัดเก็บ</th>
                   <th>ผู้ทำรายการ</th>
                 </tr>
                 </thead>
                 <tbody>
-                
                 <tr>
-                  <td>12/01/2016</td>
-                  <td>รับ สินค้าแปรรูป</td>
-                  <td>โกดัง # 3</td>
-                  <td>สินค้าประเภท 1</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
                   <td align="right">
-                    <span class="badge bg-green">+500 Tons</span>
+                    <span class="badge bg-red">+</span>
                    </td>
                   <td align="right">
                     
-                    <span class="badge bg-grey">500 Tons</span>
+                    <span class="badge bg-grey">+</span>
                     </td>
-                  <td align="center">Username1</td>
+                    <td>-</td>
                 </tr>
-              
+                <tr>
+                
  
                 </tbody>
-               
+              
               </table>
-                </div>
-                 <div id="table_loading" class="overlay">
+                  
+                  
+             </div>
+             <div id="table_loading" class="overlay">
                     <i class="fa fa-refresh fa-spin"></i>
             </div>
                 
@@ -447,15 +471,15 @@ desired effect
  function jsGetReceiveProductTable()
     {
       
-       
-        document.getElementById("table_loading").style.visibility = "visible";
+    
+      document.getElementById("table_loading").style.visibility = "visible";
         
-     
-      //getData_Sync("inc/source/getInventoryLog_v2.php?prod_type_id=1&tran_type=withdraw_rawmat&param_table=withdraw_table_1","div_withdraw_table");
+       
+      getData_Sync("inc/source/getInventoryLog_v2.php?prod_type_id=1&tran_type=receive_product&param_table=receive_product_table_1","div_receive_table");
         document.getElementById("table_loading").style.visibility = "hidden";
        $(function () {
                      //$("#withdraw_table_1").DataTable({
-                     $("#withdraw_table_1").DataTable({
+                     $("#receive_product_table_1").DataTable({
                       "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -464,57 +488,14 @@ desired effect
                 "autoWidth": false
                     
                 });
-       });
+       }); 
+        
         
        
     }     
 function jsSave_AddNew_Material()
     {
-   /*
-        var obj_txt_receive_date = document.getElementById("txt_receive_date");
-        var obj_txt_receive_qty = document.getElementById("txt_receive_qty");
-        var obj_opt_receive_location = document.getElementById("opt_receive_location");
-        var obj_opt_receive_product = document.getElementById("opt_receive_product");
-        var obj_txt_remarks = document.getElementById("txt_remarks");
-        var val_receive_date ="";
-        var val_receive_qty ="";
-        var val_receive_product ="";
-        var val_store_location ="";
-        var val_receive_remarks ="";
-        if(obj_txt_receive_date != null)
-        {
-            val_receive_date =obj_txt_receive_date.value;
-            obj_txt_receive_date.value ="";
-        }
-        
-        if(obj_txt_receive_qty != null)
-        {
-            val_receive_qty =obj_txt_receive_qty.value;
-            obj_txt_receive_qty.value ="";
-        }
-        
-        if(obj_opt_receive_location != null)
-        {
-            val_store_location =obj_opt_receive_location.value;
-            obj_opt_receive_location.value ="";
-        }
-        var val_receive_product ="";
-        if(obj_opt_receive_product != null)
-        {
-            val_receive_product =obj_opt_receive_product.value;
-            obj_opt_receive_product.value ="";
-        }
-        
-        if(val_receive_remarks != null)
-        {
-            val_receive_remarks =obj_txt_remarks.value;
-            obj_txt_remarks.value ="";
-        }
-        var param_receive_product ="receive_date="+val_receive_date+"&receive_qty="+val_receive_qty+"&prod_id="+val_receive_product+"&store_location="+val_store_location+"&receive_remark="+val_receive_remarks;
-        
-       // console.log(param_receive_product);
-        document.getElementById("table_loading").style.visibility = "hidden";
-        getDataXML_Sync("inc/source/updateInventory.php?action=receive_product&"+param_receive_product,jsAfterSubmitReceiveProduct);*/
+ 
         
         
          document.getElementById("table_loading").style.visibility = "visible";
@@ -546,10 +527,6 @@ function jsSave_AddNew_Material()
         
         var param_receive_rawmat_header ="&receive_date="+val_receive_date+"&document_no="+val_document_no+"&receive_remark="+val_receive_remarks;
         
-        
-     
-        
-        
 
         var obj_opt_product_id = document.forms.form01.elements["opt_product_id_a[]"];
         var obj_txt_TM_value = document.forms.form01.elements["txt_TM_value_a[]"];
@@ -573,7 +550,7 @@ function jsSave_AddNew_Material()
         }
         var update_ajax_url ="inc/source/updateInventory.php?action=add_receive_product_header&"+param_receive_rawmat_header+param_product;
         
-        console.log(update_ajax_url);
+        //console.log(update_ajax_url);
         getDataXML_Sync(update_ajax_url,jsAfterSubmitReceiveProduct);
         
         document.getElementById("table_loading").style.visibility = "hidden";
@@ -590,6 +567,25 @@ function jsSave_AddNew_Material()
       
         }
         
+    }
+    
+    function jsOpenReceiveProduct(ph_id)
+    {
+       // console.log(rh_id);
+        var url_1 ="inc/source/getTranscation_data.php?type=receive_product&ph_id="+ph_id;
+         console.log(url_1);
+         getDataXML_Sync(url_1,jsShowReceiveDialog);
+    }
+    function jsShowReceiveDialog(respText)
+    {
+        
+        if(respText!="")
+        {
+            document.getElementById("div_receive_data").innerHTML =respText;
+            $('#productModal_1').attr('class', 'modal fade bs-example-modal-lg').attr('aria-labelledby','myLargeModalLabel');
+            $('.modal-dialog').attr('class','modal-dialog modal-lg');
+            $('#productModal_1').modal('show');
+        }
     }
 </script>
  

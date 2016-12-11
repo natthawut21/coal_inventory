@@ -71,7 +71,7 @@ function getInventory_DocumentHeder($product_type_id,$trans_type)
                 
         
     }
-      if($trans_type=="withdraw_rawmat")
+    else if($trans_type=="withdraw_rawmat")
     {
         $_sql_header ="SELECT h1.wh_id as wh_id,DATE_FORMAT(h1.document_date,'%d-%b-%Y') as document_date,h1.document_no,h1.remarks,h1.create_by_uid,u1.username 
         ,( select sum(amount) from withdraw_document_detail d1 where d1.wh_id = h1.wh_id) as sum_withdraw
@@ -88,6 +88,32 @@ function getInventory_DocumentHeder($product_type_id,$trans_type)
                   \n\t <td>".$row["document_no"]."</td>
                   \n\t <td>".$row["remarks"]."</td>
                   \n\t <td align=\"right\">".number_format($row["sum_withdraw"])."</td>
+                  \n\t <td>".$row["username"]." </td> \n</tr>";
+                
+            }
+        }
+                
+        
+    }
+    else if($trans_type=="receive_product")
+    {
+        $_sql_header ="SELECT h1.ph_id as ph_id,DATE_FORMAT(h1.document_date,'%d-%b-%Y') as document_date,h1.document_no,h1.remarks,h1.create_by_uid,u1.username 
+        ,( select sum(amount) from production_document_detail d1 where d1.ph_id = h1.ph_id) as sum_receive
+        
+        FROM production_document_header h1,mgnt_user u1 where h1.create_by_uid =u1.uid order by h1.create_date desc ";
+       // echo $_sql_header;
+        
+        
+        $result = $conn->query($_sql_header);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            $_table_row="";
+            while($row = $result->fetch_assoc()) {
+                 $_table_row.="\n <tr onclick=\"jsOpenReceiveProduct(".$row['ph_id'].")\">
+                  \n\t <td>".$row["document_date"]."</td>
+                  \n\t <td>".$row["document_no"]."</td>
+                  \n\t <td>".$row["remarks"]."</td>
+                  \n\t <td align=\"right\">".number_format($row["sum_receive"])."</td>
                   \n\t <td>".$row["username"]." </td> \n</tr>";
                 
             }
