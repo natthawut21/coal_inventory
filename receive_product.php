@@ -101,7 +101,7 @@ desired effect
         
         
         
-        
+ <!-- Dialog Show TX-->                      
 <div class="modal fade bs-example-modal-lg" id="productModal_1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
      <div class="modal-dialog  modal-large">
                       
@@ -125,8 +125,8 @@ desired effect
 </div>
         
                 
-                
-      <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+ <!-- Dialog Save new TX-->               
+ <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 
               <div class="modal-dialog" role="document">
@@ -304,7 +304,8 @@ desired effect
               <div class="col-lg-6 col-xs-6" align="right">
                 <!--<a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">-->
                 <a class="btn btn-app btn-primary" data-toggle="modal" onclick="openDialog()" >
-                <i class="fa fa-plus-circle"></i> เพิ่มรายการ แปรรูปวัตถุดิบ   </a>
+                <i class="fa fa-plus-circle"></i> เพิ่มรายการ แปรรูปวัตถุดิบ   
+                </a>
                        
                        
                    </div>

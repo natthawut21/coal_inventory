@@ -97,6 +97,148 @@ desired effect
     <!-- Main content -->
     <section class="content">
       <!-- Your Page Content Here -->
+        
+        <!-- Dialog Show TX-->                      
+<div class="modal fade bs-example-modal-lg" id="productModal_1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+     <div class="modal-dialog  modal-large">
+                      
+                      
+     <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
+        <h4 class="modal-title" id="myModalLabel">รายการผลิตสินค้าแปรรูป</h4>
+      </div>
+    
+       <div class="modal-body">
+           <div id="div_receive_data"> - </div>
+        </div> 
+           <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">ปิด </button>
+           </div>
+      </div>
+     </div>
+    </div>
+</div>
+        
+                
+ <!-- Dialog Save new TX-->               
+ <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+                
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
+        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการขายสินค้า</h4>
+      </div>
+    
+       <div class="modal-body">
+          <form id=form01>
+           
+         <div class="row">
+             <div class="col-md-2"><label>วันที่ขายสินค้า</label></div>
+          <div class="col-md-3 ">
+               <div class="form-group">
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" id="txt_sell_date" name="txt_sell_date" class="form-control pull-right">
+
+                </div>
+              </div>
+           </div>
+            <div class="col-md-2 col-md-offset-2 "><label>หมายเลขเอกสาร</label></div>
+             <div class="col-md-3 ">
+                 <input type="text" id="txt_document_no" name="txt_document_no" class="form-control pull-right" >
+                  </div>
+        
+        </div>
+       
+        <div class="row">
+             <div class="col-md-12">
+            
+             <table class="table table-bordered table-striped">
+              <tr>
+                  <th style="width: 10px">#</th>
+                  <th style="width: 80px">ประเภทสินค้า</th>
+                  <th style="width: 20px">% TM</th>
+                  <th style="width: 40px">จำนวน (Tons)</th>
+                  <th style="width: 60px">ที่จัดเก็บ</th>
+              </tr>
+              <?php
+              
+               $_basic_info = new Basic_Info(); 
+              
+              $row_data=5;
+                for($i=0;$i<$row_data;$i++)
+                {
+                     $_rawmat_option = $_basic_info->getSellProductList_v1(-1);
+              ?>
+              <tr>
+                   <td><?php echo $i+1; ?></td>
+                  <td>
+                   <select class="form-control" id="opt_product_id_a[]" name="opt_product_id_a[]">
+                           <?php echo $_rawmat_option; ?>
+                  </select>
+                  </td>
+                  <td> <input type="text" id="txt_TM_value_a[]" name="txt_TM_value_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข %..."></td>
+                  <td> <input type="text" id="txt_receive_qty_a[]" name="txt_receive_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
+                  <td>
+                   <?php
+                       // $_basic_info = new Basic_Info();
+                        $_location_option = $_basic_info->getLocationList(-1);
+                    ?>
+                  <select class="form-control" id="opt_receive_location_a[]" name="opt_receive_location_a[]">
+                      <?php echo $_location_option; ?>
+                  </select>
+                  </td>
+                  
+              </tr>
+              <?php } ?>
+          </table>
+                 
+                 
+            
+            
+            </div>
+           </div>
+       
+       
+        <div class="row">
+            <div class="col-md-4"><label>รายละเอียดเพิ่มเติม</label></div>
+            <div class="col-md-8 "> 
+                <div class="form-group">
+                  
+                  <textarea id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
+                </div></div>
+        </div>
+        
+      
+        
+           
+           </form>    
+      </div>
+          
+    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_AddNew_Material();">บันทึก</button>
+      </div>
+    </div>
+  </div>
+            </div>
+         </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        <!--
 <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-dialog" role="document">
@@ -154,10 +296,10 @@ desired effect
         </div> <div class="row">
             <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
             <div class="col-md-8 ">
-             <!-- Select multiple-->
+           
                 <div class="form-group">
                   
-                  <!--<select multiple class="form-control">-->
+                 
                      <?php
                         $_basic_info = new Basic_Info();
                         $_location_option = $_basic_info->getLocationList(-1);
@@ -196,6 +338,11 @@ desired effect
             </div>
          </div>
         
+        
+        
+       --> 
+        
+        
        <div class="row">
 
         <!-- ./col -->
@@ -209,11 +356,11 @@ desired effect
                    </div>
 
               <div class="col-lg-6 col-xs-6" align="right">
-                <a class="btn btn-app btn-primary" data-toggle="modal" data-target="#bs-example-modal-lg">
+                  
+               
+                  <a class="btn btn-app btn-primary" data-toggle="modal" onclick="jsOpenDialog()" >
                 <i class="fa fa-plus-circle"></i> เพิ่มรายการขายสินค้าแปรรูป
-              </a>
-                       
-                       
+                </a>
                    </div>
                    
                 </div>
@@ -366,7 +513,7 @@ desired effect
       "info": true,
       "autoWidth": false
     });
-   
+  
    //Date picker
     $('#txt_sell_date').datepicker({
         autoclose: true,
@@ -375,10 +522,19 @@ desired effect
         language: "th",
         todayHighlight: true
     }); 
-       //Date picker
+   
 
   });
 
+    function jsOpenDialog()
+    {
+        
+        $('#rawmatModal').attr('class', 'modal fade bs-example-modal-lg')
+            .attr('aria-labelledby','myLargeModalLabel');
+		$('.modal-dialog').attr('class','modal-dialog modal-lg');
+        $('#rawmatModal').modal('show'); 
+        
+    }
    function jsGetSellProductTable()
     {
         document.getElementById("table_loading").style.visibility = "visible";
