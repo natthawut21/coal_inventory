@@ -184,13 +184,13 @@ desired effect
                   </select>
                   </td>
                   <td> <input type="text" id="txt_TM_value_a[]" name="txt_TM_value_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข %..."></td>
-                  <td> <input type="text" id="txt_receive_qty_a[]" name="txt_receive_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
+                  <td> <input type="text" id="txt_sell_qty_a[]" name="txt_sell_qty_a[]" class="form-control" placeholder="ระบุจำนวนตัวเลข ..."></td>
                   <td>
                    <?php
                        // $_basic_info = new Basic_Info();
                         $_location_option = $_basic_info->getLocationList(-1);
                     ?>
-                  <select class="form-control" id="opt_receive_location_a[]" name="opt_receive_location_a[]">
+                  <select class="form-control" id="opt_sell_location_a[]" name="opt_sell_location_a[]">
                       <?php echo $_location_option; ?>
                   </select>
                   </td>
@@ -224,7 +224,7 @@ desired effect
     
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSave_AddNew_Material();">บันทึก</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSubmit_SellProduct();">บันทึก</button>
       </div>
     </div>
   </div>
@@ -236,111 +236,7 @@ desired effect
         
         
         
-        
-        
-        <!--
-<div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
-        <h4 class="modal-title" id="myModalLabel">เพิ่มรายการ ขายสินค้าแปรรูป</h4>
-      </div>
-    
-       <div class="modal-body">
-         <div class="row">
-             <div class="col-md-4"><label>วันที่ ขายสินค้าแปรรูป</label></div>
-          <div class="col-md-8 ">
-               <div class="form-group">
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input id="txt_sell_date" name ="txt_sell_date" type="text" class="form-control pull-right" id="datepicker">
-                </div>
-              </div>
-           </div>
-        
-        </div>
-           
-          
-           
-        <div class="row">
-            <div class="col-md-4"><label>จำนวน</label></div>
-            <div class="col-md-7 "><div class="form-group">
-                  
-                  <input type="text" id="txt_sell_qty" name="txt_sell_qty" class="form-control" placeholder="ระบุจำนวนตัวเลข ...">
-               
-                </div>
-            </div>
-            <div class="col-md-1">
-                 <label>Tons</label>
-            </div>
-           </div>
-        <div class="row">
-            <div class="col-md-4"><label>กลุ่มสินค้า</label></div>
-            <div class="col-md-8 ">
-              <div class="form-group">
-                    <?php
-                        $_basic_info = new Basic_Info();
-                        $_product_option = $_basic_info->getProductList(-1);
-                    ?>
-                  <select class="form-control" id="opt_sell_product" name="opt_sell_product">
-                      <?php echo $_product_option; ?>
-                  </select>
-                  
-                </div>
-            
-            </div>
-        </div> <div class="row">
-            <div class="col-md-4"><label>สถานที่จัดเก็บ</label></div>
-            <div class="col-md-8 ">
-           
-                <div class="form-group">
-                  
-                 
-                     <?php
-                        $_basic_info = new Basic_Info();
-                        $_location_option = $_basic_info->getLocationList(-1);
-                    ?>
-                  <select class="form-control" id="opt_sell_location" name="opt_sell_location">
-                      <?php echo $_location_option; ?>
-                  </select>
-                    
-                    
-                </div>
-            
-            </div>
-           
-        </div>
-        <div class="row">
-            <div class="col-md-4"><label>รายละเอียดเพิ่มเติม</label></div>
-            <div class="col-md-8 "> 
-                <div class="form-group">
-                  
-                  <textarea id="txt_remarks" name="txt_remarks" class="form-control" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
-                </div></div>
-        </div>
-        
-
-           
-           
-      </div>
-          
-    
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="jsSubmit_SaleProduct();">บันทึก</button>
-      </div>
-    </div>
-  </div>
-            </div>
-         </div>
-        
-        
-        
-       --> 
+      
         
         
        <div class="row">
@@ -559,62 +455,70 @@ desired effect
 
     }
     
-    function jsSubmit_SaleProduct()
+    function jsSubmit_SellProduct()
     {
-    //    alert("After Save");
-       // console.log("After Save");
-         /* txt_sell_date
-           txt_sell_qty
-           opt_sell_product
-           opt_sell_location
-           txt_remarks
-        */
-        var obj_txt_sell_date = document.getElementById("txt_sell_date");
-        var obj_txt_sell_qty = document.getElementById("txt_sell_qty");
-        var obj_opt_sell_location = document.getElementById("opt_sell_location");
-        var obj_opt_sell_product = document.getElementById("opt_sell_product");
-        var obj_txt_remarks = document.getElementById("txt_remarks");
         var val_sell_date ="";
-        var val_sell_qty ="";
-        var val_sell_product ="";
-        var val_sell_location ="";
+       var val_document_no ="";
         var val_sell_remarks ="";
         
-        if(obj_txt_sell_date != null)
+           
+         document.getElementById("table_loading").style.visibility = "visible";
+        
+        var obj_txt_receive_date = document.getElementById("txt_receive_date");
+        var obj_txt_document_no = document.getElementById("txt_document_no");
+        var obj_txt_remarks = document.getElementById("txt_remarks");
+        
+        
+        
+        if(obj_txt_receive_date != null)
         {
-            val_sell_date =obj_txt_sell_date.value;
-            obj_txt_sell_date.value ="";
+            val_sell_date =obj_txt_receive_date.value;
+            obj_txt_receive_date.value ="";
         }
         
-        if(obj_txt_sell_qty != null)
+        if(obj_txt_document_no != null)
         {
-            val_sell_qty =obj_txt_sell_qty.value;
-            obj_txt_sell_qty.value ="";
+            val_document_no =obj_txt_document_no.value;
+            obj_txt_document_no.value ="";
         }
-        
-        if(obj_opt_sell_location != null)
-        {
-            val_sell_location =obj_opt_sell_location.value;
-            obj_opt_sell_location.value ="";
-        }
-        
-        if(obj_opt_sell_product != null)
-        {
-            val_sell_product =obj_opt_sell_product.value;
-            obj_opt_sell_product.value ="";
-        }
-        
-        if(val_sell_remarks != null)
+        if(obj_txt_remarks != null)
         {
             val_sell_remarks =obj_txt_remarks.value;
             obj_txt_remarks.value ="";
         }
-        var param_sell_product ="sell_date="+val_sell_date+"&sell_qty="+val_sell_qty+"&prod_id="+val_sell_product+"&store_location="+val_sell_location+"&sell_remark="+val_sell_remarks;
+     
         
-      
+        var param_receive_rawmat_header ="&sell_date="+val_sell_date+"&document_no="+val_document_no+"&sell_remarks="+val_sell_remarks;
+        
+
+        var obj_opt_product_id = document.forms.form01.elements["opt_product_id_a[]"];
+        var obj_txt_TM_value = document.forms.form01.elements["txt_TM_value_a[]"];
+        var obj_txt_sell_qty = document.forms.form01.elements["txt_sell_qty_a[]"];
+        var obj_opt_sell_location = document.forms.form01.elements["opt_sell_location_a[]"];
+
+        var param_product="";
+        for (var i = 0, len = obj_opt_product_id.length; i < len; i++) {
+            if(obj_opt_product_id[i].value!=-1)
+            {
+                
+                param_product=param_product+"&product_id[]="+obj_opt_product_id[i].value+"&TM_value[]="+obj_txt_TM_value[i].value+"&sell_qty[]="+obj_txt_sell_qty[i].value+"&sell_location[]="+obj_opt_sell_location[i].value;
+                obj_opt_product_id[i].value="";
+                obj_txt_TM_value[i].value="";
+                obj_txt_sell_qty[i].value="";
+                obj_opt_sell_location[i].value="-1";
+                
+            }
+          
+            
+        }
+        var update_ajax_url ="inc/source/updateInventory.php?action=add_sell_product_header&"+param_receive_rawmat_header+param_product;
+        
+        //console.log(update_ajax_url);
+        getDataXML_Sync(update_ajax_url,jsAfterSubmitSellProduct);
+        
         document.getElementById("table_loading").style.visibility = "hidden";
-       //  console.log("inc/source/updateInventory.php?action=sell_product&"+param_sell_product);
-        getDataXML_Sync("inc/source/updateInventory.php?action=sell_product&"+param_sell_product,jsAfterSubmitSellProduct);
+        
+        
         
     }
      function jsAfterSubmitSellProduct(respText)
