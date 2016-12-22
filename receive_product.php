@@ -574,7 +574,7 @@ function jsSave_AddNew_Material()
     {
        // console.log(rh_id);
         var url_1 ="inc/source/getTranscation_data.php?type=receive_product&ph_id="+ph_id;
-         console.log(url_1);
+        // console.log(url_1);
          getDataXML_Sync(url_1,jsShowReceiveDialog);
     }
     function jsShowReceiveDialog(respText)

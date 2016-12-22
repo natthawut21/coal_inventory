@@ -107,7 +107,7 @@ desired effect
      <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
-        <h4 class="modal-title" id="myModalLabel">รายการผลิตสินค้าแปรรูป</h4>
+        <h4 class="modal-title" id="myModalLabel">รายการขายสินค้าแปรรูป</h4>
       </div>
     
        <div class="modal-body">
@@ -121,7 +121,34 @@ desired effect
     </div>
 </div>
         
-                
+    
+        
+ <!-- Dialog Show TX-->                      
+<div class="modal fade bs-example-modal-lg" id="productModal_1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+     <div class="modal-dialog  modal-large">
+                      
+                      
+     <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">[&times;]</span></button>
+        <h4 class="modal-title" id="myModalLabel">รายการขายสินค้าแปรรูป</h4>
+      </div>
+    
+       <div class="modal-body">
+           <div id="div_receive_data"> - </div>
+        </div> 
+           <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal"> ปิด </button>
+           </div>
+      </div>
+     </div>
+    </div>
+</div>
+        
+        
+        
+               
  <!-- Dialog Save new TX-->               
  <div class="modal fade bs-example-modal-lg" id="rawmatModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -433,7 +460,7 @@ desired effect
     }
    function jsGetSellProductTable()
     {
-        document.getElementById("table_loading").style.visibility = "visible";
+      /*document.getElementById("table_loading").style.visibility = "visible";
 
 
        getData_Sync("inc/source/getProductInventoryLog.php?prod_id=1&param_table=product_table","div_sell_table");
@@ -452,6 +479,26 @@ desired effect
             });
 
          });
+        
+        */
+        
+         document.getElementById("table_loading").style.visibility = "visible";
+        
+       
+      getData_Sync("inc/source/getInventoryLog_v2.php?prod_type_id=1&tran_type=sell_product&param_table=sell_product_table","div_sell_table");
+        document.getElementById("table_loading").style.visibility = "hidden";
+       $(function () {
+                     //$("#withdraw_table_1").DataTable({
+                     $("#sell_product_table").DataTable({
+                      "paging": true,
+                         "lengthChange": true,
+                    "searching": true,
+                    "ordering": false,
+                    "info": true,
+                    "autoWidth": false
+                    
+                });
+       }); 
 
     }
     
@@ -464,7 +511,7 @@ desired effect
            
          document.getElementById("table_loading").style.visibility = "visible";
         
-        var obj_txt_receive_date = document.getElementById("txt_receive_date");
+        var obj_txt_receive_date = document.getElementById("txt_sell_date");
         var obj_txt_document_no = document.getElementById("txt_document_no");
         var obj_txt_remarks = document.getElementById("txt_remarks");
         
@@ -513,9 +560,8 @@ desired effect
         }
         var update_ajax_url ="inc/source/updateInventory.php?action=add_sell_product_header&"+param_receive_rawmat_header+param_product;
         
-        //console.log(update_ajax_url);
+        console.log(update_ajax_url);
         getDataXML_Sync(update_ajax_url,jsAfterSubmitSellProduct);
-        
         document.getElementById("table_loading").style.visibility = "hidden";
         
         
@@ -530,6 +576,25 @@ desired effect
         }
       
         
+    }
+    
+     function jsOpenSellProduct(sh_id)
+    {
+       // console.log(rh_id);
+        var url_1 ="inc/source/getTranscation_data.php?type=sell_product&sh_id="+sh_id;
+        // console.log(url_1);
+         getDataXML_Sync(url_1,jsShowSellDialog);
+    }
+    function jsShowSellDialog(respText)
+    {
+        
+        if(respText!="")
+        {
+            document.getElementById("div_receive_data").innerHTML =respText;
+            $('#productModal_1').attr('class', 'modal fade bs-example-modal-lg').attr('aria-labelledby','myLargeModalLabel');
+            $('.modal-dialog').attr('class','modal-dialog modal-lg');
+            $('#productModal_1').modal('show');
+        }
     }
     
     

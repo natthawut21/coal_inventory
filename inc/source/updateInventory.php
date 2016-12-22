@@ -189,7 +189,7 @@
                       //$_update_status = addNewProduct($_receive_date ,$_product_array[$p], $_receive_qty_array[$p] ,$_TM_value_array[$p] , $_store_location_array[$p] ,"HEADER_ID=$_header_update_status");
 
                       $_update_sell_header_detail_status = updateSellProductHeader_Detail( $_header_update_status,$_product_array[$p],$_TM_value_array[$p],$_sell_qty_array[$p],$_sell_location_array[$p],"");
-                      $_update_status = sellProduct($_receive_date ,$_product_array[$p], $_receive_qty_array[$p] ,$_TM_value_array[$p] , $_store_location_array[$p] ,"HEADER_ID=$_update_sell_header_detail_status");
+                      $_update_status = sellProduct($_sell_date ,$_product_array[$p], $_sell_qty_array[$p] ,$_TM_value_array[$p] , $_sell_location_array[$p] ,"HEADER_ID=$_update_sell_header_detail_status");
                         
                         
                     }
@@ -444,8 +444,8 @@ function updateSellProduct_Header($_action_type,$_sell_date , $_sell_doc_no,$_se
              $_user_login_id=4;
             
         }
-        $_receive_date_array = explode("/",$_receive_date);
-        $insertdate =  $_receive_date_array[2]."/". $_receive_date_array[1]."/". $_receive_date_array[0];
+        $_sell_date_array = explode("/",$_sell_date);
+        $insertdate =  $_sell_date_array[2]."/". $_sell_date_array[1]."/". $_sell_date_array[0];
         
         if($_action_type=="addnew")
         {
@@ -455,7 +455,7 @@ function updateSellProduct_Header($_action_type,$_sell_date , $_sell_doc_no,$_se
             $_query = "Insert into sell_document_header(document_date,document_no,remarks,create_date,create_by_uid,modify_date,modify_by_uid,document_status,status_code)".
                                               " VALUES('$insertdate','$_sell_doc_no','$_sell_remark',now(),$_user_login_id,now(),$_user_login_id ,1,'PRD-SELL')";
             
-         echo "<BR>$_query ";
+         //echo "<BR>$_query ";
 
 
             if ($conn->query($_query) === TRUE) {
@@ -564,7 +564,7 @@ function  updateSellProductHeader_Detail($_hdeader_id,$_product_id,$_TM_value,$_
         }
         $_sql ="INSERT INTO sell_document_detail(sh_id,prod_id,TM_PCT,amount,location_id,unit_id,status_code) VALUES ($_hdeader_id,$_product_id,$_TM_value,$_sell_qty,$_location_id,$_unit_id,'$_status')";
         
-       echo "<BR>$_sql";
+       //echo "<BR>$_sql";
         if ($conn->query($_sql) === TRUE) {
             $last_id = $conn->insert_id;
         }
@@ -711,7 +711,8 @@ function addNewProduct($_receive_date ,$_prod_id, $_receive_qty , $_TM_value,$_s
 
 function sellProduct($_sell_date ,$_prod_id, $_sell_qty , $_TM_value,$_store_location ,$_sell_remark )
     {
-        include_once "db_connect_inc.php";
+        include "db_connect_inc.php";
+    
         $_product_id =$_prod_id;
         $_tx_type_id =4;
         $_unit_id =1;
@@ -731,11 +732,14 @@ function sellProduct($_sell_date ,$_prod_id, $_sell_qty , $_TM_value,$_store_loc
         $_new_balance =  $_prior_balance-$_sell_qty;
         $sql_1 = "INSERT INTO tx_log (prod_id,tx_type_id,tx_create_time,amount,prior_balance,balance,location_id,remarks,unit_id,tx_log_time,uid)  ".
                             " VALUES ( $_product_id, $_tx_type_id,'$insertdate', $_sell_qty, $_prior_balance,$_new_balance ,$_store_location,'$_sell_remark',$_unit_id,now(),$_user_login_id);";
-        // echo "<BR> $sql_1 ";
+         //echo "<HR> $sql_1 ";
         
         
         
         $_update_status =0;
+        
+        $conn = new mysqli($_server_name, $_username, $_password, $_dbname);
+    
         if ($conn->query($sql_1) === TRUE) {
             $last_id = $conn->insert_id;
             // echo "<BR>  $last_id > update Product Balance ";
