@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2016 at 06:21 PM
+-- Generation Time: Dec 22, 2016 at 11:57 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -85,6 +85,16 @@ CREATE TABLE `production_document_detail` (
   `status_code` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=tis620;
 
+--
+-- Dumping data for table `production_document_detail`
+--
+
+INSERT INTO `production_document_detail` (`p_id`, `ph_id`, `prod_id`, `TM_PCT`, `amount`, `unit_id`, `location_id`, `status_code`) VALUES
+(9, 4, 2, '2.10', '250.00', 1, 2, ''),
+(10, 4, 3, '2.10', '250.00', 1, 2, ''),
+(11, 4, 4, '2.10', '500.00', 1, 2, ''),
+(12, 4, 5, '2.10', '500.00', 1, 2, '');
+
 -- --------------------------------------------------------
 
 --
@@ -100,8 +110,16 @@ CREATE TABLE `production_document_header` (
   `create_by_uid` int(11) NOT NULL,
   `modify_date` datetime NOT NULL,
   `modify_by_uid` int(11) NOT NULL,
-  `document_status` varchar(5) DEFAULT NULL
+  `document_status` varchar(5) DEFAULT NULL,
+  `status_code` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=tis620;
+
+--
+-- Dumping data for table `production_document_header`
+--
+
+INSERT INTO `production_document_header` (`ph_id`, `document_date`, `document_no`, `remarks`, `create_date`, `create_by_uid`, `modify_date`, `modify_by_uid`, `document_status`, `status_code`) VALUES
+(4, '2016-12-22 00:00:00', 'PRD-001', 'ผลิต 1500', '2016-12-22 23:21:25', 4, '2016-12-22 23:21:25', 4, '1', 'PRD-ADD');
 
 -- --------------------------------------------------------
 
@@ -127,17 +145,17 @@ CREATE TABLE `product_code` (
 --
 
 INSERT INTO `product_code` (`prod_id`, `prod_type_id`, `sub_product_type_id`, `prod_code_TH`, `prod_code_EN`, `balance`, `create_date`, `create_by_uid`, `modify_date`, `modify_by_uid`) VALUES
-(1, 1, -1, 'ถ่านหินประเภท 1 / 4,200 KCal', 'Raw material', '1500.00', '2016-09-19 00:00:00', 1, '2016-11-30 23:01:09', 4),
-(2, 2, 1, 'Size # 1(ถ่านหินประเภท 1 / 4,200 KCal)', 'Size # 1', '0.00', '2016-09-19 00:00:00', 3, '2016-09-26 23:35:19', 4),
-(3, 2, 1, 'Size # 2(ถ่านหินประเภท 1 / 4,200 KCal)', 'Size # 2', '0.00', '2016-09-19 00:00:00', 1, '2016-10-03 00:26:20', 4),
-(4, 2, 1, 'Size # 3(ถ่านหินประเภท 1 / 4,200 KCal)', 'Size # 3', '0.00', '2016-09-19 00:00:00', 1, '2016-10-03 00:25:37', 4),
-(5, 2, 1, 'Size # 4(ถ่านหินประเภท 1 / 4,200 KCal)', 'Size # 4', '0.00', '2016-09-19 00:00:00', 1, '2016-09-26 23:33:30', 4),
-(6, 1, -1, 'ถ่านหินประเภท 2 / 6,000 KCal', 'Raw material', '1000.00', '2016-09-19 00:00:00', 1, '2016-11-30 23:01:09', 4),
-(7, 1, -1, 'ถ่านหินประเภท 3 / 5,000 KCal', 'Raw material', '0.00', '2016-09-19 00:00:00', 1, '2016-11-14 23:28:26', 4),
-(8, 2, 6, 'Size # 1 (ถ่านหินประเภท 2 / 6,000 KCal)', 'Size # 1', '0.00', '2016-09-19 00:00:00', 3, '2016-09-26 23:35:19', 4),
-(9, 2, 6, 'Size # 2 (ถ่านหินประเภท 2 / 6,000 KCal)', 'Size # 2', '0.00', '2016-09-19 00:00:00', 1, '2016-10-03 00:26:20', 4),
-(10, 2, 6, 'Size # 3 (ถ่านหินประเภท 2 / 6,000 KCal)', 'Size # 3', '0.00', '2016-09-19 00:00:00', 1, '2016-10-03 00:25:37', 4),
-(11, 2, 6, 'Size # 4 (ถ่านหินประเภท 2 / 6,000 KCal)', 'Size # 4', '0.00', '2016-09-19 00:00:00', 1, '2016-09-26 23:33:30', 4),
+(1, 1, -1, 'ถ่านหินประเภท 1 / 4,200 KCal', 'Raw material', '3250.00', '2016-09-19 00:00:00', 1, '2016-12-22 23:24:40', 4),
+(2, 2, 1, 'Size # 1(ถ่านหินประเภท 1 / 4,200 KCal)', 'Size # 1', '100.00', '2016-09-19 00:00:00', 3, '2016-12-22 23:24:41', 4),
+(3, 2, 1, 'Size # 2(ถ่านหินประเภท 1 / 4,200 KCal)', 'Size # 2', '50.00', '2016-09-19 00:00:00', 1, '2016-12-22 23:24:41', 4),
+(4, 2, 1, 'Size # 3(ถ่านหินประเภท 1 / 4,200 KCal)', 'Size # 3', '50.00', '2016-09-19 00:00:00', 1, '2016-12-22 23:24:41', 4),
+(5, 2, 1, 'Size # 4(ถ่านหินประเภท 1 / 4,200 KCal)', 'Size # 4', '50.00', '2016-09-19 00:00:00', 1, '2016-12-22 23:24:41', 4),
+(6, 1, -1, 'ถ่านหินประเภท 2 / 6,000 KCal', 'Raw material', '5100.00', '2016-09-19 00:00:00', 1, '2016-12-22 23:17:33', 4),
+(7, 1, -1, 'ถ่านหินประเภท 3 / 5,000 KCal', 'Raw material', '5200.00', '2016-09-19 00:00:00', 1, '2016-12-22 23:17:33', 4),
+(8, 2, 6, 'Size # 1 (ถ่านหินประเภท 2 / 6,000 KCal)', 'Size # 1', '0.00', '2016-09-19 00:00:00', 3, '2016-12-12 00:53:39', 4),
+(9, 2, 6, 'Size # 2 (ถ่านหินประเภท 2 / 6,000 KCal)', 'Size # 2', '0.00', '2016-09-19 00:00:00', 1, '2016-12-12 00:53:39', 4),
+(10, 2, 6, 'Size # 3 (ถ่านหินประเภท 2 / 6,000 KCal)', 'Size # 3', '0.00', '2016-09-19 00:00:00', 1, '2016-12-12 00:53:39', 4),
+(11, 2, 6, 'Size # 4 (ถ่านหินประเภท 2 / 6,000 KCal)', 'Size # 4', '0.00', '2016-09-19 00:00:00', 1, '2016-12-12 00:53:39', 4),
 (12, 2, 7, 'Size # 1 (ถ่านหินประเภท 3 / 5,000 KCal)', 'Size # 1', '0.00', '2016-09-19 00:00:00', 3, '2016-09-26 23:35:19', 4),
 (13, 2, 7, 'Size # 2 (ถ่านหินประเภท 3 / 5,000 KCal)', 'Size # 2', '0.00', '2016-09-19 00:00:00', 1, '2016-10-03 00:26:20', 4),
 (14, 2, 7, 'Size # 3 (ถ่านหินประเภท 3 / 5,000 KCal)', 'Size # 3', '0.00', '2016-09-19 00:00:00', 1, '2016-10-03 00:25:37', 4),
@@ -185,8 +203,9 @@ CREATE TABLE `receive_rawmat_document_detail` (
 --
 
 INSERT INTO `receive_rawmat_document_detail` (`r_id`, `rh_id`, `prod_id`, `TM_PCT`, `amount`, `unit_id`, `location_id`, `status_code`) VALUES
-(14, 15, 1, '2.50', '1500.00', 1, 1, ''),
-(15, 15, 6, '2.20', '1000.00', 1, 2, '');
+(33, 24, 1, '2.10', '5000.00', 1, 1, ''),
+(34, 24, 6, '2.20', '5100.00', 1, 1, ''),
+(35, 24, 7, '2.30', '5200.00', 1, 1, '');
 
 -- --------------------------------------------------------
 
@@ -212,7 +231,7 @@ CREATE TABLE `receive_rawmat_document_header` (
 --
 
 INSERT INTO `receive_rawmat_document_header` (`rh_id`, `document_date`, `document_no`, `remarks`, `status_code`, `create_date`, `create_by_uid`, `modify_date`, `modify_by_uid`, `document_status`) VALUES
-(15, '2016-11-30 00:00:00', '30112016-001', 'TEST 01', 'RM-ADD', '2016-11-30 23:01:09', 4, '2016-11-30 23:01:09', 4, 1);
+(24, '2016-12-21 00:00:00', 'RAW-001', 'รับวัตถุดิบ 15,300', 'RM-ADD', '2016-12-22 23:17:33', 4, '2016-12-22 23:17:33', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -226,9 +245,21 @@ CREATE TABLE `sell_document_detail` (
   `prod_id` int(11) DEFAULT NULL,
   `TM_PCT` decimal(5,2) DEFAULT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
+  `unit_id` int(11) NOT NULL,
   `location_id` int(11) NOT NULL,
   `status_code` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=tis620;
+
+--
+-- Dumping data for table `sell_document_detail`
+--
+
+INSERT INTO `sell_document_detail` (`s_id`, `sh_id`, `prod_id`, `TM_PCT`, `amount`, `unit_id`, `location_id`, `status_code`) VALUES
+(26, 15, 1, '2.10', '250.00', 1, 1, ''),
+(27, 15, 2, '2.10', '150.00', 1, 2, ''),
+(28, 15, 3, '2.10', '200.00', 1, 2, ''),
+(29, 15, 4, '2.10', '450.00', 1, 2, ''),
+(30, 15, 5, '2.10', '450.00', 1, 2, '');
 
 -- --------------------------------------------------------
 
@@ -248,6 +279,13 @@ CREATE TABLE `sell_document_header` (
   `modify_by_uid` int(11) NOT NULL,
   `document_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=tis620;
+
+--
+-- Dumping data for table `sell_document_header`
+--
+
+INSERT INTO `sell_document_header` (`sh_id`, `document_date`, `document_no`, `remarks`, `status_code`, `create_date`, `create_by_uid`, `modify_date`, `modify_by_uid`, `document_status`) VALUES
+(15, '2016-12-22 00:00:00', 'SEL-001', 'ขายของ 1500', 'PRD-S', '2016-12-22 23:24:40', 4, '2016-12-22 23:24:40', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -278,8 +316,19 @@ CREATE TABLE `tx_log` (
 --
 
 INSERT INTO `tx_log` (`tx_log_id`, `prod_id`, `tx_type_id`, `tx_create_time`, `location_id`, `amount`, `TM_PCT`, `prior_balance`, `balance`, `remarks`, `unit_id`, `tx_log_time`, `uid`, `document_no`, `status_remark`) VALUES
-(34, 1, 1, '2016-11-30 00:00:00', 1, '1500.00', '2.50', '0.00', '1500.00', 'HEADER_ID=15', 1, '2016-11-30 23:01:09', 4, NULL, NULL),
-(35, 6, 1, '2016-11-30 00:00:00', 2, '1000.00', '2.20', '0.00', '1000.00', 'HEADER_ID=15', 1, '2016-11-30 23:01:09', 4, NULL, NULL);
+(92, 1, 1, '2016-12-21 00:00:00', 1, '5000.00', '2.10', '0.00', '5000.00', 'HEADER_ID=24', 1, '2016-12-22 23:17:33', 4, NULL, NULL),
+(93, 6, 1, '2016-12-21 00:00:00', 1, '5100.00', '2.20', '0.00', '5100.00', 'HEADER_ID=24', 1, '2016-12-22 23:17:33', 4, NULL, NULL),
+(94, 7, 1, '2016-12-21 00:00:00', 1, '5200.00', '2.30', '0.00', '5200.00', 'HEADER_ID=24', 1, '2016-12-22 23:17:33', 4, NULL, NULL),
+(95, 1, 2, '2016-12-21 00:00:00', 1, '1500.00', '2.10', '5000.00', '3500.00', 'HEADER_ID=28', 1, '2016-12-22 23:18:33', 4, NULL, NULL),
+(96, 2, 3, '2016-12-22 00:00:00', 2, '250.00', '2.10', '0.00', '250.00', 'HEADER_ID=4', 1, '2016-12-22 23:21:25', 4, NULL, NULL),
+(97, 3, 3, '2016-12-22 00:00:00', 2, '250.00', '2.10', '0.00', '250.00', 'HEADER_ID=4', 1, '2016-12-22 23:21:25', 4, NULL, NULL),
+(98, 4, 3, '2016-12-22 00:00:00', 2, '500.00', '2.10', '0.00', '500.00', 'HEADER_ID=4', 1, '2016-12-22 23:21:26', 4, NULL, NULL),
+(99, 5, 3, '2016-12-22 00:00:00', 2, '500.00', '2.10', '0.00', '500.00', 'HEADER_ID=4', 1, '2016-12-22 23:21:26', 4, NULL, NULL),
+(100, 1, 4, '2016-12-22 00:00:00', 1, '250.00', '0.00', '3500.00', '3250.00', 'HEADER_ID=26', 1, '2016-12-22 23:24:40', 4, NULL, NULL),
+(101, 2, 4, '2016-12-22 00:00:00', 2, '150.00', '0.00', '250.00', '100.00', 'HEADER_ID=27', 1, '2016-12-22 23:24:40', 4, NULL, NULL),
+(102, 3, 4, '2016-12-22 00:00:00', 2, '200.00', '0.00', '250.00', '50.00', 'HEADER_ID=28', 1, '2016-12-22 23:24:41', 4, NULL, NULL),
+(103, 4, 4, '2016-12-22 00:00:00', 2, '450.00', '0.00', '500.00', '50.00', 'HEADER_ID=29', 1, '2016-12-22 23:24:41', 4, NULL, NULL),
+(104, 5, 4, '2016-12-22 00:00:00', 2, '450.00', '0.00', '500.00', '50.00', 'HEADER_ID=30', 1, '2016-12-22 23:24:41', 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -345,7 +394,7 @@ CREATE TABLE `withdraw_document_detail` (
 --
 
 INSERT INTO `withdraw_document_detail` (`w_id`, `wh_id`, `prod_id`, `TM_PCT`, `amount`, `unit_id`, `location_id`, `status_code`) VALUES
-(1, 5, 1, '2.50', '500.00', 1, 1, '');
+(27, 28, 1, '2.10', '1500.00', 1, 1, '');
 
 -- --------------------------------------------------------
 
@@ -370,7 +419,7 @@ CREATE TABLE `withdraw_document_header` (
 --
 
 INSERT INTO `withdraw_document_header` (`wh_id`, `document_date`, `document_no`, `remarks`, `create_date`, `create_by_uid`, `modify_date`, `modify_by_uid`, `document_status`) VALUES
-(5, '2016-12-01 00:00:00', '123', '12165456', '2016-12-01 00:17:10', 4, '2016-12-01 00:17:10', 4, '1');
+(28, '2016-12-21 00:00:00', 'WIT-001', 'เบิกแปรรูป 1500', '2016-12-22 23:18:33', 4, '2016-12-22 23:18:33', 4, '1');
 
 --
 -- Indexes for dumped tables
@@ -387,6 +436,12 @@ ALTER TABLE `location`
 --
 ALTER TABLE `mgnt_user`
   ADD PRIMARY KEY (`uid`);
+
+--
+-- Indexes for table `production_document_detail`
+--
+ALTER TABLE `production_document_detail`
+  ADD PRIMARY KEY (`p_id`);
 
 --
 -- Indexes for table `production_document_header`
@@ -477,10 +532,15 @@ ALTER TABLE `location`
 ALTER TABLE `mgnt_user`
   MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT for table `production_document_detail`
+--
+ALTER TABLE `production_document_detail`
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
 -- AUTO_INCREMENT for table `production_document_header`
 --
 ALTER TABLE `production_document_header`
-  MODIFY `ph_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ph_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `product_code`
 --
@@ -495,27 +555,27 @@ ALTER TABLE `product_type`
 -- AUTO_INCREMENT for table `receive_rawmat_document_detail`
 --
 ALTER TABLE `receive_rawmat_document_detail`
-  MODIFY `r_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `r_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `receive_rawmat_document_header`
 --
 ALTER TABLE `receive_rawmat_document_header`
-  MODIFY `rh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `rh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `sell_document_detail`
 --
 ALTER TABLE `sell_document_detail`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `sell_document_header`
 --
 ALTER TABLE `sell_document_header`
-  MODIFY `sh_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tx_log`
 --
 ALTER TABLE `tx_log`
-  MODIFY `tx_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `tx_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 --
 -- AUTO_INCREMENT for table `tx_type`
 --
@@ -530,12 +590,12 @@ ALTER TABLE `unit`
 -- AUTO_INCREMENT for table `withdraw_document_detail`
 --
 ALTER TABLE `withdraw_document_detail`
-  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `withdraw_document_header`
 --
 ALTER TABLE `withdraw_document_header`
-  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
